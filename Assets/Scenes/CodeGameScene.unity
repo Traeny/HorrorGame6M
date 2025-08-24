@@ -657,15 +657,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf42e5671f176c4c9c0961f7b0fc05c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 3.5
-  acceleration: 15
-  lookSensitivity: {x: 0.1, y: 0.1}
-  pitchLimit: 85
+  preset: {fileID: 11400000, guid: c79c4c36849f28b4fb86d63b32861007, type: 2}
   currentPitch: 0
+  verticalVelocity: 0
   moveInput: {x: 0, y: 0}
   lookInput: {x: 0, y: 0}
+  sprintInput: 0
   characterController: {fileID: 2116737347}
   fpCamera: {fileID: 381139419}
+  Landed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2116737346
 MonoBehaviour:
   m_ObjectHideFlags: 0
