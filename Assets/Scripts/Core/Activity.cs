@@ -40,7 +40,7 @@ namespace Player_Script
             Active = true;
         }
 
-        public virtual bool CanStopActivety()
+        public virtual bool CanStopActivity()
         {
             return true;
         }
@@ -63,7 +63,7 @@ namespace Player_Script
 
         public bool TryStopActivety()
         {
-            if (!CanStopActivety())
+            if (!CanStopActivity())
             {
                 return false;
             }

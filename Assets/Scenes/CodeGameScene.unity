@@ -636,9 +636,11 @@ GameObject:
   - component: {fileID: 1934254216}
   - component: {fileID: 1934254219}
   - component: {fileID: 1934254218}
+  - component: {fileID: 1934254220}
+  - component: {fileID: 1934254221}
   - component: {fileID: 1934254217}
   m_Layer: 0
-  m_Name: FOModules
+  m_Name: FPModules
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -799,6 +801,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   coyoteTimer: 0
+--- !u!114 &1934254220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934254215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56d7b14f288ec1d459fff8dd6e1544bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1934254221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934254215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55491e69fb8de8c4e9a841ce6ef80b69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2116737344
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,6 +866,8 @@ MonoBehaviour:
   sprintInput: 0
   characterController: {fileID: 2116737347}
   fpCamera: {fileID: 381139419}
+  Sprint: {fileID: 0}
+  Crouch: {fileID: 1934254221}
   Landed:
     m_PersistentCalls:
       m_Calls: []

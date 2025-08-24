@@ -34,6 +34,14 @@ namespace Player_Script
             }
         }
 
+        void OnCrouch(InputValue value)
+        {
+            if (value.isPressed)
+            {
+                Activity.TryToggle(fpController.Crouch);
+            }
+        }
+
         #endregion
 
         #region Unity Methods

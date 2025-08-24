@@ -27,6 +27,7 @@ namespace Player_Script
 
         [Header("Physics Parameters")]
         public float gravityScale = 2f;
+        public LayerMask obstacleLayerMask = Physics.DefaultRaycastLayers;
 
         [Header("Sounds & Footstep Parameters")]
         public float footstepWalkRate = 0.8f;

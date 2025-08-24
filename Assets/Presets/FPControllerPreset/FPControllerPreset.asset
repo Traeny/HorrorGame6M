@@ -23,6 +23,9 @@ MonoBehaviour:
   cameraSprintFOV: 67.5
   cameraFOVSmoothing: 5
   gravityScale: 2
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
   footstepWalkRate: 0.55
   footstepSprintRate: 0.35
   footstepWalkVolume: 0.5

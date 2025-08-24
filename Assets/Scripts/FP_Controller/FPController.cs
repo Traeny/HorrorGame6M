@@ -41,6 +41,9 @@ namespace Player_Script
             }
         }
 
+        [Header("Camera Parameters")]
+        public Vector3 currentCameraPosition { get; private set; } = new Vector3(0f, 1.6f, 0f);
+
         [Header("Physics Parameters")]
         public float verticalVelocity = 0f;
         public Vector3 currentVelocity { get; private set; }
@@ -64,6 +67,7 @@ namespace Player_Script
 
         [Header("Activities")]
         public FPSprint Sprint;
+        public FPCrouch Crouch;
 
         [Header("Events")]
         public UnityEvent Landed;
@@ -87,6 +91,25 @@ namespace Player_Script
             LookUpdate();
             CameraUpdate();
 
+            // Updating Camera posotion
+            Vector3 targetCameraPosition = Vector3.up * 1.6f;
+
+            if (Activity.IsActive(Crouch))
+            {
+                targetCameraPosition = Vector3.up * 0.9f;
+
+                characterController.height = 1f;
+                characterController.center = Vector3.up * 0.5f;
+            }
+            else
+            {
+                characterController.height = 2f;
+                characterController.center = Vector3.up * 1f;
+            }
+
+                currentCameraPosition = Vector3.Lerp(currentCameraPosition, targetCameraPosition, 7f * Time.deltaTime);
+
+
             if(!wasGrounded && Grounded)
             {
                 Landed?.Invoke();
@@ -98,8 +121,6 @@ namespace Player_Script
         #endregion
 
         #region Controller Methods
-
-
 
         void MoveUpdate()
         {
@@ -165,7 +186,11 @@ namespace Player_Script
             }
 
             fpCamera.Lens.FieldOfView = Mathf.Lerp(fpCamera.Lens.FieldOfView, targetFOV, preset.cameraFOVSmoothing * Time.deltaTime);
+
+            fpCamera.transform.localPosition = currentCameraPosition;
+        
         }
+
 
         #endregion
     }

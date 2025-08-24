@@ -13,10 +13,8 @@ namespace Player_Script
 
         public override bool CanStartActivity()
         {
-            //bool crouch = Activity.IsActive(controller.Crouch);
-            //return !crouch;
-
-            return true;
+            bool crouch = Activity.IsActive(controller.Crouch);
+            return !crouch;
         }
 
         private void Update()
