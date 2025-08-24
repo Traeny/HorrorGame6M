@@ -6,6 +6,10 @@ public class FPController : MonoBehaviour
 {
     [Header("Movement Parameters")]
     public float maxSpeed = 3.5f;
+    public float acceleration = 15f;
+
+    public Vector3 currentVelocity { get; private set; }
+    public float currentSpeed { get; private set; }
 
     [Header("Looking Parameters")]
     public Vector2 lookSensitivity = new Vector2(0.1f, 0.1f);
@@ -50,7 +54,23 @@ public class FPController : MonoBehaviour
         motion.y = 0f;
         motion.Normalize();
 
-        characterController.Move(motion * maxSpeed * Time.deltaTime);
+        if(motion.sqrMagnitude >= 0.01f)
+        {
+            currentVelocity = Vector3.MoveTowards(currentVelocity, motion * maxSpeed, acceleration * Time.deltaTime);
+        }
+        else
+        {
+            currentVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, acceleration * Time.deltaTime);
+        }
+
+        float verticalVelocity = Physics.gravity.y * 20f * Time.deltaTime;
+
+        Vector3 fullVelocity = new Vector3(currentVelocity.x, verticalVelocity, currentVelocity.z);
+
+        characterController.Move(fullVelocity * Time.deltaTime);
+
+        // Updating current speed
+        currentSpeed = currentVelocity.magnitude;
     }
 
     void LookUpdate()
