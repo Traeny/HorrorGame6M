@@ -8,13 +8,24 @@ namespace Player_Script
     public class FPController : MonoBehaviour
     {
         public FPControllerPreset preset;
-        float maxSpeed => sprintInput ? preset.sprintSpeed : preset.walkSpeed;
+
+        float maxSpeed
+        {
+            get
+            {
+                if (Activity.IsActive(Sprint))
+                {
+                    return preset.sprintSpeed;
+                }
+                return preset.walkSpeed;
+            }
+        }
 
         public bool sprinting
         {
             get
             {
-                return sprintInput && currentSpeed > 0.1f;
+                return Activity.IsActive(Sprint);
             }
         }
 
@@ -46,6 +57,13 @@ namespace Player_Script
         [Header("Components")]
         [SerializeField] CharacterController characterController;
         [SerializeField] CinemachineCamera fpCamera;
+
+        public CharacterController CharacterController => characterController;
+        public CinemachineCamera Camera => fpCamera;
+        public Transform CameraTransform => fpCamera.transform;
+
+        [Header("Activities")]
+        public FPSprint Sprint;
 
         [Header("Events")]
         public UnityEvent Landed;
