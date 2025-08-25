@@ -1,4 +1,5 @@
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -82,6 +83,7 @@ namespace Player_Script
         public UnityEvent Jumped;
 
         public UnityAction TryJump;
+        public UnityAction RequestCameraOffset;
 
         #region Unity Methods
 
@@ -95,6 +97,8 @@ namespace Player_Script
 
         private void Update()
         {
+            UpdateCameraOffset();
+
             MoveUpdate();
             LookUpdate();
             CameraUpdate();
@@ -181,6 +185,14 @@ namespace Player_Script
 
             // looking left and right
             transform.Rotate(Vector3.up * input.x);
+        }
+
+        private void UpdateCameraOffset()
+        {
+            cameraPositionOffset = Vector3.zero;
+            cameraRotationOffset = Quaternion.identity;
+
+            RequestCameraOffset?.Invoke();
         }
 
         void CameraUpdate()
