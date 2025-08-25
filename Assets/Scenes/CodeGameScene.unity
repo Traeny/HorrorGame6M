@@ -635,9 +635,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1934254216}
   - component: {fileID: 1934254219}
-  - component: {fileID: 1934254218}
   - component: {fileID: 1934254220}
   - component: {fileID: 1934254221}
+  - component: {fileID: 1934254222}
+  - component: {fileID: 1934254218}
   - component: {fileID: 1934254217}
   m_Layer: 0
   m_Name: FPModules
@@ -800,7 +801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
-  coyoteTimer: 0
+  coyoteTimer: 0.2
 --- !u!114 &1934254220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -823,6 +824,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55491e69fb8de8c4e9a841ce6ef80b69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1934254222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934254215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cee78eedb5003a94f9e8794ab21f35e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2116737344
@@ -860,6 +873,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preset: {fileID: 11400000, guid: c79c4c36849f28b4fb86d63b32861007, type: 2}
   currentPitch: 0
+  cameraPositionOffset: {x: 0, y: 0, z: 0}
+  cameraRotationOffset: {x: 0, y: 0, z: 0, w: 1}
   verticalVelocity: 0
   moveInput: {x: 0, y: 0}
   lookInput: {x: 0, y: 0}

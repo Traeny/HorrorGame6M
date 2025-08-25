@@ -21,12 +21,12 @@ namespace Player_Script
         {
             if (controller.sprintInput && controller.currentSpeed > 0.1f)
             {
-                TryStartActivety();
+                TryStartActivity();
             }
 
            if (controller.sprintInput == false || controller.currentSpeed <= 0.1f)
             {
-                TryStopActivety();
+                TryStopActivity();
             }
         }
     }

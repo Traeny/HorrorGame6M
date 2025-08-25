@@ -13,6 +13,10 @@ namespace Player_Script
         {
             get
             {
+                if (Activity.IsActive(Crouch))
+                {
+                    return preset.crouchSpeed;
+                }
                 if (Activity.IsActive(Sprint))
                 {
                     return preset.sprintSpeed;
@@ -43,6 +47,10 @@ namespace Player_Script
 
         [Header("Camera Parameters")]
         public Vector3 currentCameraPosition { get; private set; } = new Vector3(0f, 1.6f, 0f);
+
+        [Space(10)]
+        public Vector3 cameraPositionOffset = Vector3.zero;
+        public Quaternion cameraRotationOffset = Quaternion.identity;
 
         [Header("Physics Parameters")]
         public float verticalVelocity = 0f;
@@ -169,7 +177,7 @@ namespace Player_Script
 
             // looking up and down
             CurrentPitch -= input.y;
-            fpCamera.transform.localRotation = Quaternion.Euler(CurrentPitch, 0f, 0f);
+            fpCamera.transform.localRotation = Quaternion.Euler(CurrentPitch, 0f, 0f) * cameraRotationOffset;
 
             // looking left and right
             transform.Rotate(Vector3.up * input.x);
@@ -187,7 +195,7 @@ namespace Player_Script
 
             fpCamera.Lens.FieldOfView = Mathf.Lerp(fpCamera.Lens.FieldOfView, targetFOV, preset.cameraFOVSmoothing * Time.deltaTime);
 
-            fpCamera.transform.localPosition = currentCameraPosition;
+            fpCamera.transform.localPosition = currentCameraPosition + cameraPositionOffset;
         
         }
 

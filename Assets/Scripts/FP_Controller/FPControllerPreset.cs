@@ -8,6 +8,8 @@ namespace Player_Script
         [Header("Movement Parameters")]
         public float acceleration = 15f;
 
+        [Space(15)]
+        public float crouchSpeed = 2f;
         public float walkSpeed = 3.5f;
         public float sprintSpeed = 10f;
 

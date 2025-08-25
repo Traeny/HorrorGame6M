@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: FPControllerPreset
   m_EditorClassIdentifier: 
   acceleration: 15
+  crouchSpeed: 2
   walkSpeed: 3.5
   sprintSpeed: 10
   jumpHeight: 2
@@ -25,7 +26,7 @@ MonoBehaviour:
   gravityScale: 2
   obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 0
   footstepWalkRate: 0.55
   footstepSprintRate: 0.35
   footstepWalkVolume: 0.5

@@ -15,12 +15,12 @@ namespace Player_Script
 
         public static bool TryStart(Activity activity)
         {
-            return activity != null && activity.TryStartActivety();
+            return activity != null && activity.TryStartActivity();
         }
 
         public static bool TryStop(Activity activity)
         {
-            return activity != null && activity.TryStopActivety();
+            return activity != null && activity.TryStopActivity();
         }
 
         public static bool TryToggle(Activity activity)
@@ -45,12 +45,12 @@ namespace Player_Script
             return true;
         }
 
-        protected virtual void StopActivety()
+        protected virtual void StopActivity()
         {
             Active = false;
         }
 
-        public bool TryStartActivety()
+        public bool TryStartActivity()
         {
             if (!CanStartActivity())
             {
@@ -61,14 +61,14 @@ namespace Player_Script
             return true;
         }
 
-        public bool TryStopActivety()
+        public bool TryStopActivity()
         {
             if (!CanStopActivity())
             {
                 return false;
             }
 
-            StopActivety();
+            StopActivity();
             return true;
         }
 
@@ -76,9 +76,9 @@ namespace Player_Script
         {
             if (Active)
             {
-                return TryStopActivety();
+                return TryStopActivity();
             }
-            return TryStartActivety();
+            return TryStartActivity();
         }
     }
 

@@ -15,8 +15,13 @@ namespace Player_Script
             {
                 Debug.LogError($"{GetType().Name} could not find FPController in parent of {gameObject.name}");
             }
-        }
 
+            preset = controller.preset;
+
+            if (preset == null)
+            {
+                Debug.LogError($"{GetType().Name} could not find FPControllerPreset on {controller.name}");
+            }
+        }
     }
 }
-
