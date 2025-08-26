@@ -639,6 +639,7 @@ GameObject:
   - component: {fileID: 1934254221}
   - component: {fileID: 1934254222}
   - component: {fileID: 1934254218}
+  - component: {fileID: 1934254223}
   - component: {fileID: 1934254217}
   m_Layer: 0
   m_Name: FPModules
@@ -884,6 +885,22 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   recoverySmoothness: 7
+--- !u!114 &1934254223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934254215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50a96de62ab19fb4ab944b54d07d42ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  applyPositionOffset: 0
+  applyRotationOffset: 1
+  applyRotationNoiseOffset: 1
 --- !u!1 &2116737344
 GameObject:
   m_ObjectHideFlags: 0

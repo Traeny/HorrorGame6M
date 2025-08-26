@@ -23,6 +23,21 @@ MonoBehaviour:
   cameraNormalFOV: 60
   cameraSprintFOV: 67.5
   cameraFOVSmoothing: 5
+  headBobWalk:
+    amplitude: 0.05
+    frequency: 6
+    noiseScale: 0.1
+    maxRotation: 0.3
+  headBobCrouch:
+    amplitude: 0.07
+    frequency: 4.5
+    noiseScale: 0.07
+    maxRotation: 0.4
+  headBobSprint:
+    amplitude: 0.14
+    frequency: 8.5
+    noiseScale: 0.2
+    maxRotation: 0.7
   gravityScale: 2
   obstacleLayerMask:
     serializedVersion: 2

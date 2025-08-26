@@ -27,6 +27,11 @@ namespace Player_Script
         public float cameraSprintFOV = 67.5f;
         public float cameraFOVSmoothing = 5f;
 
+        [Header("Head Bobbing")]
+        public HeadBobPreset headBobWalk;
+        public HeadBobPreset headBobCrouch;
+        public HeadBobPreset headBobSprint;
+
         [Header("Physics Parameters")]
         public float gravityScale = 2f;
         public LayerMask obstacleLayerMask = Physics.DefaultRaycastLayers;
