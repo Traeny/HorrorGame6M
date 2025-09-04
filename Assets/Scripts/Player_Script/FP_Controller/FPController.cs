@@ -1,5 +1,4 @@
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +9,7 @@ namespace Player_Script
     {
         public FPControllerPreset preset;
 
+        // This is for checking if the player is running, croaching or walking 
         float maxSpeed
         {
             get
@@ -26,6 +26,7 @@ namespace Player_Script
             }
         }
 
+        // This checks if the player is sprinting through activitys
         public bool sprinting
         {
             get
@@ -34,6 +35,8 @@ namespace Player_Script
             }
         }
 
+
+        // Controls how high and low the player can move their camrera
         [SerializeField] float currentPitch = 0f;
 
         public float CurrentPitch
