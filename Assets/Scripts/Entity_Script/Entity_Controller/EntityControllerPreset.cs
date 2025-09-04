@@ -6,9 +6,9 @@ namespace Entity_Script
     public class EntityControllerPreset : MonoBehaviour
     {
         [Header("Movement Parameters")]
-        public float acceleration = 15f;
+        public float acceleration = 10f;
 
-        [Space(15)]
+        [Space(10)]
         public float walkSpeed = 3.5f;
         public float sprintSpeed = 10f;
     }
