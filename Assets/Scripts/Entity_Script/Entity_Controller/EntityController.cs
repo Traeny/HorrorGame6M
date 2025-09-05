@@ -38,6 +38,7 @@ namespace Entity_Script
         // List of activities the entity can take
         [Header("Activities")]
         public EntitySprint Sprint;
+        public EntityPatrol Patrol;
 
         // pre determined patrol positions around the map
         public Transform[] neighbors;

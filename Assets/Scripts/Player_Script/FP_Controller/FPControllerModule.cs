@@ -13,6 +13,7 @@ namespace Player_Script
         protected virtual void Awake()
         {
             controller = GetComponentInParent<FPController>();
+
             if (controller == null)
             {
                 Debug.LogError($"{GetType().Name} could not find FPController in parent of {gameObject.name}");
@@ -20,5 +21,3 @@ namespace Player_Script
         }
     }
 }
-
-// This has references to the fp controller and fp contoller module

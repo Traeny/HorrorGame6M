@@ -1,4 +1,3 @@
-using Player_Script;
 using UnityEngine;
 
 
@@ -15,8 +14,10 @@ namespace Entity_Script
 
         public override bool CanStartActivity()
         {
-            // Here you can type down when the enetity can start sprinting
-            // When noticed player, sound is far or loud enough, etc
+            // The entity can Sprint if:
+            // - He is chasing the player
+            // - Heard a sound from far away
+
             return true;
         }
     }
