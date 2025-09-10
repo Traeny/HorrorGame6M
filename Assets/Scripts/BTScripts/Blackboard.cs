@@ -5,13 +5,20 @@ using TMPro;
 
 public class Blackboard : MonoBehaviour
 {
-    public float timeOfDay;
-    public TextMeshProUGUI clock;
-    public Stack<GameObject> patrons = new Stack<GameObject>();
-    public int openTime = 6;
-    public int closeTime = 20;
+    //public float timeOfDay;
+    //public TextMeshProUGUI clock;
+    //public Stack<GameObject> patrons = new Stack<GameObject>();
+    //public int openTime = 6;
+    //public int closeTime = 20;
 
+    
+
+    // Testing
+    public Vector3 lastSeenPlayerPosition;
+    public float lastSeenPlayerTime = -Mathf.Infinity;
     static Blackboard instance;
+
+
     public static Blackboard Instance
     {
         get
@@ -40,10 +47,13 @@ public class Blackboard : MonoBehaviour
         }
     }
 
+    /*
     private void Start()
     {
         StartCoroutine("UpdateClock");
     }
+
+
 
     private IEnumerator UpdateClock()
     {
@@ -72,9 +82,16 @@ public class Blackboard : MonoBehaviour
         patrons.Push(p);
         return true;
     }
+    */
 
-    public void DeregisterPatron()
+    // Testing
+    public void SetLastSeenPlayerPosition(Vector3 lspp)
     {
-        //patron = null;
+        lastSeenPlayerPosition = lspp;
+    }
+
+    public void SetlastSeenPlayerTime(float lspt)
+    {
+        lastSeenPlayerTime = lspt;
     }
 }

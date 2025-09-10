@@ -1,4 +1,5 @@
 using System.Collections;
+using Player_Script;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,9 +14,6 @@ public class BTAgent : MonoBehaviour
     public Node.Status treeStatus = Node.Status.RUNNING;
 
     WaitForSeconds waitForSeconds;
-
-
-    Vector3 rememberedLocation; 
 
     public void Start()
     {
@@ -48,7 +46,7 @@ public class BTAgent : MonoBehaviour
         return Node.Status.RUNNING;
     }
 
-    // This could prob be moved to a module later
+    /*
     public Node.Status CanSee(Vector3 target, string tag, float distance, float maxAngle, Transform eyeTransform)
     {
         Vector3 directionToTarget = (target - this.transform.position).normalized;
@@ -64,12 +62,16 @@ public class BTAgent : MonoBehaviour
             {
                 if (hitInfo.collider.gameObject.CompareTag(tag))
                 {
+                    Blackboard.Instance.SetLastSeenPlayerPosition(player.transform.position);
+                    Blackboard.Instance.SetlastSeenPlayerTime(Time.time);
+
                     return Node.Status.SUCCESS;
                 }
             }
         }
         return Node.Status.FAILURE;        
     }
+    */
 
     private IEnumerator Behave()
     {
@@ -79,43 +81,4 @@ public class BTAgent : MonoBehaviour
             yield return waitForSeconds;
         }
     }
-
-    /*
-    public Node.Status IsOpen()
-    {
-        if (Blackboard.Instance.timeOfDay < Blackboard.Instance.openTime || Blackboard.Instance.timeOfDay > Blackboard.Instance.closeTime)
-        {
-            return Node.Status.FAILURE;
-        }
-        return Node.Status.SUCCESS;
-    }
-
-    public Node.Status Flee(Vector3 location, float distance)
-    {
-        if(state == ActionState.IDLE)
-        {
-            rememberedLocation = this.transform.position + (transform.position - location).normalized * distance;
-        }
-        return GoToLocation(rememberedLocation);
-    }
-
-
-
-    public Node.Status GoToDoor(GameObject door)
-    {
-        Node.Status s = GoToLocation(door.transform.position);
-
-        if (s == Node.Status.SUCCESS)
-        {
-            if (!door.GetComponent<Lock>().isLocked)
-            {
-                door.GetComponent<NavMeshObstacle>().enabled = false;
-                return Node.Status.SUCCESS;
-            }
-            return Node.Status.FAILURE;
-        }
-        else
-            return s;
-    }
-    */
 }
