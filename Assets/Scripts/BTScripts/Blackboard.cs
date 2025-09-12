@@ -16,6 +16,7 @@ public class Blackboard : MonoBehaviour
     // Testing
     public Vector3 lastSeenPlayerPosition;
     public float lastSeenPlayerTime = -Mathf.Infinity;
+    public bool isPlayerVisible = false;
     static Blackboard instance;
 
 
