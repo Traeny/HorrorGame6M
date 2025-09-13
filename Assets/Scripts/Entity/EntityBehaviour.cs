@@ -41,7 +41,7 @@ public class EntityBehaviour : BTAgent
 
         // Condition Leaf Nodes
         Leaf isPlayerVisible = new Leaf("Is Player Visible? (Condition Leaf)", IsPlayerVisible); // Done
-        Leaf playerInAttackRange = new Leaf("Is Player In Attack Range? (Condition Leaf)", IsPlayerInAttackRange);
+        Leaf playerInAttackRange = new Leaf("Is Player In Attack Range? (Condition Leaf)", IsPlayerInAttackRange); // Done
         Leaf canGetToPlayer = new Leaf("Can Get To Player? (Condition Leaf)", CanGetToPlayer);
         Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething);
         Leaf sawSomething = new Leaf("Saw Something? (Condition Leaf)", SawSomething);
@@ -96,40 +96,40 @@ public class EntityBehaviour : BTAgent
         tree.PrintTree();
     }
 
-    // Placeholder Functions
+    // Finished funvtions
     public Node.Status IsPlayerVisible()
     {
-        Vector3 directionToTarget = (player.transform.position - this.transform.position).normalized;
-
-        float angle = Vector3.Angle(directionToTarget, this.transform.forward);
-
-        if (angle <= maxAngle && directionToTarget.magnitude <= distance)
+        if(Blackboard.Instance.isPlayerVisible)
         {
-            RaycastHit hitInfo;
-
-            if (Physics.Raycast(eyeTransform.position, directionToTarget, out hitInfo, distance))
-            {
-                if (hitInfo.collider.gameObject.CompareTag("Player"))
-                {
-                    Blackboard.Instance.isPlayerVisible = true;
-                    Blackboard.Instance.SetLastSeenPlayerPosition(player.transform.position);
-                    Blackboard.Instance.SetlastSeenPlayerTime(Time.time);
-
-                    return Node.Status.SUCCESS;
-                }
-            }
+            return Node.Status.SUCCESS;
         }
-        Blackboard.Instance.isPlayerVisible = false;
+
         return Node.Status.FAILURE;
     }
-    public Node.Status IsPlayerInAttackRange() 
+
+    public Node.Status IsPlayerInAttackRange()
     {
-        return Node.Status.SUCCESS; 
+        if (Blackboard.Instance.playerInAttackRange)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
     }
+
     public Node.Status CanGetToPlayer()
     {
-        return Node.Status.SUCCESS;
+        if (Blackboard.Instance.canReachPlayer)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
     }
+
+    // Placeholder Functions
+
+
     public Node.Status HeardSomething()
     {
         return Node.Status.SUCCESS;
@@ -336,5 +336,31 @@ public Node.Status CanSeePlayer()
         isLookingAround = false; // reset for next time
         Debug.Log("Finished looking around.");
         return Node.Status.SUCCESS;
+
+        public Node.Status IsPlayerVisible()
+    {
+        Vector3 directionToTarget = (player.transform.position - this.transform.position).normalized;
+
+        float angle = Vector3.Angle(directionToTarget, this.transform.forward);
+
+        if (angle <= maxAngle && directionToTarget.magnitude <= distance)
+        {
+            RaycastHit hitInfo;
+
+            if (Physics.Raycast(eyeTransform.position, directionToTarget, out hitInfo, distance))
+            {
+                if (hitInfo.collider.gameObject.CompareTag("Player"))
+                {
+                    Blackboard.Instance.isPlayerVisible = true;
+                    Blackboard.Instance.SetLastSeenPlayerPosition(player.transform.position);
+                    Blackboard.Instance.SetlastSeenPlayerTime(Time.time);
+
+                    return Node.Status.SUCCESS;
+                }
+            }
+        }
+        Blackboard.Instance.isPlayerVisible = false;
+        return Node.Status.FAILURE;
+    }
     }*/
 }

@@ -1,24 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class Blackboard : MonoBehaviour
 {
-    //public float timeOfDay;
-    //public TextMeshProUGUI clock;
-    //public Stack<GameObject> patrons = new Stack<GameObject>();
-    //public int openTime = 6;
-    //public int closeTime = 20;
-
-    
-
-    // Testing
-    public Vector3 lastSeenPlayerPosition;
-    public float lastSeenPlayerTime = -Mathf.Infinity;
-    public bool isPlayerVisible = false;
     static Blackboard instance;
 
+    [Header("Conditions")]
+    public bool isPlayerVisible = false;
+    public bool playerInAttackRange = false;
+    public bool canReachPlayer = false;
 
     public static Blackboard Instance
     {
@@ -46,53 +35,5 @@ public class Blackboard : MonoBehaviour
         {
             instance = value as Blackboard;
         }
-    }
-
-    /*
-    private void Start()
-    {
-        StartCoroutine("UpdateClock");
-    }
-
-
-
-    private IEnumerator UpdateClock()
-    {
-        while (true)
-        {
-            timeOfDay++;
-
-            if(timeOfDay > 23)
-            {
-                timeOfDay = 0;
-            }
-
-            clock.text = timeOfDay + ":00";
-
-            if(timeOfDay == closeTime)
-            {
-                patrons.Clear();
-            }
-
-            yield return new WaitForSeconds(3);
-        }
-    }
-
-    public bool RegisteredPatron(GameObject p)
-    {
-        patrons.Push(p);
-        return true;
-    }
-    */
-
-    // Testing
-    public void SetLastSeenPlayerPosition(Vector3 lspp)
-    {
-        lastSeenPlayerPosition = lspp;
-    }
-
-    public void SetlastSeenPlayerTime(float lspt)
-    {
-        lastSeenPlayerTime = lspt;
     }
 }
