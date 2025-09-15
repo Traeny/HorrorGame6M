@@ -1,5 +1,4 @@
 using System.Collections;
-using Player_Script;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,7 +18,8 @@ public class BTAgent : MonoBehaviour
     {
         agent = this.GetComponent<NavMeshAgent>();
         tree = new BehaviourTree();
-        waitForSeconds = new WaitForSeconds(Random.Range(0.1f, 0.2f));
+        //waitForSeconds = new WaitForSeconds(Random.Range(0.1f, 0.2f));
+        waitForSeconds = new WaitForSeconds(0f);
         StartCoroutine(Behave());
     }
 
@@ -45,33 +45,6 @@ public class BTAgent : MonoBehaviour
 
         return Node.Status.RUNNING;
     }
-
-    /*
-    public Node.Status CanSee(Vector3 target, string tag, float distance, float maxAngle, Transform eyeTransform)
-    {
-        Vector3 directionToTarget = (target - this.transform.position).normalized;
-
-
-        float angle = Vector3.Angle(directionToTarget, this.transform.forward);
-
-        if(angle <= maxAngle && directionToTarget.magnitude <= distance)
-        {
-            RaycastHit hitInfo;
-
-            if(Physics.Raycast(eyeTransform.position, directionToTarget, out hitInfo, distance))
-            {
-                if (hitInfo.collider.gameObject.CompareTag(tag))
-                {
-                    Blackboard.Instance.SetLastSeenPlayerPosition(player.transform.position);
-                    Blackboard.Instance.SetlastSeenPlayerTime(Time.time);
-
-                    return Node.Status.SUCCESS;
-                }
-            }
-        }
-        return Node.Status.FAILURE;        
-    }
-    */
 
     private IEnumerator Behave()
     {

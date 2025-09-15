@@ -1,27 +1,29 @@
-using System.Collections;
 using UnityEngine;
 
 public class EntityBehaviour : BTAgent
 {
-    public GameObject[] patrolPoints;
     public GameObject player;
-    public Transform eyeTransform;
-    public float attackRange = 3f;
 
-    public float maxAngle = 80f;
-    public float distance = 20f;
-    public float memoryDuration = 5f;
-    float nextActionTime;
+    public KillPlayer killPlayerModule;
+
 
     new void Start()
     {
         base.Start();
+
         player = GameObject.FindWithTag("Player");
 
         if(player == null)
         {
-            Debug.LogError("Player Missing / Not Found!");
+            Debug.LogError($"Player referece missing from {gameObject.name}");
             return;
+        }
+
+        killPlayerModule = GetComponentInChildren<KillPlayer>();
+
+        if(killPlayerModule == null)
+        {
+            Debug.LogError($"Kill Player module Missing from {gameObject.name}");
         }
 
         // Nodes
@@ -42,8 +44,8 @@ public class EntityBehaviour : BTAgent
         // Condition Leaf Nodes
         Leaf isPlayerVisible = new Leaf("Is Player Visible? (Condition Leaf)", IsPlayerVisible); // Done
         Leaf playerInAttackRange = new Leaf("Is Player In Attack Range? (Condition Leaf)", IsPlayerInAttackRange); // Done
-        Leaf canGetToPlayer = new Leaf("Can Get To Player? (Condition Leaf)", CanGetToPlayer);
-        Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething);
+        Leaf canGetToPlayer = new Leaf("Can Get To Player? (Condition Leaf)", CanGetToPlayer); // Done
+        Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething); // Done
         Leaf sawSomething = new Leaf("Saw Something? (Condition Leaf)", SawSomething);
         Leaf searchTimeExpired = new Leaf("Search Time Expired? (Condition Leaf)", SearchTimeExpired);
 
@@ -96,7 +98,7 @@ public class EntityBehaviour : BTAgent
         tree.PrintTree();
     }
 
-    // Finished funvtions
+    // Finished for now
     public Node.Status IsPlayerVisible()
     {
         if(Blackboard.Instance.isPlayerVisible)
@@ -127,13 +129,31 @@ public class EntityBehaviour : BTAgent
         return Node.Status.FAILURE;
     }
 
-    // Placeholder Functions
-
-
     public Node.Status HeardSomething()
     {
+        if (Blackboard.Instance.heardNoise)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
+    }
+
+    public Node.Status KillPlayer()
+    {
+        killPlayerModule.KillPlayerAction();
         return Node.Status.SUCCESS;
     }
+
+    public Node.Status MoveTowardsPlayer()
+    {
+        Node.Status s = GoToLocation(Blackboard.Instance.lastSeenPosition);
+
+        return s;
+    }
+
+    // Placeholder Functions
+
     public Node.Status SawSomething()
     {
         return Node.Status.SUCCESS;
@@ -142,14 +162,8 @@ public class EntityBehaviour : BTAgent
     {
         return Node.Status.SUCCESS;
     }
-    public Node.Status MoveTowardsPlayer()
-    {
-        return Node.Status.SUCCESS;
-    }
-    public Node.Status KillPlayer()
-    {
-        return Node.Status.SUCCESS;
-    }
+
+
     public Node.Status MoveToLastKnownLocation()
     {
         return Node.Status.SUCCESS;
@@ -361,6 +375,18 @@ public Node.Status CanSeePlayer()
         }
         Blackboard.Instance.isPlayerVisible = false;
         return Node.Status.FAILURE;
-    }
+
+        /*
+    public GameObject[] patrolPoints;
+    
+    public Transform eyeTransform;
+    public float attackRange = 3f;
+
+    public float maxAngle = 80f;
+    public float distance = 20f;
+    public float memoryDuration = 5f;
+    float nextActionTime;
+    
+}
     }*/
 }

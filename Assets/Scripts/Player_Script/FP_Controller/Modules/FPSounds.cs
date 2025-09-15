@@ -60,6 +60,13 @@ namespace Player_Script
                 AudioClip clip = clips[index];
 
                 audioSource.PlayOneShot(clip, volumeScale);
+
+                NoiseSystem.Instance.MakeNoise(new NoiseInfo
+                {
+                    position = transform.position,
+                    radius = 10f,
+                    type = NoiseType.Medium
+                });
             }
             catch { }
         }
@@ -70,4 +77,3 @@ namespace Player_Script
         }
     }
 }
-

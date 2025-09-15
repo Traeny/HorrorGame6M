@@ -56,6 +56,7 @@ namespace Player_Script
             Cursor.lockState = CursorLockMode.Locked;
         }
         #endregion
+
     }
 }
 

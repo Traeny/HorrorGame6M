@@ -13,9 +13,9 @@ public class NoiseSystem : MonoBehaviour
 
         foreach (var collider in colliders)
         {
-            NoiseListener listener = collider.GetComponentInParent<NoiseListener>();
+            HearingSensor listener = collider.GetComponentInParent<HearingSensor>();
 
-            listener?.OnNoiseIsHeard(noise);
+            listener.OnNoiseHeard(noise);
         }
     }
 

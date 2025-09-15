@@ -1,11 +1,11 @@
 using System.Collections;
-using Player_Script;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class CanGetToPlayer : MonoBehaviour
 {
-    private NavMeshPath path = new NavMeshPath();
+    private NavMeshPath path;
+
     public GameObject player;
     public NavMeshAgent agent;
     private float delay = 0.1f;
@@ -20,13 +20,15 @@ public class CanGetToPlayer : MonoBehaviour
             return;
         }
 
-        agent = player.GetComponent<NavMeshAgent>();
+        agent = GetComponentInParent<NavMeshAgent>();
 
         if(agent == null)
         {
             Debug.LogError("No NavmeshAgent found! " + gameObject.name);
             return;
         }
+
+        path = new NavMeshPath();
 
         StartCoroutine(RouteCheckRoutine());
     }

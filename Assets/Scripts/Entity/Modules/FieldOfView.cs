@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Entity_Script
 {
@@ -62,6 +64,7 @@ namespace Entity_Script
 
                     if(!Physics.Raycast(eyeOrigin.position, directionToTarget, distanceToTarget, obstructionMask))
                     {
+                        UpdateLastSeenPlayerPosition();
                         Blackboard.Instance.isPlayerVisible = true;
                     }
                     else
@@ -78,7 +81,20 @@ namespace Entity_Script
             {
                 Blackboard.Instance.isPlayerVisible = false;
             }
+        }
 
+        private void UpdateLastSeenPlayerPosition()
+        {
+            if (NavMesh.SamplePosition(player.transform.position, out NavMeshHit hit, 4f, NavMesh.AllAreas))
+            {
+                Blackboard.Instance.lastSeenPosition= hit.position;
+            }
+            else
+            {
+                Blackboard.Instance.lastHeardPosition = player.transform.position;
+            }
         }
     }
+
+
 }
