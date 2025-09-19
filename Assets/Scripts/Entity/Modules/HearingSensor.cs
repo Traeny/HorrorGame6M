@@ -3,7 +3,10 @@ using UnityEngine.AI;
 
 public class HearingSensor : MonoBehaviour
 {
-    public Vector3 noisePosition;
+    [Header("Debug")]
+    public GameObject ears;
+
+    public SuspicionManager suspicionManager;
 
     public NoiseType noiseType { get; private set; } = NoiseType.Medium;
 
@@ -15,6 +18,16 @@ public class HearingSensor : MonoBehaviour
 
     public float timeSinceHeardNoise => Time.time - noiseTime;
 
+    private void Start()
+    {
+        suspicionManager = GetComponentInParent<SuspicionManager>();
+
+        if(suspicionManager == null)
+        {
+            Debug.LogError("Suspicion manager reference missing in hearing sensor!");
+        }
+    }
+
     private void Update()
     {
         UpdateHearing();
@@ -23,19 +36,20 @@ public class HearingSensor : MonoBehaviour
     public void OnNoiseHeard(NoiseInfo noise)
     {
         Blackboard.Instance.heardNoise = true;
+        ears.SetActive(true);
 
         noiseTime = Time.time;
         noiseType = noise.type;
 
+        suspicionManager.AddSuspicion(25f);
+
         if(NavMesh.SamplePosition(noise.position, out NavMeshHit hit, 4f, NavMesh.AllAreas))
         {
-            noisePosition = hit.position;
-            Blackboard.Instance.lastHeardPosition = hit.position;
+            Blackboard.Instance.UpdateInterestPoint(hit.position);
         }
         else
         {
-            noisePosition = noise.position;
-            Blackboard.Instance.lastHeardPosition = noise.position;
+            Blackboard.Instance.UpdateInterestPoint(hit.position);
         }
     }
 
@@ -59,5 +73,6 @@ public class HearingSensor : MonoBehaviour
     public void ForgetNoise()
     {
         Blackboard.Instance.heardNoise = false;
+        ears.SetActive(false);
     }
 }

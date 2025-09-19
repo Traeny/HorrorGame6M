@@ -46,6 +46,8 @@ public class BTAgent : MonoBehaviour
         return Node.Status.RUNNING;
     }
 
+
+
     private IEnumerator Behave()
     {
         while (true)

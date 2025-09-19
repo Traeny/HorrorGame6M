@@ -2,24 +2,19 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CanGetToPlayer : MonoBehaviour
+public class CanGetToLocation : MonoBehaviour
 {
-    private NavMeshPath path;
+    public GameObject map;
 
-    public GameObject player;
+    private NavMeshPath path;
+    
+    public Vector3 target;
+
     public NavMeshAgent agent;
-    private float delay = 0.1f;
+    private float delay = 0.01f;
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");
-
-        if (player == null)
-        {
-            Debug.LogError("Player Missing / Not Found!");
-            return;
-        }
-
         agent = GetComponentInParent<NavMeshAgent>();
 
         if(agent == null)
@@ -31,6 +26,11 @@ public class CanGetToPlayer : MonoBehaviour
         path = new NavMeshPath();
 
         StartCoroutine(RouteCheckRoutine());
+    }
+
+    public void UpdateMoveToTarget(Vector3 newTarget)
+    {
+        target = newTarget;
     }
 
     private IEnumerator RouteCheckRoutine()
@@ -46,13 +46,15 @@ public class CanGetToPlayer : MonoBehaviour
 
     public void CanReachTarget()
     {
-        if (NavMesh.CalculatePath(agent.transform.position, player.transform.position, NavMesh.AllAreas, path))
+        if (NavMesh.CalculatePath(agent.transform.position, target, NavMesh.AllAreas, path))
         {
-            Blackboard.Instance.canReachPlayer = true;
+            Blackboard.Instance.canReachLocation = true;
+            map.SetActive(false);
         }
         else
         {
-            Blackboard.Instance.canReachPlayer = false;
+            Blackboard.Instance.canReachLocation = false;
+            map.SetActive(true);
         }   
     }
 }

@@ -7,12 +7,16 @@ public class Blackboard : MonoBehaviour
     [Header("Conditions")]
     public bool isPlayerVisible = false;
     public bool playerInAttackRange = false;
-    public bool canReachPlayer = false;
+    public bool canReachLocation = false;
     public bool heardNoise = false;
 
+    public bool isSuspicious = false;
+
     [Header("Position info")]
-    public Vector3 lastHeardPosition;
-    public Vector3 lastSeenPosition; 
+    public Vector3 interestPoint;
+
+    //public Vector3 lastHeardPosition;
+    //public Vector3 lastSeenPosition;
 
     // Maybe it woukd be smart to have the forgetting logic in the black board?
     // Then it would be easy to just send a forget time based on the sound type 
@@ -43,5 +47,10 @@ public class Blackboard : MonoBehaviour
         {
             instance = value as Blackboard;
         }
+    }
+
+    public void UpdateInterestPoint(Vector3 position)
+    {
+        interestPoint = position;
     }
 }

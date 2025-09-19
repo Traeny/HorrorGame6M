@@ -12,6 +12,6 @@ public class HearingSensorEditor : Editor
         }
 
         Handles.color = Color.magenta;
-        Handles.SphereHandleCap(0, Blackboard.Instance.lastHeardPosition, Quaternion.identity, 0.2f, EventType.Repaint);
+        Handles.SphereHandleCap(0, Blackboard.Instance.interestPoint, Quaternion.identity, 0.2f, EventType.Repaint);
     }
 }

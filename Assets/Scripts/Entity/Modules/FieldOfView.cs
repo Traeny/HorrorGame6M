@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,6 +6,11 @@ namespace Entity_Script
 {
     public class FieldOfView : MonoBehaviour
     {
+        [Header("Debugging")]
+        public GameObject canSeePlayer;
+        public GameObject cantSeePlayer;
+
+        [Header("Real stuff")]
         public float radius;
 
         [Range(0, 360)]
@@ -64,34 +68,45 @@ namespace Entity_Script
 
                     if(!Physics.Raycast(eyeOrigin.position, directionToTarget, distanceToTarget, obstructionMask))
                     {
-                        UpdateLastSeenPlayerPosition();
+                        UpdateInterestPoint();
+                        canSeePlayer.SetActive(true);
+                        cantSeePlayer.SetActive(false);
                         Blackboard.Instance.isPlayerVisible = true;
                     }
                     else
                     {
+
+                        canSeePlayer.SetActive(false);
+                        cantSeePlayer.SetActive(true);
                         Blackboard.Instance.isPlayerVisible = false;
                     }
                 }
                 else
                 {
+                    canSeePlayer.SetActive(false);
+                    cantSeePlayer.SetActive(true);
                     Blackboard.Instance.isPlayerVisible = false;
                 }
             }
             else if (Blackboard.Instance.isPlayerVisible)
             {
+                canSeePlayer.SetActive(false);
+                cantSeePlayer.SetActive(true);
                 Blackboard.Instance.isPlayerVisible = false;
             }
         }
 
-        private void UpdateLastSeenPlayerPosition()
+        private void UpdateInterestPoint()
         {
             if (NavMesh.SamplePosition(player.transform.position, out NavMeshHit hit, 4f, NavMesh.AllAreas))
             {
-                Blackboard.Instance.lastSeenPosition= hit.position;
+                Blackboard.Instance.UpdateInterestPoint(hit.position);
+                //Blackboard.Instance.lastSeenPosition = hit.position;
             }
             else
             {
-                Blackboard.Instance.lastHeardPosition = player.transform.position;
+                Blackboard.Instance.UpdateInterestPoint(player.transform.position);
+                //Blackboard.Instance.lastHeardPosition = player.transform.position;
             }
         }
     }
