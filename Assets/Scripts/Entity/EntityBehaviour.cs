@@ -1,19 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityBehaviour : BTAgent
 {
+    [Header("Modules")]
     public KillPlayer killPlayerModule;
     public CanGetToLocation canGetToLocationModule;
     public Turn turningModule;
+    public HotspotArea hotspotModule;
+    Vector3 currentTarget;
 
+    [Header("Debug")]
     public Renderer rend;
 
 
     new void Start()
     {
         base.Start();
-
-        //rend = GetComponentInChildren<Renderer>();
 
         killPlayerModule = GetComponentInChildren<KillPlayer>();
 
@@ -36,46 +39,131 @@ public class EntityBehaviour : BTAgent
             Debug.LogError($"Turn module Missing from Entity Behaviour Script");
         }
 
-        // Nodes
+        hotspotModule = GetComponentInChildren<HotspotArea>();
 
-        // Selector Nodes
-        //Selector quitInvestigate = new Selector("Quit Investigation? (Selector)");
+        if (hotspotModule == null)
+        {
+            Debug.LogError($"Hotspot module Missing from Entity Behaviour Script");
+        }
+
+        // ----------- ( ROOT ) -----------
+        Selector entityRoot = new Selector("Entity Root (Selector)");
+
+        // ----------- ( PATROL BRANCH ) -----------
+        BehaviourTree patrolConditionTree = new BehaviourTree(); // Patrol
+        Sequence patrolConditions = new Sequence("Patrol Conditions (Sequence)"); // Patrol
+        Leaf isPlayerVisible = new Leaf("Is Player Visible? (Condition Leaf)", IsPlayerVisible); // Hunt Patrol
+        Inverter playerNotVisible = new Inverter("Player Not Visible? (Inverter)"); // Hunt Patrol
+        Inverter notSuspicious = new Inverter("Entity Not Suspicious? (Inverter)"); // Patrol
+        Leaf isSuspicious = new Leaf("Entity is Suspicious? (Condition Leaf)", IsSuspicious); // Hunt Patrol
+        DependencySequence patrolBehaviour = new DependencySequence("Patrol Behaviour (Dependancy Sequence)", patrolConditionTree, agent); // Patrol
+        Leaf wanderRandomly = new Leaf("Wander Randomly! (Action Leaf)", WanderRandomly); // Patrol
+
+        // ----------- ( KILL BRANCH ) -----------
+        Sequence killBehaviour = new Sequence("Kill Behaviour (Sequence)"); // Kill Branch
+        Leaf playerInAttackRange = new Leaf("Is Player In Attack Range? (Condition Leaf)", IsPlayerInAttackRange); // Kill Branch
+        Leaf killPlayer = new Leaf("Kill Player! (Action Leaf)", KillPlayer); // Kill Branch
+
+        // ----------- ( HUNT BRANCH ) -----------
+        BehaviourTree huntConditionTree = new BehaviourTree(); // Hunt Branch
+
+        Selector huntBehaviour = new Selector("Hunt Behaviour (Selector)"); // Hunt Branch
+        Sequence directPursuit = new Sequence("Direct Pursuit (Sequence)"); // Hunt Branch
+        Leaf goToPlayerPosition = new Leaf("Go To Player Position (Action Leaf)", GoToPlayerPosition); // Hunt Branch
+        Sequence stalkPursuit = new Sequence("Stalk Pursuit (Sequence)"); // Hunt Branch
+        
+        Sequence stalkConditions = new Sequence("Hunt Conditions (Sequence)"); // Hunt Branch
+        Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething); // Hunt Branch
+        Inverter haventHeardAnything = new Inverter("Haven't heard Anything (Inverter)"); // Hunt Branch
+        DependencySequence stalkBehaviour = new DependencySequence("Stalk Behaviour (Dependancy Sequence)", huntConditionTree, agent); // Hunt Branch
+        Leaf moveToHotspotPoint = new Leaf("Move to Hotspot Point (Action Leaf)", MoveToHotspotPoint); // Hunt Branch
+        Leaf generateSearchPoints = new Leaf("Generate Search Points (Action Leaf)", GenerateSearchPoints);
+        BehaviourTree searchLoopConditionTree = new BehaviourTree(); // Hunt Branch
+        Sequence searchLoopConditions = new Sequence("Search Loop Conditions (Sequence)"); // Hunt Branch
+        Leaf searchPointsLeft = new Leaf("Search Points Left (Condition Leaf)", SearchPointsLeft); // Hunt Branch
+        Loop searchArea = new Loop("Search Area (Loop)", searchLoopConditionTree); // Hunt Branch
+        Leaf lookAround = new Leaf("Look Around! (Action Leaf)", LookAround); // Hunt Branch
+        Leaf goToPoint = new Leaf("Go To Point (Action Leaf)", GoToPoint); // Hunt Branch
+
+        // Patrol Conditions Tree
+        playerNotVisible.AddChild(isPlayerVisible);
+        notSuspicious.AddChild(isSuspicious);
+
+        patrolConditions.AddChild(playerNotVisible);
+        patrolConditions.AddChild(notSuspicious);
+
+        patrolConditionTree.AddChild(patrolConditions);
+
+        // Patrol behaviour Branch
+        patrolBehaviour.AddChild(wanderRandomly);
+
+
+        // Hunt Conditions Tree
+        haventHeardAnything.AddChild(heardSomething);
+
+        stalkConditions.AddChild(playerNotVisible);
+        stalkConditions.AddChild(haventHeardAnything);
+
+        huntConditionTree.AddChild(stalkConditions);
+
+        // Search Loop Condition Tree
+        searchLoopConditions.AddChild(searchPointsLeft);
+        searchLoopConditionTree.AddChild(searchLoopConditions);
+
+        searchArea.AddChild(goToPoint);
+        searchArea.AddChild(lookAround);
+
+        stalkBehaviour.AddChild(moveToHotspotPoint);
+        stalkBehaviour.AddChild(generateSearchPoints);
+        stalkBehaviour.AddChild(searchArea);
+
+        stalkPursuit.AddChild(isSuspicious);
+        stalkPursuit.AddChild(stalkBehaviour);
+
+        directPursuit.AddChild(isPlayerVisible);
+        directPursuit.AddChild(goToPlayerPosition);
+
+        huntBehaviour.AddChild(directPursuit);
+        huntBehaviour.AddChild(stalkPursuit);
+
+        // Kill 
+        killBehaviour.AddChild(playerInAttackRange);
+        killBehaviour.AddChild(killPlayer);
+
+        // ----------- ( Final Tree ) -----------
+
+        entityRoot.AddChild(killBehaviour);
+        entityRoot.AddChild(huntBehaviour);
+        entityRoot.AddChild(patrolBehaviour);
+
+        tree.AddChild(entityRoot);
+        tree.PrintTree();
+
+
+
+        /*
+         Leaf getHotspotPoint = new Leaf("Get Hotspot Point (Action Leaf)", GetHotspotPoint); // Hunt Branch
+        //Leaf sawSomething = new Leaf("Saw Something? ()Condition Lead)", SawSomething); // Hunt Branch
+        //Inverter didntSeeAnything = new Inverter("haventSeenAnything (Inverter)"); // Hunt Branch
         Selector interruptInvestigate = new Selector("Interrupt Investigate (Selector)");
         Selector proceedInvestigation = new Selector("Can proceed Investigation (Selector)");
-        Selector entityRoot = new Selector("Entity Root (Selector)");
         Selector nextAttackAction = new Selector("Next attack action (Selector)");
-
+        
         // Sequence Nodes
         Sequence investigateBehaviour = new Sequence("Investigate Behaviour (Sequence)");
-        Sequence attackBehaviour = new Sequence("Attack Behaviour (Sequence)");
         Sequence canAttack = new Sequence("Can Attack Check? (Sequence)");
         Sequence chaseBehaviour = new Sequence("Chase Behaviour (Sequence)");
         Sequence investigateRoutine = new Sequence("Investigate Routine (Sequence)");
-        Sequence patrolBehaviour = new Sequence("Patrol Behaviour (Sequence)");
 
         // Condition Leaf Nodes
-        Leaf isPlayerVisible = new Leaf("Is Player Visible? (Condition Leaf)", IsPlayerVisible); // Debugged 
-        Leaf isSuspicious = new Leaf("Entity is Suspicious (Condition Leaf)", IsSuspicious); // Debugged
-        Leaf playerInAttackRange = new Leaf("Is Player In Attack Range? (Condition Leaf)", IsPlayerInAttackRange);
         Leaf canGetToInterestPoint = new Leaf("Can Get To Interest Point? (Condition Leaf)", CanGetToInterestPoint);
-        Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething);
-        
+
+
         // Action Leaf Nodes
-        Leaf killPlayer = new Leaf("Kill Player! (Action Leaf)", KillPlayer);
         Leaf moveTowardInterestPoint = new Leaf("Move To Last Known Location! (Action Leaf)", MoveTowardInterestPoint);
 
-        // Need to implement
-        
-        //Leaf suspicionTimeExpired = new Leaf("Suspicion time expired? (Condition Leaf)", CheckSuspicionTime);
-        //Leaf searchTimeExpired = new Leaf("Search Time Expired? (Condition Leaf)", SearchTimeExpired);
-        //Leaf sawSomething = new Leaf("Saw Something? (Condition Leaf)", SawSomething);
-        Leaf lookAround = new Leaf("Look Around! (Action Leaf)", LookAround);
-        
-        Leaf wanderRandomly = new Leaf("Wander Randomly! (Action Leaf)", WanderRandomly);
-        
-
         // Building the behavioral tree
-
+ 
         // Attack branch
         chaseBehaviour.AddChild(canGetToInterestPoint);
         chaseBehaviour.AddChild(moveTowardInterestPoint);
@@ -90,13 +178,9 @@ public class EntityBehaviour : BTAgent
         attackBehaviour.AddChild(nextAttackAction);
 
         // Investigate branch
-        //quitInvestigate.AddChild(suspicionTimeExpired);
-        //quitInvestigate.AddChild(searchTimeExpired);
-
         investigateRoutine.AddChild(canGetToInterestPoint);
         investigateRoutine.AddChild(moveTowardInterestPoint);
         investigateRoutine.AddChild(lookAround);
-        //investigateRoutine.AddChild(quitInvestigate);
 
         interruptInvestigate.AddChild(heardSomething);
         interruptInvestigate.AddChild(isPlayerVisible);
@@ -108,8 +192,15 @@ public class EntityBehaviour : BTAgent
         investigateBehaviour.AddChild(proceedInvestigation);
 
         // Patrol Branch
+        notSuspicious.AddChild(isSuspicious);
+        playerNotVisible.AddChild(isPlayerVisible);
+
+        patrolConditions.AddChild(playerNotVisible);
+        patrolConditions.AddChild(notSuspicious);
+
+        patrolConditionTree.AddChild(patrolConditions);
+
         patrolBehaviour.AddChild(wanderRandomly);
-        patrolBehaviour.AddChild(heardSomething);
 
         // Finalising the tree 
 
@@ -117,12 +208,24 @@ public class EntityBehaviour : BTAgent
         entityRoot.AddChild(investigateBehaviour);
         entityRoot.AddChild(patrolBehaviour);
 
-        tree.AddChild(entityRoot);
-        tree.PrintTree();
+        // Finalizing the tree
+        killBehaviour.AddChild(playerInAttackRange);
+        killBehaviour.AddChild(killPlayer);
+
+        entityRoot.AddChild(killBehaviour);
+            public Node.Status MoveTowardInterestPoint() // !
+    {
+        rend.material.color = Color.gray;
+
+        Node.Status s = GoToLocation(Blackboard.Instance.interestPoint);
+
+        return s;
+    }
+        */
     }
 
-    // Condition leaf Functions
-    public Node.Status IsPlayerVisible() // ?
+    // Tested
+    public Node.Status IsPlayerVisible()
     {
         if(Blackboard.Instance.isPlayerVisible)
         {
@@ -130,6 +233,41 @@ public class EntityBehaviour : BTAgent
         }
 
         return Node.Status.FAILURE;
+    }
+
+    public Node.Status IsSuspicious()
+    {
+        if (Blackboard.Instance.isSuspicious)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
+    }
+
+    public Node.Status WanderRandomly()
+    {
+        rend.material.color = Color.green;
+
+        if (state == ActionState.IDLE)
+        {
+            currentTarget = Area.Instance.GetRandompoint();
+        }
+
+        return GoToLocation(currentTarget);
+    }
+
+    public Node.Status GoToPlayerPosition()
+    {
+        Node.Status s = GoToLocation(Blackboard.Instance.lastSeenPosition);
+        return s;
+    }
+
+    public Node.Status MoveToHotspotPoint()
+    {
+        Node.Status s = GoToLocation(Blackboard.Instance.hotspotOrigin);
+
+        return s;
     }
 
     public Node.Status IsPlayerInAttackRange() // ?
@@ -142,35 +280,64 @@ public class EntityBehaviour : BTAgent
         return Node.Status.FAILURE;
     }
 
+    public Node.Status HeardSomething()
+    {
+
+        if (Blackboard.Instance.heardNoise)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
+    }
+
+    public Node.Status GenerateSearchPoints()
+    {
+        // Placeholfer magic number 3. Will be turned to random based on a range later!
+        List<Vector3> points = hotspotModule.GetRandomPoints(3, Blackboard.Instance.hotspotOrigin);
+
+        if (points.Count <= 0 || points == null)
+        {
+            return Node.Status.FAILURE;
+        }
+
+        return Node.Status.SUCCESS;
+    }
+
+    public Node.Status GoToPoint()
+    {
+        // move to the firs point on the list
+        Node.Status s = GoToLocation(Blackboard.Instance.searchPoints[0]);
+
+        if (s == Node.Status.SUCCESS)
+        {
+            Blackboard.Instance.searchPoints.RemoveAt(0);
+        }
+
+        // PLLSSS WORK. Im on my knees
+
+        return s;
+    }
+
+    // Not Tested?
+
+    public Node.Status SawSomething() // ?
+    {
+        if (Blackboard.Instance.isPlayerVisible)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
+    }
+
+
+
     public Node.Status CanGetToInterestPoint() // ?
     {
         canGetToLocationModule.UpdateMoveToTarget(Blackboard.Instance.interestPoint);
 
         if (Blackboard.Instance.canReachLocation)
-        {
-            return Node.Status.SUCCESS;
-        }
-
-        return Node.Status.FAILURE;
-    }
-
-    public Node.Status IsSuspicious() // ?
-    {
-        //rend.material.color = Color.gray;
-
-        if (Blackboard.Instance.isSuspicious)
-        {
-            return Node.Status.SUCCESS;
-        }
-
-        return Node.Status.FAILURE;
-    }
-
-    public Node.Status HeardSomething() // ?
-    {
-        // rend.material.color = Color.blue;
-
-        if (Blackboard.Instance.heardNoise)
         {
             return Node.Status.SUCCESS;
         }
@@ -186,19 +353,9 @@ public class EntityBehaviour : BTAgent
         return Node.Status.SUCCESS;
     }
 
-    Vector3 currentTarget;
+    
 
-    public Node.Status WanderRandomly() // !
-    {
-        rend.material.color = Color.green;
 
-        if (state == ActionState.IDLE)
-        {
-             currentTarget = Area.Instance.GetRandompoint();
-        }
-
-        return GoToLocation(currentTarget);
-    }
 
     public Node.Status LookAround() // !
     {
@@ -209,28 +366,32 @@ public class EntityBehaviour : BTAgent
         return s;
     }
 
-    public Node.Status MoveTowardInterestPoint() // !
-    {
-        rend.material.color = Color.gray;
-
-        Node.Status s = GoToLocation(Blackboard.Instance.interestPoint);
-
-        return s;
-    }
-
-    // Placeholder Functions
-
-    public Node.Status SawSomething()
-    {
-        return Node.Status.SUCCESS;
-    }
-    public Node.Status SearchTimeExpired()
+    public Node.Status GetHotspotPoint() // IDK if needed
     {
         return Node.Status.SUCCESS;
     }
 
-    public Node.Status CheckSuspicionTime()
+
+    public Node.Status SearchPointsLeft()
     {
-        return Node.Status.SUCCESS;
+        if(Blackboard.Instance.searchPoints.Count > 0)
+        {
+            return Node.Status.SUCCESS;
+        }
+        else
+        {
+            return Node.Status.FAILURE;
+        }
+        
     }
+
+
+
+    // Go To Positions
+
+
+    // Needs work 
+
+
+
 }

@@ -4,6 +4,7 @@ using System.Collections;
 public class RobberBehaviour : BTAgent
 {
     /*
+    
     public GameObject van;
     public GameObject backdoor;
     public GameObject frontdoor;

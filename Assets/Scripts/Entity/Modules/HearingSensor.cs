@@ -36,19 +36,22 @@ public class HearingSensor : MonoBehaviour
     public void OnNoiseHeard(NoiseInfo noise)
     {
         Blackboard.Instance.heardNoise = true;
-        ears.SetActive(true);
+        ears.SetActive(true); // Debug
 
         noiseTime = Time.time;
         noiseType = noise.type;
 
+        // This needs to be modified based on the noise intensity
         suspicionManager.AddSuspicion(25f);
 
         if(NavMesh.SamplePosition(noise.position, out NavMeshHit hit, 4f, NavMesh.AllAreas))
         {
+            Blackboard.Instance.lastHeardPosition = hit.position;
             Blackboard.Instance.UpdateInterestPoint(hit.position);
         }
-        else
+        else // Why do we set the position to be same in both?
         {
+            Blackboard.Instance.lastHeardPosition = hit.position;
             Blackboard.Instance.UpdateInterestPoint(hit.position);
         }
     }
@@ -73,6 +76,6 @@ public class HearingSensor : MonoBehaviour
     public void ForgetNoise()
     {
         Blackboard.Instance.heardNoise = false;
-        ears.SetActive(false);
+        ears.SetActive(false); // Debug
     }
 }
