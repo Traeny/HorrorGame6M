@@ -16,11 +16,10 @@ public class Blackboard : MonoBehaviour
     public Vector3 interestPoint;
     public Vector3 hotspotOrigin;
     public List<Vector3> searchPoints;
-
     public Vector3 lastHeardPosition;
-
-
     public Vector3 lastSeenPosition;
+
+    private Vector3 currentHotspot;
 
     // Maybe it woukd be smart to have the forgetting logic in the black board?
     // Then it would be easy to just send a forget time based on the sound type 
@@ -71,5 +70,20 @@ public class Blackboard : MonoBehaviour
     public void SetSearchPointList(List<Vector3> newpoints)
     {
         searchPoints = newpoints;
+    }
+
+    public bool CheckIfNewHotspot()
+    {
+        if(hotspotOrigin != currentHotspot)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void SetCurrentHotspot()
+    {
+        currentHotspot = hotspotOrigin;
     }
 }

@@ -9,7 +9,7 @@ namespace Player_Script
     {
         public FPControllerPreset preset;
 
-        // This is for checking if the player is running, croaching or walking 
+        // This is for checking if the player is running, crouching or walking 
         float maxSpeed
         {
             get
@@ -32,6 +32,15 @@ namespace Player_Script
             get
             {
                 return Activity.IsActive(Sprint);
+            }
+        }
+
+        // This is a TEST
+        public bool crouching
+        {
+            get
+            {
+                return Activity.IsActive(Crouch);
             }
         }
 

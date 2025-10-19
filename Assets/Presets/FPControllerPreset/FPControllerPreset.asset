@@ -42,8 +42,10 @@ MonoBehaviour:
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  footstepCrouchRate: 0.65
   footstepWalkRate: 0.55
   footstepSprintRate: 0.35
+  footstepCrouchVolume: 0.2
   footstepWalkVolume: 0.5
   footstepSprintVolume: 0.8
   maxLandSoundVolume: 0.7

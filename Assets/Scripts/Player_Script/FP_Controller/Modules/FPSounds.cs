@@ -11,7 +11,13 @@ namespace Player_Script
         [SerializeField] AudioClip[] footstepSounds;
 
         [SerializeField] float footstepTimer = 0f;
- 
+
+        NoiseInfo newNoise = new NoiseInfo
+        {
+            radius = 0f,
+            type = NoiseType.Medium
+        };
+
         private void Start()
         {
             controller.Jumped.AddListener(PlayJumpSound);
@@ -30,14 +36,41 @@ namespace Player_Script
                 float rate = preset.footstepWalkRate;
                 float volume = preset.footstepWalkVolume;
 
-                float t = Mathf.InverseLerp(preset.walkSpeed, preset.sprintSpeed, controller.currentSpeed);
+                if (controller.crouching)
+                {
+                    rate = preset.footstepCrouchRate;
+                    volume = preset.footstepCrouchVolume;
+                }
+                else
+                {
+                    float t = Mathf.InverseLerp(preset.walkSpeed, preset.sprintSpeed, controller.currentSpeed);
 
-                rate = Mathf.Lerp(preset.footstepWalkRate, preset.footstepSprintRate, t);
-                volume = Mathf.Lerp(preset.footstepWalkVolume, preset.footstepSprintVolume, t);
+                    rate = Mathf.Lerp(preset.footstepWalkRate, preset.footstepSprintRate, t);
+                    volume = Mathf.Lerp(preset.footstepWalkVolume, preset.footstepSprintVolume, t);
+                }
 
                 if (Time.time >= footstepTimer)
                 {
-                    PlaySound(footstepSounds, volume);
+                    if (controller.crouching)
+                    {
+                        newNoise.position = transform.position;
+                        newNoise.radius = 5f;
+                        newNoise.type = NoiseType.Silent;
+                    }
+                    else if (controller.sprinting)
+                    {
+                        newNoise.position = transform.position;
+                        newNoise.radius = 25f;
+                        newNoise.type = NoiseType.Loud;
+                    }
+                    else
+                    {
+                        newNoise.position = transform.position;
+                        newNoise.radius = 10f;
+                        newNoise.type = NoiseType.Medium;
+                    }
+
+                    PlaySound(footstepSounds, newNoise, volume);
                     footstepTimer = Time.time + rate;
                 }
             }
@@ -49,10 +82,14 @@ namespace Player_Script
 
             scale *= preset.maxLandSoundVolume;
 
-            PlaySound(landSounds, scale);
+            newNoise.position = transform.position;
+            newNoise.radius = 20f;
+            newNoise.type = NoiseType.Loud;
+
+            PlaySound(landSounds, newNoise, scale);
         }
 
-        private void PlaySound(AudioClip[] clips, float volumeScale = 1f)
+        private void PlaySound(AudioClip[] clips, NoiseInfo noiseInfo, float volumeScale = 1f)
         {
             try
             {
@@ -61,19 +98,20 @@ namespace Player_Script
 
                 audioSource.PlayOneShot(clip, volumeScale);
 
-                NoiseSystem.Instance.MakeNoise(new NoiseInfo
-                {
-                    position = transform.position,
-                    radius = 10f,
-                    type = NoiseType.Medium
-                });
+
+                NoiseSystem.Instance.MakeNoise(newNoise);
+
             }
             catch { }
         }
 
         private void PlayJumpSound()
         {
-            PlaySound(jumpSounds, preset.jumpSoundVolume);
+            newNoise.position = transform.position;
+            newNoise.radius = 12f;
+            newNoise.type = NoiseType.Medium;
+
+            PlaySound(jumpSounds, newNoise, preset.jumpSoundVolume);
         }
     }
 }

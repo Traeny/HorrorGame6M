@@ -41,8 +41,21 @@ public class HearingSensor : MonoBehaviour
         noiseTime = Time.time;
         noiseType = noise.type;
 
-        // This needs to be modified based on the noise intensity
-        suspicionManager.AddSuspicion(25f);
+        if(noise.type == NoiseType.Loud)
+        {
+            Blackboard.Instance.UpdateHotspotOrigin(noise.position);
+            suspicionManager.AddSuspicion(100f);
+        }
+        else if(noise.type == NoiseType.Medium)
+        {
+            //Blackboard.Instance.UpdateHotspotOrigin(noise.position);
+            suspicionManager.AddSuspicion(50f);
+        }
+        else if(noise.type == NoiseType.Silent)
+        {
+            suspicionManager.AddSuspicion(10f);
+        }
+
 
         if(NavMesh.SamplePosition(noise.position, out NavMeshHit hit, 4f, NavMesh.AllAreas))
         {

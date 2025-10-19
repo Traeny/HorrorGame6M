@@ -37,10 +37,13 @@ namespace Player_Script
         public LayerMask obstacleLayerMask = Physics.DefaultRaycastLayers;
 
         [Header("Sounds & Footstep Parameters")]
+        public float footstepCrouchRate = 1f; // TESTING
         public float footstepWalkRate = 0.8f;
         public float footstepSprintRate = 0.3f;
 
+
         [Space(15)]
+        public float footstepCrouchVolume = 0.07f; // TESTING
         public float footstepWalkVolume = 0.1f;
         public float footstepSprintVolume = 0.5f;
 
