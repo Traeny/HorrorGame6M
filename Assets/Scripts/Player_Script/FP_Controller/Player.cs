@@ -34,13 +34,23 @@ namespace Player_Script
             }
         }
 
-        void OnCrouch(InputValue value)
+        private void OnCrouch(InputValue value)
         {
             if (value.isPressed)
             {
                 Activity.TryToggle(fpController.Crouch);
             }
         }
+
+        // I guess i need to add an interact function (Testing)
+        private void OnInteract(InputValue value)
+        {
+            if (value.isPressed)
+            {
+                fpController.TryInteract?.Invoke();
+            }
+        }
+        
 
         #endregion
 

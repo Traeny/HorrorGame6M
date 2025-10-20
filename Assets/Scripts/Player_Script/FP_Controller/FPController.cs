@@ -7,6 +7,8 @@ namespace Player_Script
     [RequireComponent(typeof(CharacterController))]
     public class FPController : MonoBehaviour
     {
+
+
         public FPControllerPreset preset;
 
         // This is for checking if the player is running, crouching or walking 
@@ -35,7 +37,7 @@ namespace Player_Script
             }
         }
 
-        // This is a TEST
+        // This checks if the player is crouching
         public bool crouching
         {
             get
@@ -90,10 +92,20 @@ namespace Player_Script
         public FPSprint Sprint;
         public FPCrouch Crouch;
 
+
+        // I guess under the activities we need to add a Hiding activity
+        // when the player is hiding
+        // -we need to set move speed to 0
+        // Player can't jump or crouch
+        // Player can look around 
+
         [Header("Events")]
         public UnityEvent Landed;
         public UnityEvent Jumped;
 
+
+        //Testing
+        public UnityAction TryInteract;
         public UnityAction TryJump;
         public UnityAction RequestCameraOffset;
 
