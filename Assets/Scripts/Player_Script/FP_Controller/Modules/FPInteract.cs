@@ -1,17 +1,58 @@
+using TMPro;
 using UnityEngine;
 
 namespace Player_Script
 {
+    // PLAYER INTERACT
     public class FPInteract : FPControllerModule
     {
+        public Camera mainCamera;
+        public float interactionDistance = 2f;
+
+        public GameObject interactionUI;
+        public TextMeshProUGUI interactionText;
+
+        // Testing 
+        private IInteractable currentInteractable;
+
         void Start()
         {
             controller.TryInteract += OnTryInteract;
         }
 
-        private void OnTryInteract()
+        private void Update()
         {
-            // Raycast to the interact layer. It should give info to the script and based on that we decide what to do
+            InteractionRay();
+        }
+
+        void OnTryInteract()
+        {
+            if (currentInteractable != null)
+            {
+                currentInteractable.Interact();
+            }
+        }
+
+        void InteractionRay()
+        {
+            Ray ray = mainCamera.ViewportPointToRay(Vector3.one / 2f);
+            RaycastHit hit;
+            currentInteractable = null;
+
+            bool hitSomething = false;
+
+            if(Physics.Raycast(ray, out hit, interactionDistance))
+            {
+                IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+
+                if(interactable != null)
+                {
+                    currentInteractable = interactable;
+                    hitSomething = true;
+                    interactionText.text = interactable.GetDescription();
+                }
+            }
+            interactionUI.SetActive(hitSomething);
         }
     }
 }

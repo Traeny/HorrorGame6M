@@ -47,6 +47,7 @@ namespace Player_Script
         {
             if (value.isPressed)
             {
+                Debug.Log("Player.cs Invoke TryInteract -> FPController");
                 fpController.TryInteract?.Invoke();
             }
         }
