@@ -38,13 +38,21 @@ namespace Player_Script
 
         private void OnTryJump()
         {
-            if (coyoteTimer <= preset.coyoteTime)
+            // Testing
+            if (controller.hidingInLocker == false)
             {
-                Jump();
+                if (coyoteTimer <= preset.coyoteTime)
+                {
+                    Jump();
 
-                controller.Jumped?.Invoke();
+                    controller.Jumped?.Invoke();
 
-                return;
+                    return;
+                }
+            }
+            else // Testing 
+            {
+                Debug.Log("Can't jump while hiding in locker");
             }
         }
 

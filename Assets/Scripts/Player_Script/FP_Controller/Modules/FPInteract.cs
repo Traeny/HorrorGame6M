@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Player_Script
 {
-    // PLAYER INTERACT
     public class FPInteract : FPControllerModule
     {
         public Camera mainCamera;
@@ -12,7 +11,6 @@ namespace Player_Script
         public GameObject interactionUI;
         public TextMeshProUGUI interactionText;
 
-        // Testing 
         private IInteractable currentInteractable;
 
         void Start()

@@ -7,13 +7,21 @@ namespace Player_Script
     [RequireComponent(typeof(CharacterController))]
     public class FPController : MonoBehaviour
     {
+        // Testing
+        public bool hidingInLocker = false;
+
         public FPControllerPreset preset;
 
-        // This is for checking if the player is running, crouching or walking 
+        // Adjusting move speed based on movement method
         float maxSpeed
         {
             get
             {
+                // Testing
+                if (hidingInLocker)
+                {
+                    return 0;
+                }
                 if (Activity.IsActive(Crouch))
                 {
                     return preset.crouchSpeed;
@@ -26,7 +34,7 @@ namespace Player_Script
             }
         }
 
-        // This checks if the player is sprinting through activitys
+        // Cheking if player is sprinting 
         public bool sprinting
         {
             get
@@ -35,7 +43,7 @@ namespace Player_Script
             }
         }
 
-        // This checks if the player is crouching
+        // Checking if player if crouching
         public bool crouching
         {
             get
@@ -44,10 +52,10 @@ namespace Player_Script
             }
         }
 
-
-        // Controls how high and low the player can move their camrera
+        // Players current camera angle
         [SerializeField] float currentPitch = 0f;
 
+        // Setting a limit to players camera angle
         public float CurrentPitch
         {
             get => currentPitch;
@@ -94,7 +102,7 @@ namespace Player_Script
         public UnityEvent Landed;
         public UnityEvent Jumped;
 
-        //Testing
+        [Header("Unity Action")]
         public UnityAction TryInteract;
         public UnityAction TryJump;
         public UnityAction RequestCameraOffset;
@@ -222,11 +230,7 @@ namespace Player_Script
             fpCamera.Lens.FieldOfView = Mathf.Lerp(fpCamera.Lens.FieldOfView, targetFOV, preset.cameraFOVSmoothing * Time.deltaTime);
 
             fpCamera.transform.localPosition = currentCameraPosition + cameraPositionOffset;
-        
         }
-
-
         #endregion
     }
 }
-

@@ -17,6 +17,12 @@ namespace Player_Script
             {
                 return false;
             }
+
+            if (controller.hidingInLocker)
+            {
+                return false;
+            }
+
             return true;
         }
 

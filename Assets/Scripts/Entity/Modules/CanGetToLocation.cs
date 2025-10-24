@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class CanGetToLocation : MonoBehaviour
 {
-    public GameObject map;
+    //public GameObject map;
 
     private NavMeshPath path;
     
@@ -49,12 +49,12 @@ public class CanGetToLocation : MonoBehaviour
         if (NavMesh.CalculatePath(agent.transform.position, target, NavMesh.AllAreas, path))
         {
             Blackboard.Instance.canReachLocation = true;
-            map.SetActive(false);
+            //map.SetActive(false);
         }
         else
         {
             Blackboard.Instance.canReachLocation = false;
-            map.SetActive(true);
+            //map.SetActive(true);
         }   
     }
 }

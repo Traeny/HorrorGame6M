@@ -58,7 +58,7 @@ namespace Player_Script
                 {
                     ChangeState(EState.Recovery);
                 }
-                else if (state == EState.Recovery && Vector3.Distance(currentOffset, Vector3.zero) <= 0.05f) ;
+                else if (state == EState.Recovery && Vector3.Distance(currentOffset, Vector3.zero) <= 0.05f)
                 {
                     TryStop(this);
                 }

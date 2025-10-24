@@ -42,17 +42,14 @@ namespace Player_Script
             }
         }
 
-        // I guess i need to add an interact function (Testing)
         private void OnInteract(InputValue value)
         {
             if (value.isPressed)
             {
-                Debug.Log("Player.cs Invoke TryInteract -> FPController");
                 fpController.TryInteract?.Invoke();
             }
         }
         
-
         #endregion
 
         #region Unity Methods
@@ -67,7 +64,6 @@ namespace Player_Script
             Cursor.lockState = CursorLockMode.Locked;
         }
         #endregion
-
     }
 }
 

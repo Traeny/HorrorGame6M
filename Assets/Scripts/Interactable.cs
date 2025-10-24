@@ -4,7 +4,7 @@ public class Interactable : MonoBehaviour, IInteractable
 {
     public string GetDescription()
     {
-        return "Get into locker";
+        return "basic interact";
     }
 
     public void Interact()
