@@ -6,6 +6,11 @@ public class InteractableLockerDoor : MonoBehaviour, IInteractable
     public GameObject playerLockerExitPosition;
     public GameObject player;
 
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
+
     public string GetDescription()
     {
         return "Leave locker";

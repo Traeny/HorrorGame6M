@@ -5,7 +5,12 @@ public class InteractableLocker : MonoBehaviour, IInteractable
 {
     public GameObject playerLockerPosition;
     public GameObject player;
-    
+
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
+
 
 
     public string GetDescription()
