@@ -99,8 +99,6 @@ public class EntityBehaviour : BTAgent
 
         // ---------- ( Hunt Branch ) ------------------
 
-        //stalkConditions.AddChild(isSuspicious);
-
         // Hunt Conditions Tree
         stalkConditions.AddChild(playerNotVisible);
         huntConditionTree.AddChild(stalkConditions);

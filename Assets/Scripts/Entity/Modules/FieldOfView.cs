@@ -69,32 +69,25 @@ namespace Entity_Script
                     if(!Physics.Raycast(eyeOrigin.position, directionToTarget, distanceToTarget, obstructionMask))
                     {
                         UpdateInterestPoint();
-                        canSeePlayer.SetActive(true); // Debug
-                        cantSeePlayer.SetActive(false); // Debug
                         Blackboard.Instance.isPlayerVisible = true;
                     }
                     else
                     {
-
-                        canSeePlayer.SetActive(false); // Debug
-                        cantSeePlayer.SetActive(true); // Debug
                         Blackboard.Instance.isPlayerVisible = false;
                     }
                 }
                 else
                 {
-                    canSeePlayer.SetActive(false); // Debug
-                    cantSeePlayer.SetActive(true); // Debug
                     Blackboard.Instance.isPlayerVisible = false;
                 }
             }
             else if (Blackboard.Instance.isPlayerVisible)
             {
-                canSeePlayer.SetActive(false); // Debug
-                cantSeePlayer.SetActive(true); // Debug
                 Blackboard.Instance.isPlayerVisible = false;
             }
         }
+
+        // Blackboard
 
         private void UpdateInterestPoint()
         {

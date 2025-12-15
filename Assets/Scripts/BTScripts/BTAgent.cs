@@ -19,12 +19,9 @@ public class BTAgent : MonoBehaviour
         agent = this.GetComponent<NavMeshAgent>();
         tree = new BehaviourTree();
 
-        // Testing
         agent.updateRotation = true;
         agent.angularSpeed = 720f;
 
-
-        //waitForSeconds = new WaitForSeconds(Random.Range(0.1f, 0.2f));
         waitForSeconds = new WaitForSeconds(0f);
         StartCoroutine(Behave());
     }
@@ -51,8 +48,6 @@ public class BTAgent : MonoBehaviour
 
         return Node.Status.RUNNING;
     }
-
-
 
     private IEnumerator Behave()
     {
