@@ -19,6 +19,7 @@ public class BTAgent : MonoBehaviour
         agent = this.GetComponent<NavMeshAgent>();
         tree = new BehaviourTree();
 
+        // Do we need these 2 lines? Im not sure what they do
         agent.updateRotation = true;
         agent.angularSpeed = 720f;
 
@@ -32,7 +33,8 @@ public class BTAgent : MonoBehaviour
         
         if (state == ActionState.IDLE)
         {
-            agent.SetDestination(destination); 
+            agent.SetDestination(destination);
+            FaceTarget(destination);
             state = ActionState.WORKING;
         } 
         else if (Vector3.Distance(agent.pathEndPosition, destination) >= 2)
@@ -45,8 +47,15 @@ public class BTAgent : MonoBehaviour
             state = ActionState.IDLE;
             return Node.Status.SUCCESS;
         }
-
         return Node.Status.RUNNING;
+    }
+
+    private void FaceTarget(Vector3 destination)
+    {
+        Vector3 lookPos = destination - transform.position;
+        lookPos.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.2f);
     }
 
     private IEnumerator Behave()

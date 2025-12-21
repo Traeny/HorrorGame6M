@@ -8,10 +8,13 @@ public class EntityBehaviour : BTAgent
     public CanGetToLocation canGetToLocationModule;
     public Turn turningModule;
     public HotspotArea hotspotModule;
-    Vector3 currentTarget;
 
     [Header("Debug")]
     public Renderer rend;
+
+    // Testing
+    private Vector3 currentTarget;
+    private bool hasTarget = false;
 
 
     new void Start()
@@ -138,13 +141,13 @@ public class EntityBehaviour : BTAgent
         tree.PrintTree();
     }
 
+    // Condition nodes
     public Node.Status IsPlayerVisible() // ?
     {
         if(Blackboard.Instance.isPlayerVisible)
         {
             return Node.Status.SUCCESS;
         }
-
         return Node.Status.FAILURE;
     }
 
@@ -200,6 +203,8 @@ public class EntityBehaviour : BTAgent
         }   
     }
 
+    // Action nodes
+
     public Node.Status GoToPoint() // !
     {
         rend.material.color = Color.gray;
@@ -216,6 +221,8 @@ public class EntityBehaviour : BTAgent
 
     public Node.Status KillPlayer() // !
     {
+        // This function could trigger the different kill animations
+
         rend.material.color = Color.red;
 
         killPlayerModule.KillPlayerAction();
@@ -227,6 +234,7 @@ public class EntityBehaviour : BTAgent
     {
         rend.material.color = Color.yellow;
 
+        // This look around function does not work like it should!
         Node.Status s = turningModule.LookAround();
 
         return s;
@@ -270,9 +278,17 @@ public class EntityBehaviour : BTAgent
     {
         rend.material.color = Color.green;
 
-        if (state == ActionState.IDLE)
+        if (!hasTarget)
         {
-            currentTarget = Area.Instance.GetRandompoint();
+            currentTarget = Area.Instance.GetRandomPoint();
+            hasTarget = true;
+        }
+
+        float distance = Vector3.Distance(transform.position, currentTarget);
+
+        if (distance <= 2f)
+        {
+            hasTarget = false; // ready to pick a new target next tick
         }
 
         return GoToLocation(currentTarget);
