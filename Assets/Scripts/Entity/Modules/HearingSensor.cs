@@ -41,14 +41,14 @@ public class HearingSensor : MonoBehaviour
         noiseTime = Time.time;
         noiseType = noise.type;
 
-        if(noise.type == NoiseType.Loud)
+        if (noise.type == NoiseType.Loud)
         {
             Blackboard.Instance.UpdateHotspotOrigin(noise.position);
             suspicionManager.AddSuspicion(100f);
         }
         else if(noise.type == NoiseType.Medium)
         {
-            //Blackboard.Instance.UpdateHotspotOrigin(noise.position);
+            Blackboard.Instance.UpdateHotspotOrigin(noise.position);
             suspicionManager.AddSuspicion(50f);
         }
         else if(noise.type == NoiseType.Silent)

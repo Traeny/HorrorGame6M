@@ -288,7 +288,7 @@ public class EntityBehaviour : BTAgent
 
         if (distance <= 2f)
         {
-            hasTarget = false; // ready to pick a new target next tick
+            hasTarget = false;
         }
 
         return GoToLocation(currentTarget);

@@ -95,6 +95,7 @@ namespace Entity_Script
             {
                 Blackboard.Instance.UpdateInterestPoint(hit.position);
                 Blackboard.Instance.lastSeenPosition = hit.position;
+
                 Blackboard.Instance.UpdateHotspotOrigin(hit.position);
             }
             else

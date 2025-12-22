@@ -8104,8 +8104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c95bf16cf576f4c49aa82c533c1bb4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outerRadius: 20
-  innerRadius: 5
+  outerRadius: 50
+  innerRadius: 3
   player: {fileID: 0}
 --- !u!4 &881227380
 Transform:
