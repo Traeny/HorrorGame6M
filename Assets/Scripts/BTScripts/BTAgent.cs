@@ -30,6 +30,7 @@ public class BTAgent : MonoBehaviour
     public Node.Status GoToLocation(Vector3 destination)
     { 
         float distanceToTarget = Vector3.Distance(destination, this.transform.position);
+        agent.speed = Blackboard.Instance.moveSpeed;
         
         if (state == ActionState.IDLE)
         {
@@ -57,6 +58,8 @@ public class BTAgent : MonoBehaviour
         Quaternion rotation = Quaternion.LookRotation(lookPos);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.2f);
     }
+
+    
 
     private IEnumerator Behave()
     {

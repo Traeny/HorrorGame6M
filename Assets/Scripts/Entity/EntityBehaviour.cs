@@ -209,6 +209,8 @@ public class EntityBehaviour : BTAgent
     {
         rend.material.color = Color.gray;
 
+        Blackboard.Instance.UpdateMovementSpeed(2.5f); // OK
+
         Node.Status s = GoToLocation(Blackboard.Instance.searchPoints[0]);
 
         if (s == Node.Status.SUCCESS)
@@ -269,6 +271,8 @@ public class EntityBehaviour : BTAgent
     {
         rend.material.color = Color.cyan;
 
+        Blackboard.Instance.UpdateMovementSpeed(5f); // OK
+
         Node.Status s = GoToLocation(Blackboard.Instance.lastSeenPosition);
 
         return s;
@@ -277,6 +281,8 @@ public class EntityBehaviour : BTAgent
     public Node.Status WanderRandomly() // !
     {
         rend.material.color = Color.green;
+
+        Blackboard.Instance.UpdateMovementSpeed(3.5f); // OK
 
         if (!hasTarget)
         {

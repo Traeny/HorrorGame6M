@@ -69,20 +69,24 @@ namespace Entity_Script
                     if(!Physics.Raycast(eyeOrigin.position, directionToTarget, distanceToTarget, obstructionMask))
                     {
                         UpdateInterestPoint();
+                        //Blackboard.Instance.UpdateMovementSpeed(5f);
                         Blackboard.Instance.isPlayerVisible = true;
                     }
                     else
                     {
+                        //Blackboard.Instance.UpdateMovementSpeed(3.5f);
                         Blackboard.Instance.isPlayerVisible = false;
                     }
                 }
                 else
                 {
+                    //Blackboard.Instance.UpdateMovementSpeed(3.5f);
                     Blackboard.Instance.isPlayerVisible = false;
                 }
             }
             else if (Blackboard.Instance.isPlayerVisible)
             {
+                //Blackboard.Instance.UpdateMovementSpeed(3.5f);
                 Blackboard.Instance.isPlayerVisible = false;
             }
         }

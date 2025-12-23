@@ -20,6 +20,9 @@ public class Blackboard : MonoBehaviour
     public Vector3 lastSeenPosition;
     private Vector3 currentHotspot;
 
+    [Header("Movement Speed")]
+    public float moveSpeed;
+
     public static Blackboard Instance
     {
         get
@@ -81,5 +84,10 @@ public class Blackboard : MonoBehaviour
     public void SetCurrentHotspot()
     {
         currentHotspot = hotspotOrigin;
+    }
+
+    public void UpdateMovementSpeed(float newSpeed)
+    {
+        moveSpeed = newSpeed;
     }
 }
