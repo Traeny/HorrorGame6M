@@ -67,7 +67,7 @@ namespace Player_Script
         }
 
         [Header("Camera Parameters")]
-        public Vector3 currentCameraPosition { get; private set; } = new Vector3(0f, 1.6f, 0f);
+        //public Vector3 currentCameraPosition { get; private set; } = new Vector3(0f, 1.6f, 0f);
 
         [Space(10)]
         public Vector3 cameraPositionOffset = Vector3.zero;
@@ -126,11 +126,11 @@ namespace Player_Script
             CameraUpdate();
 
             // Updating Camera posotion
-            Vector3 targetCameraPosition = Vector3.up * 1.6f;
+            //Vector3 targetCameraPosition = Vector3.up * 1.6f;
 
             if (Activity.IsActive(Crouch))
             {
-                targetCameraPosition = Vector3.up * 0.9f;
+                //targetCameraPosition = Vector3.up * 0.9f;
 
                 characterController.height = 1f;
                 characterController.center = Vector3.up * 0.5f;
@@ -141,7 +141,7 @@ namespace Player_Script
                 characterController.center = Vector3.up * 1f;
             }
 
-                currentCameraPosition = Vector3.Lerp(currentCameraPosition, targetCameraPosition, 7f * Time.deltaTime);
+            //currentCameraPosition = Vector3.Lerp(currentCameraPosition, targetCameraPosition, 7f * Time.deltaTime);
 
 
             if(!wasGrounded && Grounded)
@@ -229,7 +229,7 @@ namespace Player_Script
 
             fpCamera.Lens.FieldOfView = Mathf.Lerp(fpCamera.Lens.FieldOfView, targetFOV, preset.cameraFOVSmoothing * Time.deltaTime);
 
-            fpCamera.transform.localPosition = currentCameraPosition + cameraPositionOffset;
+            //fpCamera.transform.localPosition = currentCameraPosition + cameraPositionOffset;
         }
         #endregion
     }
