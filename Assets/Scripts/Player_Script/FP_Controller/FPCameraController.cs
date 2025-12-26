@@ -14,7 +14,7 @@ namespace Player_Script
 
         private void Awake()
         {
-            controller = GetComponent<FPController>();
+            controller = GetComponentInParent<FPController>();
 
             if(controller == null ) 
             {
