@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace Player_Script
 {
@@ -6,6 +7,8 @@ namespace Player_Script
     {
         [SerializeField] FPController controller;
         [SerializeField] Animator animator;
+        [SerializeField] Rig leftLegRig;
+        [SerializeField] Rig rightLegRig;
 
         private void OnValidate()
         {
@@ -46,6 +49,17 @@ namespace Player_Script
             animator.SetBool("Crouch", Activity.IsActive(controller.Crouch));
 
             animator.SetBool("Fall", controller.verticalVelocity <= -0.1f && !controller.Grounded);
+
+            if(!Activity.IsActive(controller.Crouch) && controller.currentVelocity.sqrMagnitude > 0.01f)
+            {
+                leftLegRig.weight = 0f;
+                rightLegRig.weight = 0f;
+            }
+            else
+            {
+                leftLegRig.weight = 1f;
+                rightLegRig.weight = 1f;
+            }
 
         }
     }
