@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class IKLegCoordinator : MonoBehaviour
@@ -10,8 +11,10 @@ public class IKLegCoordinator : MonoBehaviour
     public float rotationStepThreshold = 25f;
 
     float accumulatedYaw;
-    float lastYaw;
+    public float lastYaw;
     bool leftNext = true;
+
+    bool isSteppingSequenceRunning;
 
     void Start()
     {
@@ -23,24 +26,35 @@ public class IKLegCoordinator : MonoBehaviour
         float currentYaw = transform.eulerAngles.y;
         float deltaYaw = Mathf.Abs(Mathf.DeltaAngle(lastYaw, currentYaw));
 
-        accumulatedYaw += deltaYaw;
-        lastYaw = currentYaw;
-
-        if (accumulatedYaw >= rotationStepThreshold)
+        if (deltaYaw >= rotationStepThreshold && !isSteppingSequenceRunning)
         {
-            if (leftNext)
-            {
-                rightLeg.LockFoot();
-                leftLeg.RequestStep();
-            }
-            else
-            {
-                leftLeg.LockFoot();
-                rightLeg.RequestStep();
-            }
+            lastYaw = currentYaw;
+            StartCoroutine(StepSequence());
+        }
+    }
+
+    IEnumerator StepSequence()
+    {
+        isSteppingSequenceRunning = true;
+
+        if (leftNext)
+        {
+            leftLeg.RequestStep();
+            yield return new WaitUntil(() => !leftLeg.isStepping);
+
+            rightLeg.RequestStep();
+            yield return new WaitUntil(() => !rightLeg.isStepping);
+        }
+        else
+        {
+            rightLeg.RequestStep();
+            yield return new WaitUntil(() => !rightLeg.isStepping);
+
+            leftLeg.RequestStep();
+            yield return new WaitUntil(() => !leftLeg.isStepping);
+        }
 
         leftNext = !leftNext;
-        accumulatedYaw = 0f;
-        }
+        isSteppingSequenceRunning = false;
     }
 }

@@ -14,20 +14,11 @@ public class IKLegController : MonoBehaviour
     public float stepHeight = 0.5f;
     public float stepSpeed = 3f;
 
-    bool isStepping;
-    bool isLocked;
+    public bool isStepping;
 
-    Vector3 lockedPosition;
-    Quaternion lockedRotation;
+    [Header("Body Reference")]
+    public Transform body;
 
-    void LateUpdate()
-    {
-        if (isLocked)
-        {
-            IKTarget.position = lockedPosition;
-            IKTarget.rotation = lockedRotation;
-        }
-    }
 
     public void RequestStep()
     {
@@ -35,30 +26,28 @@ public class IKLegController : MonoBehaviour
         {
             return;
         }
-            
-        UnlockFoot();
 
-        Vector3 start = IKTarget.position;
-        Vector3 end = GetFootTarget();
+        Vector3 startPos = IKTarget.position;
+        Quaternion startRot = IKTarget.transform.rotation;
 
-        StartCoroutine(StepArc(start, end));
-    }
-
-
-    Vector3 GetFootTarget()
-    {
         RaycastHit hit;
-        Vector3 origin = transform.position + Vector3.up;
+        Vector3 endPos = startPos;
+        Quaternion endRot = startRot;
 
-        if (Physics.Raycast(origin, Vector3.down, out hit, rayLength, groundLayer))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, rayLength, groundLayer))
         {
-            return hit.point;
+            endPos = hit.point;
+            endRot = Quaternion.LookRotation(body.forward);
         }
-            
-        return IKTarget.position;
+
+        StartCoroutine(StepArc(startPos, endPos, startRot, endRot));
     }
 
-    IEnumerator StepArc(Vector3 start, Vector3 end)
+    IEnumerator StepArc(
+        Vector3 startPos,
+        Vector3 endPos,
+        Quaternion startRot,
+        Quaternion endRot)
     {
         isStepping = true;
 
@@ -67,31 +56,19 @@ public class IKLegController : MonoBehaviour
         {
             t += Time.deltaTime * stepSpeed;
 
-            Vector3 pos = Vector3.Lerp(start, end, t);
+            Vector3 pos = Vector3.Lerp(startPos, endPos, t);
             float arc = 4f * t * (1f - t);
             pos.y += arc * stepHeight;
 
             IKTarget.position = pos;
+            IKTarget.transform.rotation = Quaternion.Slerp(startRot, endRot, t);
+
             yield return null;
         }
 
-        IKTarget.position = end;
-        LockFoot();
+        IKTarget.position = endPos;
+        IKTarget.transform.rotation = endRot;
 
         isStepping = false;
     }
-
-
-    public void LockFoot()
-    {
-        isLocked = true;
-        lockedPosition = IKTarget.position;
-        lockedRotation = IKTarget.rotation;
-    }
-
-    public void UnlockFoot()
-    {
-        isLocked = false;
-    }
-
 }

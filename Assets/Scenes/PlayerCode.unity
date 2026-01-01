@@ -1191,7 +1191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &134669142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1453,7 +1453,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154821408}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
   m_Name: 
@@ -1471,14 +1471,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154821408}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87562baa58cbca945be722d6b9cebcea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IKLegCoordinator
   leftLeg: {fileID: 983101993}
   rightLeg: {fileID: 1111268706}
-  rotationStepThreshold: 25
+  rotationStepThreshold: 45
+  lastYaw: 0
 --- !u!1001 &162706339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7332,7 +7333,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767435776}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1845963, y: 0.5006161, z: 0.8337752, w: -0.14186868}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 258.09128, y: 0.104922175, z: -261.49173}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
@@ -8208,7 +8209,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &847382590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8596,7 +8597,7 @@ MonoBehaviour:
     m_TargetRotationWeight: 1
     m_HintWeight: 0
     m_MaintainTargetPositionOffset: 1
-    m_MaintainTargetRotationOffset: 0
+    m_MaintainTargetRotationOffset: 1
 --- !u!43 &948796532
 Mesh:
   m_ObjectHideFlags: 0
@@ -9335,7 +9336,7 @@ Transform:
   m_GameObject: {fileID: 983101991}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.08, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9358,8 +9359,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   rayLength: 5
-  stepHeight: 0.5
+  stepHeight: 0.3
   stepSpeed: 3
+  isStepping: 0
+  body: {fileID: 1379273586}
 --- !u!1001 &986017229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10232,7 +10235,7 @@ Transform:
   m_GameObject: {fileID: 1111268704}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.08, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10255,8 +10258,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   rayLength: 5
-  stepHeight: 0.5
+  stepHeight: 0.3
   stepSpeed: 3
+  isStepping: 0
+  body: {fileID: 1379273586}
 --- !u!43 &1130572631
 Mesh:
   m_ObjectHideFlags: 0
@@ -11958,6 +11963,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4091175805123342844, guid: f2b6e6bbb03a90a42961ca0fd319dd39, type: 3}
   m_PrefabInstance: {fileID: 9123812114007477242}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1379273586 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1065113443155254448, guid: f2b6e6bbb03a90a42961ca0fd319dd39, type: 3}
+  m_PrefabInstance: {fileID: 9123812114007477242}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1384678033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12751,7 +12761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498407725}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.08955866, y: 0.51241356, z: 0.8497434, w: 0.085719176}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 257.8222, y: 0.10608864, z: -261.38242}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
@@ -17007,7 +17017,7 @@ MonoBehaviour:
     m_TargetRotationWeight: 1
     m_HintWeight: 0
     m_MaintainTargetPositionOffset: 1
-    m_MaintainTargetRotationOffset: 0
+    m_MaintainTargetRotationOffset: 1
 --- !u!4 &1971928557 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4092433003080072390, guid: f2b6e6bbb03a90a42961ca0fd319dd39, type: 3}
@@ -18577,6 +18587,10 @@ PrefabInstance:
       propertyPath: rightLegRig
       value: 
       objectReference: {fileID: 847382590}
+    - target: {fileID: 7921502101792357019, guid: f2b6e6bbb03a90a42961ca0fd319dd39, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -18594,7 +18608,7 @@ PrefabInstance:
       addedObject: {fileID: 1111268705}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4358189869953165291, guid: f2b6e6bbb03a90a42961ca0fd319dd39, type: 3}
-      insertIndex: -1
+      insertIndex: 3
       addedObject: {fileID: 154821415}
     - targetCorrespondingSourceObject: {fileID: 4358189869953165291, guid: f2b6e6bbb03a90a42961ca0fd319dd39, type: 3}
       insertIndex: -1
