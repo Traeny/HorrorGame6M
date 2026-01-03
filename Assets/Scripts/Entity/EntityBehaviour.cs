@@ -209,7 +209,7 @@ public class EntityBehaviour : BTAgent
     {
         rend.material.color = Color.gray;
 
-        Blackboard.Instance.UpdateMovementSpeed(2.5f); // OK
+        Blackboard.Instance.UpdateMovementSpeed(3.5f); // OK
 
         Node.Status s = GoToLocation(Blackboard.Instance.searchPoints[0]);
 
@@ -260,6 +260,8 @@ public class EntityBehaviour : BTAgent
     {
         rend.material.color = Color.black;
 
+        Blackboard.Instance.UpdateMovementSpeed(3.5f);
+
         Blackboard.Instance.SetCurrentHotspot();
 
         Node.Status s = GoToLocation(Blackboard.Instance.hotspotOrigin);
@@ -271,7 +273,7 @@ public class EntityBehaviour : BTAgent
     {
         rend.material.color = Color.cyan;
 
-        Blackboard.Instance.UpdateMovementSpeed(5f); // OK
+        Blackboard.Instance.UpdateMovementSpeed(7.5f); // OK
 
         Node.Status s = GoToLocation(Blackboard.Instance.lastSeenPosition);
 

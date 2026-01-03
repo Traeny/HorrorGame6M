@@ -59,8 +59,6 @@ public class BTAgent : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.2f);
     }
 
-    
-
     private IEnumerator Behave()
     {
         while (true)

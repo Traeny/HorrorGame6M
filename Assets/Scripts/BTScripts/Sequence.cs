@@ -9,7 +9,7 @@ public class Sequence : Node
 
     public override Status Process()
     {
-        Debug.Log("Sequence: " + name + " " + currentChild);
+        //Debug.Log("Sequence: " + name + " " + currentChild);
 
         Status childStatus = children[currentChild].Process();
 

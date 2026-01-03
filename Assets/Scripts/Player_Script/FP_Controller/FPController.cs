@@ -7,7 +7,6 @@ namespace Player_Script
     [RequireComponent(typeof(CharacterController))]
     public class FPController : MonoBehaviour
     {
-        // Testing
         public bool hidingInLocker = false;
 
         public FPControllerPreset preset;
@@ -17,7 +16,6 @@ namespace Player_Script
         {
             get
             {
-                // Testing
                 if (hidingInLocker)
                 {
                     return 0;
@@ -67,9 +65,6 @@ namespace Player_Script
         }
 
         [Header("Camera Parameters")]
-        //public Vector3 currentCameraPosition { get; private set; } = new Vector3(0f, 1.6f, 0f);
-
-        [Space(10)]
         public Vector3 cameraPositionOffset = Vector3.zero;
         public Quaternion cameraRotationOffset = Quaternion.identity;
 
@@ -125,13 +120,8 @@ namespace Player_Script
             LookUpdate();
             CameraUpdate();
 
-            // Updating Camera posotion
-            //Vector3 targetCameraPosition = Vector3.up * 1.6f;
-
             if (Activity.IsActive(Crouch))
             {
-                //targetCameraPosition = Vector3.up * 0.9f;
-
                 characterController.height = 1f;
                 characterController.center = Vector3.up * 0.5f;
             }
@@ -140,9 +130,6 @@ namespace Player_Script
                 characterController.height = 2f;
                 characterController.center = Vector3.up * 1f;
             }
-
-            //currentCameraPosition = Vector3.Lerp(currentCameraPosition, targetCameraPosition, 7f * Time.deltaTime);
-
 
             if(!wasGrounded && Grounded)
             {
@@ -183,15 +170,12 @@ namespace Player_Script
 
             Vector3 fullVelocity = new Vector3(currentVelocity.x, verticalVelocity, currentVelocity.z);
 
-
-
             CollisionFlags flags = characterController.Move(fullVelocity * Time.deltaTime);
 
             if((flags & CollisionFlags.Above) != 0 && verticalVelocity > 0.01f)
             {
                 verticalVelocity = 0f;
             }
-
 
             // Updating speed
             currentSpeed = currentVelocity.magnitude;

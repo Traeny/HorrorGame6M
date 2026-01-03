@@ -70,23 +70,31 @@ namespace Entity_Script
                     {
                         UpdateInterestPoint();
                         //Blackboard.Instance.UpdateMovementSpeed(5f);
+                        canSeePlayer.SetActive(true);
+                        cantSeePlayer.SetActive(false);
                         Blackboard.Instance.isPlayerVisible = true;
                     }
                     else
                     {
                         //Blackboard.Instance.UpdateMovementSpeed(3.5f);
+                        canSeePlayer.SetActive(false);
+                        cantSeePlayer.SetActive(true);
                         Blackboard.Instance.isPlayerVisible = false;
                     }
                 }
                 else
                 {
                     //Blackboard.Instance.UpdateMovementSpeed(3.5f);
+                    canSeePlayer.SetActive(false);
+                    cantSeePlayer.SetActive(true);
                     Blackboard.Instance.isPlayerVisible = false;
                 }
             }
             else if (Blackboard.Instance.isPlayerVisible)
             {
                 //Blackboard.Instance.UpdateMovementSpeed(3.5f);
+                canSeePlayer.SetActive(false);
+                cantSeePlayer.SetActive(true);
                 Blackboard.Instance.isPlayerVisible = false;
             }
         }
