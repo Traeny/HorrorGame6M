@@ -24,35 +24,46 @@ public class IKLegCoordinator : MonoBehaviour
     void Update()
     {
         float currentYaw = transform.eulerAngles.y;
-        float deltaYaw = Mathf.Abs(Mathf.DeltaAngle(lastYaw, currentYaw));
+        float deltaYaw = Mathf.DeltaAngle(lastYaw, currentYaw);
 
-        if (deltaYaw >= rotationStepThreshold && !isSteppingSequenceRunning)
+        if (Mathf.Abs(deltaYaw) >= rotationStepThreshold && !isSteppingSequenceRunning)
         {
+            if (deltaYaw > 0f)
+            {
+                StartCoroutine(StepSequenceRight());
+            }
+            else
+            {
+                StartCoroutine(StepSequenceLeft());
+            }
+
             lastYaw = currentYaw;
-            StartCoroutine(StepSequence());
         }
     }
 
-    IEnumerator StepSequence()
+    IEnumerator StepSequenceRight()
     {
         isSteppingSequenceRunning = true;
 
-        if (leftNext)
-        {
-            leftLeg.RequestStep();
-            yield return new WaitUntil(() => !leftLeg.isStepping);
+        rightLeg.RequestStep();
+        yield return new WaitUntil(() => !rightLeg.isStepping);
 
-            rightLeg.RequestStep();
-            yield return new WaitUntil(() => !rightLeg.isStepping);
-        }
-        else
-        {
-            rightLeg.RequestStep();
-            yield return new WaitUntil(() => !rightLeg.isStepping);
+        leftLeg.RequestStep();
+        yield return new WaitUntil(() => !leftLeg.isStepping);
 
-            leftLeg.RequestStep();
-            yield return new WaitUntil(() => !leftLeg.isStepping);
-        }
+        leftNext = !leftNext;
+        isSteppingSequenceRunning = false;
+    }
+
+    IEnumerator StepSequenceLeft()
+    {
+        isSteppingSequenceRunning = true;
+
+        leftLeg.RequestStep();
+        yield return new WaitUntil(() => !leftLeg.isStepping);
+
+        rightLeg.RequestStep();
+        yield return new WaitUntil(() => !rightLeg.isStepping);
 
         leftNext = !leftNext;
         isSteppingSequenceRunning = false;
