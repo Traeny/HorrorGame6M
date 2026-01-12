@@ -18,18 +18,22 @@ public class InteractableLockerDoor : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        // We get the player character controller reference
         CharacterController controller = player.GetComponent<CharacterController>();
 
-        controller.enabled = false;
-        player.transform.SetPositionAndRotation(playerLockerExitPosition.transform.position, playerLockerExitPosition.transform.rotation);
-        controller.enabled = true;
-
+        //We get the players FPController scripts reference
         FPController playerController = player.GetComponent<FPController>();
 
+        // Here we disable the character controller
+        controller.enabled = false;
+
+        // Then we move the player to a specific position and rotation
+        player.transform.SetPositionAndRotation(playerLockerExitPosition.transform.position, playerLockerExitPosition.transform.rotation);
+
+        // After moving the player we enable the character controller
+        controller.enabled = true;
+
+        // After the player has exited the locker we set the hiding bool to false
         playerController.hidingInLocker = false;
-
-
-        Debug.Log("Interacting!");
-        return;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -9,6 +10,10 @@ namespace Player_Script
         [SerializeField] Animator animator;
         [SerializeField] Rig leftLegRig;
         [SerializeField] Rig rightLegRig;
+        [SerializeField] Rig rightArmRig;
+
+        // Testing
+        public bool enteringloker = false;
 
         private void OnValidate()
         {
@@ -60,7 +65,22 @@ namespace Player_Script
                 leftLegRig.weight = 1f;
                 rightLegRig.weight = 1f;
             }
+        }
 
+        public IEnumerator EnterLockerAnimation(Transform outsidePos, Transform outsideHandPos, Transform insidePos, Transform insideHandPos)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        public IEnumerator Testing()
+        {
+            enteringloker = true;
+
+            // Play enterin locker anim
+            // When it ends 
+            yield return new WaitForSeconds(0.1f);
+
+            enteringloker = false;
         }
     }
 }

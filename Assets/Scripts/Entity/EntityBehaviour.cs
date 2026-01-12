@@ -273,7 +273,7 @@ public class EntityBehaviour : BTAgent
     {
         rend.material.color = Color.cyan;
 
-        Blackboard.Instance.UpdateMovementSpeed(7.5f); // OK
+        Blackboard.Instance.UpdateMovementSpeed(5f); // OK
 
         Node.Status s = GoToLocation(Blackboard.Instance.lastSeenPosition);
 
