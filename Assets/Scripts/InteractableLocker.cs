@@ -36,14 +36,10 @@ public class InteractableLocker : MonoBehaviour, IInteractable
         // The animation needs the outside and inside locker position as well ad the inside and outside door hand positions
         // These will be used as targets gor the IKs
 
-        var playerAnimationScript = player.GetComponentInChildren<FPFullBodyAnimator>();
+        //var playerAnimationScript = player.GetComponentInChildren<FPFullBodyAnimator>();
 
         // 1. We call a script that has the logic for enter locker animation
-        StartCoroutine(playerAnimationScript.EnterLockerAnimation(outsidePos, outsideHandPos, insidePos, insideHandPos));
-
-        
-
-
+        //StartCoroutine(playerAnimationScript.EnterLockerAnimation(outsidePos, outsideHandPos, insidePos, insideHandPos));
 
         // After the loop has been finished we can move to the camera animation
         controller.enabled = true;

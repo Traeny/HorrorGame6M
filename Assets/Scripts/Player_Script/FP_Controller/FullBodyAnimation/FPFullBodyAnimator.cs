@@ -12,7 +12,6 @@ namespace Player_Script
         [SerializeField] Rig rightLegRig;
         [SerializeField] Rig rightArmRig;
 
-        // Testing
         public bool enteringloker = false;
 
         private void OnValidate()
@@ -55,7 +54,12 @@ namespace Player_Script
 
             animator.SetBool("Fall", controller.verticalVelocity <= -0.1f && !controller.Grounded);
 
-            if(!Activity.IsActive(controller.Crouch) && controller.currentVelocity.sqrMagnitude > 0.01f)
+            IdleLegRigHandler();
+        }
+
+        private void IdleLegRigHandler()
+        {
+            if (!Activity.IsActive(controller.Crouch) && controller.currentVelocity.sqrMagnitude > 0.01f)
             {
                 leftLegRig.weight = 0f;
                 rightLegRig.weight = 0f;
@@ -67,6 +71,7 @@ namespace Player_Script
             }
         }
 
+        /*
         public IEnumerator EnterLockerAnimation(Transform outsidePos, Transform outsideHandPos, Transform insidePos, Transform insideHandPos)
         {
             yield return new WaitForEndOfFrame();
@@ -82,6 +87,7 @@ namespace Player_Script
 
             enteringloker = false;
         }
+        */
     }
 }
 

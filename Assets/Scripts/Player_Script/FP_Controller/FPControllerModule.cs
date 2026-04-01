@@ -7,7 +7,6 @@ namespace Player_Script
         [SerializeField]
         protected FPController controller;
 
-        [SerializeField]
         protected FPControllerPreset preset => controller.preset;
 
         protected virtual void Awake()

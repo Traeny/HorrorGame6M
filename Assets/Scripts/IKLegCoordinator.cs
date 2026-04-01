@@ -10,7 +10,6 @@ public class IKLegCoordinator : MonoBehaviour
     [Header("Rotation Stepping")]
     public float rotationStepThreshold = 25f;
 
-    float accumulatedYaw;
     public float lastYaw;
     bool leftNext = true;
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class IKLegController : MonoBehaviour
@@ -19,6 +20,10 @@ public class IKLegController : MonoBehaviour
     [Header("Body Reference")]
     public Transform body;
 
+    private void Update()
+    {
+        Debug.DrawRay(transform.position, Vector3.down, Color.green);
+    }
 
     public void RequestStep()
     {
@@ -39,7 +44,6 @@ public class IKLegController : MonoBehaviour
             endPos = hit.point;
             endRot = Quaternion.LookRotation(body.forward);
         }
-
         StartCoroutine(StepArc(startPos, endPos, startRot, endRot));
     }
 
