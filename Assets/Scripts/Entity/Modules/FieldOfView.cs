@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,27 +5,17 @@ namespace Entity_Script
 {
     public class FieldOfView : MonoBehaviour
     {
+        public EnemyPreset preset;
+
         [Header("Debugging")]
         public GameObject canSeePlayer;
         public GameObject cantSeePlayer;
 
-        [Header("Real stuff")]
-        public float radius;
-
-        [Range(0, 360)]
-        public float angle;
-
+        [Header("Components")]
         public GameObject player;
-
-        public LayerMask targetMask;
-        public LayerMask obstructionMask;
-
         public Transform eyeOrigin;
 
-        [SerializeField]
-        float delay = 0.1f;
-
-        public bool isPlayerVisible = false;
+        private float timer = 0;
 
         private void Start()
         {
@@ -34,27 +23,27 @@ namespace Entity_Script
 
             if (player == null)
             {
-                Debug.LogError("Player Missing / Not Found!");
+                Debug.LogError("Player Missing!");
                 return;
             }
 
-            StartCoroutine(FOVRoutine());
+            timer = preset.delay;
         }
 
-        private IEnumerator FOVRoutine()
+        private void Update()
         {
-            WaitForSeconds wait = new WaitForSeconds(delay);
+            timer -= Time.deltaTime;
 
-            while (true)
+            if (timer < 0)
             {
-                yield return wait;
                 FOVCheck();
+                timer = preset.delay;
             }
         }
 
         private void FOVCheck()
         {
-            Collider[] rangeChecks = Physics.OverlapSphere(eyeOrigin.position, radius, targetMask);
+            Collider[] rangeChecks = Physics.OverlapSphere(eyeOrigin.position, preset.radius, preset.targetMask);
 
             if(rangeChecks.Length != 0)
             {
@@ -62,21 +51,19 @@ namespace Entity_Script
 
                 Vector3 directionToTarget = (target.position - eyeOrigin.position).normalized;
 
-                if(Vector3.Angle(eyeOrigin.forward, directionToTarget) < angle / 2)
+                if(Vector3.Angle(eyeOrigin.forward, directionToTarget) < preset.angle / 2)
                 {
                     float distanceToTarget = Vector3.Distance(eyeOrigin.position, target.position);
 
-                    if(!Physics.Raycast(eyeOrigin.position, directionToTarget, distanceToTarget, obstructionMask))
+                    if(!Physics.Raycast(eyeOrigin.position, directionToTarget, distanceToTarget, preset.obstructionMask))
                     {
                         UpdateInterestPoint();
-                        //Blackboard.Instance.UpdateMovementSpeed(5f);
                         canSeePlayer.SetActive(true);
                         cantSeePlayer.SetActive(false);
                         Blackboard.Instance.isPlayerVisible = true;
                     }
                     else
                     {
-                        //Blackboard.Instance.UpdateMovementSpeed(3.5f);
                         canSeePlayer.SetActive(false);
                         cantSeePlayer.SetActive(true);
                         Blackboard.Instance.isPlayerVisible = false;
@@ -84,7 +71,6 @@ namespace Entity_Script
                 }
                 else
                 {
-                    //Blackboard.Instance.UpdateMovementSpeed(3.5f);
                     canSeePlayer.SetActive(false);
                     cantSeePlayer.SetActive(true);
                     Blackboard.Instance.isPlayerVisible = false;
@@ -92,14 +78,11 @@ namespace Entity_Script
             }
             else if (Blackboard.Instance.isPlayerVisible)
             {
-                //Blackboard.Instance.UpdateMovementSpeed(3.5f);
                 canSeePlayer.SetActive(false);
                 cantSeePlayer.SetActive(true);
                 Blackboard.Instance.isPlayerVisible = false;
             }
         }
-
-        // Blackboard
 
         private void UpdateInterestPoint()
         {
@@ -107,7 +90,6 @@ namespace Entity_Script
             {
                 Blackboard.Instance.UpdateInterestPoint(hit.position);
                 Blackboard.Instance.lastSeenPosition = hit.position;
-
                 Blackboard.Instance.UpdateHotspotOrigin(hit.position);
             }
             else
@@ -118,6 +100,4 @@ namespace Entity_Script
             }
         }
     }
-
-
 }
