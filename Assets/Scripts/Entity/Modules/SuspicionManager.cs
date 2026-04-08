@@ -2,22 +2,22 @@ using UnityEngine;
 
 public class SuspicionManager : MonoBehaviour
 {
+    public EnemyPreset preset;
+
     [Header("Debug")]
     public GameObject kysymysmerkki;
 
     [Range(0, 200)]
     public float suspicionLevel;
-    public float suspicionDecayRate = 10f;
-    public float suspicionThreshold = 100f;
 
     void Update()
     {
-        suspicionLevel -= suspicionDecayRate * Time.deltaTime;
-        suspicionLevel = Mathf.Clamp(suspicionLevel, 0, 200);
+        suspicionLevel -= preset.suspicionDecayRate * Time.deltaTime;
+        suspicionLevel = Mathf.Clamp(suspicionLevel, 0, preset.maxSuspicionLevel);
 
-        Blackboard.Instance.isSuspicious = suspicionLevel >= suspicionThreshold;
+        Blackboard.Instance.isSuspicious = suspicionLevel >= preset.suspicionThreshold;
 
-        if(suspicionLevel >= suspicionThreshold)
+        if(suspicionLevel >= preset.suspicionThreshold)
         {
             kysymysmerkki.SetActive(true);
         }
@@ -29,7 +29,7 @@ public class SuspicionManager : MonoBehaviour
 
     public void AddSuspicion(float amount)
     {
-        suspicionLevel = Mathf.Clamp(suspicionLevel + amount, 0, 200);
+        suspicionLevel = Mathf.Clamp(suspicionLevel + amount, 0, preset.maxSuspicionLevel);
     }
 
 }

@@ -1,13 +1,12 @@
-using System.Collections;
 using UnityEngine;
 
 public class PlayerInAttackRange : MonoBehaviour
 {
+    public EnemyPreset preset;
+
+    [Header("Components")]
     public GameObject player;
-
-    public float delay = 0.1f;
-
-    public float attackRange;
+    private float timer = 0;
 
     private void Start()
     {
@@ -15,21 +14,20 @@ public class PlayerInAttackRange : MonoBehaviour
 
         if (player == null)
         {
-            Debug.LogError("Player Missing / Not Found!");
+            Debug.LogError("Player Missing!");
             return;
         }
 
-        StartCoroutine(DistanceRoutine());
+        timer = preset.delay;
     }
 
-    private IEnumerator DistanceRoutine()
+    private void Update()
     {
-        WaitForSeconds wait = new WaitForSeconds(delay);
-
-        while (true)
+        timer -= Time.deltaTime;
+        if(timer < 0)
         {
-            yield return wait;
             InAttackRange();
+            timer = preset.delay;
         }
     }
 
@@ -37,7 +35,7 @@ public class PlayerInAttackRange : MonoBehaviour
     {
         float distanceToTarget = Vector3.Distance(transform.position, player.transform.position);
 
-        if(distanceToTarget <= attackRange)
+        if(distanceToTarget <= preset.attackRange)
         {
             Blackboard.Instance.playerInAttackRange = true;
         }

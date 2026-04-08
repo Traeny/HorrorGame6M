@@ -20,7 +20,7 @@ public class Blackboard : MonoBehaviour
     public Vector3 lastSeenPosition;
     private Vector3 currentHotspot;
 
-    [Header("Movement Speed")]
+    //[Header("Movement Speed")]
     public float moveSpeed;
 
     public static Blackboard Instance

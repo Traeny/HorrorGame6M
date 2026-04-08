@@ -3,20 +3,22 @@ using UnityEngine.AI;
 
 public class HearingSensor : MonoBehaviour
 {
+    public EnemyPreset preset;
+
     [Header("Debug")]
     public GameObject ears;
-
-    public SuspicionManager suspicionManager;
-
-    public NoiseType noiseType { get; private set; } = NoiseType.Medium;
-
-    public float noiseTime { get; private set; } = 0f;
-
     public float entryExpirationTime = 3f;
+
+    [Header("Components")]
+    public SuspicionManager suspicionManager;
+    public NoiseType noiseType { get; private set; } = NoiseType.Medium;
+    public float noiseTime { get; private set; } = 0f;
 
     [SerializeField] string hearingDebug = "";
 
     public float timeSinceHeardNoise => Time.time - noiseTime;
+
+    private float timer = 0f;
 
     private void Start()
     {
@@ -24,19 +26,27 @@ public class HearingSensor : MonoBehaviour
 
         if(suspicionManager == null)
         {
-            Debug.LogError("Suspicion manager reference missing in hearing sensor!");
+            Debug.Log("Suspicion manager reference missing in hearing sensor!");
+            return;
         }
+        timer = preset.delay;
     }
 
     private void Update()
     {
-        UpdateHearing();
+        timer -= Time.deltaTime;
+
+        if (timer < 0)
+        {
+            UpdateHearing();
+            timer = preset.delay;
+        }
     }
 
     public void OnNoiseHeard(NoiseInfo noise)
     {
         Blackboard.Instance.heardNoise = true;
-        ears.SetActive(true); // Debug
+        ears.SetActive(true);
 
         noiseTime = Time.time;
         noiseType = noise.type;
@@ -44,18 +54,15 @@ public class HearingSensor : MonoBehaviour
         if (noise.type == NoiseType.Loud)
         {
             Blackboard.Instance.UpdateHotspotOrigin(noise.position);
-            Blackboard.Instance.UpdateMovementSpeed(5f); // Set entity running
             suspicionManager.AddSuspicion(100f);
         }
         else if(noise.type == NoiseType.Medium)
         {
             Blackboard.Instance.UpdateHotspotOrigin(noise.position);
-            //Blackboard.Instance.UpdateMovementSpeed(3.5f); // Set entity running
             suspicionManager.AddSuspicion(50f);
         }
         else if(noise.type == NoiseType.Silent)
         {
-            //Blackboard.Instance.UpdateMovementSpeed(5f); // Set entity running
             suspicionManager.AddSuspicion(10f);
         }
 
@@ -65,7 +72,7 @@ public class HearingSensor : MonoBehaviour
             Blackboard.Instance.lastHeardPosition = hit.position;
             Blackboard.Instance.UpdateInterestPoint(hit.position);
         }
-        else // Why do we set the position to be same in both?
+        else
         {
             Blackboard.Instance.lastHeardPosition = hit.position;
             Blackboard.Instance.UpdateInterestPoint(hit.position);
@@ -80,10 +87,9 @@ public class HearingSensor : MonoBehaviour
             return;
         }
 
-        hearingDebug = $"Heard Noise {Mathf.RoundToInt(timeSinceHeardNoise)} s ago.\n\r";
         hearingDebug = $" Type = {noiseType}";
 
-        if(timeSinceHeardNoise >= entryExpirationTime)
+        if(timeSinceHeardNoise >= preset.entryExpirationTime)
         {
             ForgetNoise();
         }
@@ -92,6 +98,6 @@ public class HearingSensor : MonoBehaviour
     public void ForgetNoise()
     {
         Blackboard.Instance.heardNoise = false;
-        ears.SetActive(false); // Debug
+        ears.SetActive(false);
     }
 }

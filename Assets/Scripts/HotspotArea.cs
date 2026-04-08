@@ -4,8 +4,10 @@ using UnityEngine.AI;
 
 public class HotspotArea : MonoBehaviour
 {
-    public float radius = 5f; // This could be randomized a bit
-    public int pointCount = 3;
+    public EnemyPreset preset;
+
+    //public float radius = 5f;
+    //public int pointCount = 3;
     public Vector3 origin = Vector3.zero;
 
     private List<Vector3> points = new List<Vector3>();
@@ -18,7 +20,7 @@ public class HotspotArea : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            Vector3 randomDirection = Random.insideUnitSphere * radius;
+            Vector3 randomDirection = Random.insideUnitSphere * preset.hotspotRadius;
             randomDirection.y = 0f;
 
             Vector3 randomPoint = newOrigin + randomDirection;
@@ -42,7 +44,7 @@ public class HotspotArea : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        DrawCircle(origin, radius, 50);
+        DrawCircle(origin, preset.hotspotRadius, 50);
 
         Gizmos.color = Color.red;
         foreach (var p in points)

@@ -3,10 +3,10 @@ using UnityEditor;
 
 namespace Entity_Script
 {
-    //[CustomEditor(typeof(FieldOfView))]
+    [CustomEditor(typeof(FieldOfView))]
     public class FOVEditor : Editor
     {
-        /*
+        
         public EnemyPreset preset;
 
         private void OnSceneGUI()
@@ -14,7 +14,7 @@ namespace Entity_Script
             FieldOfView fov = (FieldOfView)target;
 
             Handles.color = Color.white;
-            Handles.DrawWireArc(fov.eyeOrigin.position, Vector3.up, Vector3.forward, 360, fov.preset.radius);
+            Handles.DrawWireArc(fov.eyeOrigin.position, Vector3.up, Vector3.forward, 360, fov.preset.fovRadius);
 
             Vector3 viewAngle1 = DirectionFromAngle(fov.eyeOrigin.eulerAngles.y, -fov.preset.angle / 2);
 
@@ -22,8 +22,8 @@ namespace Entity_Script
 
             Handles.color = Color.yellow;
 
-            Handles.DrawLine(fov.eyeOrigin.position, fov.eyeOrigin.position + viewAngle1 * fov.preset.radius);
-            Handles.DrawLine(fov.eyeOrigin.position, fov.eyeOrigin.position + viewAngle2 * fov.preset.radius);
+            Handles.DrawLine(fov.eyeOrigin.position, fov.eyeOrigin.position + viewAngle1 * fov.preset.fovRadius);
+            Handles.DrawLine(fov.eyeOrigin.position, fov.eyeOrigin.position + viewAngle2 * fov.preset.fovRadius);
 
             if (Blackboard.Instance.isPlayerVisible)
             {
@@ -40,7 +40,7 @@ namespace Entity_Script
 
             return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
         }
-        */
+        
     }
 }
 

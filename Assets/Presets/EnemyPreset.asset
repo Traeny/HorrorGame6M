@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyPreset
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPreset
   delay: 0.1
-  radius: 10
+  fovRadius: 10
   angle: 100
   targetMask:
     serializedVersion: 2
@@ -21,3 +21,9 @@ MonoBehaviour:
   obstructionMask:
     serializedVersion: 2
     m_Bits: 512
+  attackRange: 2.5
+  entryExpirationTime: 3
+  suspicionDecayRate: 10
+  suspicionThreshold: 100
+  maxSuspicionLevel: 200
+  hotspotRadius: 7

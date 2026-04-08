@@ -9,6 +9,6 @@ public class PlayerInAttackRangeEditor : Editor
         PlayerInAttackRange entity = (PlayerInAttackRange)target;
 
         Handles.color = Color.red;
-        Handles.DrawWireArc(entity.transform.position, Vector3.up, Vector3.forward, 360, entity.attackRange);
+        Handles.DrawWireArc(entity.transform.position, Vector3.up, Vector3.forward, 360, entity.preset.attackRange);
     }
 }

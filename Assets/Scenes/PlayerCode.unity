@@ -2268,6 +2268,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 644194358964413301, guid: cc7a899bef7f9e2428e30af36a4414e8, type: 3}
+      propertyPath: preset
+      value: 
+      objectReference: {fileID: 11400000, guid: 6201ea66b7fea8642af974f147764f71, type: 2}
+    - target: {fileID: 2985641443647088553, guid: cc7a899bef7f9e2428e30af36a4414e8, type: 3}
+      propertyPath: preset
+      value: 
+      objectReference: {fileID: 11400000, guid: 6201ea66b7fea8642af974f147764f71, type: 2}
+    - target: {fileID: 3178418046687566364, guid: cc7a899bef7f9e2428e30af36a4414e8, type: 3}
+      propertyPath: preset
+      value: 
+      objectReference: {fileID: 11400000, guid: 6201ea66b7fea8642af974f147764f71, type: 2}
+    - target: {fileID: 5651723726737140584, guid: cc7a899bef7f9e2428e30af36a4414e8, type: 3}
+      propertyPath: preset
+      value: 
+      objectReference: {fileID: 11400000, guid: 6201ea66b7fea8642af974f147764f71, type: 2}
     - target: {fileID: 7148938034978511366, guid: cc7a899bef7f9e2428e30af36a4414e8, type: 3}
       propertyPath: preset
       value: 
@@ -9208,8 +9224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58707af957cd4f741a6fd2db5067b45d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 5
-  pointCount: 3
+  preset: {fileID: 0}
   origin: {x: 0, y: 0, z: 0}
 --- !u!4 &995397523
 Transform:

@@ -43,7 +43,7 @@ namespace Entity_Script
 
         private void FOVCheck()
         {
-            Collider[] rangeChecks = Physics.OverlapSphere(eyeOrigin.position, preset.radius, preset.targetMask);
+            Collider[] rangeChecks = Physics.OverlapSphere(eyeOrigin.position, preset.fovRadius, preset.targetMask);
 
             if(rangeChecks.Length != 0)
             {
