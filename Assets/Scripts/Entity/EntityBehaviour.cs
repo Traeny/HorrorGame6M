@@ -55,10 +55,9 @@ public class EntityBehaviour : BTAgent
         // ----------- ( PATROL BRANCH ) -----------
         BehaviourTree patrolConditionTree = new BehaviourTree(); // Patrol
         Sequence patrolConditions = new Sequence("Patrol Conditions (Sequence)"); // Patrol
-        Leaf isPlayerVisible = new Leaf("Is Player Visible? (Condition Leaf)", IsPlayerVisible); // Hunt Patrol
-        Inverter playerNotVisible = new Inverter("Player Not Visible? (Inverter)"); // Hunt Patrol
+        
         Inverter notSuspicious = new Inverter("Entity Not Suspicious? (Inverter)"); // Patrol
-        Leaf isSuspicious = new Leaf("Entity is Suspicious? (Condition Leaf)", IsSuspicious); // Hunt Patrol
+        
         DependencySequence patrolBehaviour = new DependencySequence("Patrol Behaviour (Dependancy Sequence)", patrolConditionTree, agent); // Patrol
         Leaf wanderRandomly = new Leaf("Wander Randomly! (Action Leaf)", WanderRandomly); // Patrol
 
@@ -68,25 +67,44 @@ public class EntityBehaviour : BTAgent
         Leaf killPlayer = new Leaf("Kill Player! (Action Leaf)", KillPlayer); // Kill Branch
 
         // ----------- ( HUNT BRANCH ) -----------
-        BehaviourTree huntConditionTree = new BehaviourTree(); // Hunt Branc
         Selector huntBehaviour = new Selector("Hunt Behaviour (Selector)"); // Hunt Branch
+        Sequence pursueSequence = new Sequence("Pursue Sequence (Sequence)"); // Hunt Branch
+        Selector pursuitConditions = new Selector("Pursuit Conditions (Selector)"); // Hunt Branch
+        Leaf sawSomething = new Leaf("Saw Something (Conditions Leaf)", SawSomething); // Hunt Branch
+        Leaf heardLoudNoise = new Leaf("Heard Loud Noise (Condition Leaf)", HeardLoudNoise); // Hunt Branch
+        Leaf announcePursuit = new Leaf("Announce Pursuit (Action Leaf)", AnnouncePursuit); // Hunt Branch
+        Selector pursuitStyleSelector = new Selector("Pursuit Style Selector (Selector)"); // Hunt Branch
         Sequence directPursuit = new Sequence("Direct Pursuit (Sequence)"); // Hunt Branch
-        Leaf goToPlayerPosition = new Leaf("Go To Player Position (Action Leaf)", GoToPlayerPosition); // Hunt Branch
-        Sequence stalkPursuit = new Sequence("Stalk Pursuit (Sequence)"); // Hunt Branch   
-        Sequence stalkConditions = new Sequence("Hunt Conditions (Sequence)"); // Hunt Branch
-        Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething); // Hunt Branch
-        Inverter haventHeardAnything = new Inverter("Haven't heard Anything (Inverter)"); // Hunt Branch
+        Leaf isPlayerVisible = new Leaf("Is Player Visible? (Condition Leaf)", IsPlayerVisible); // Hunt Branch, Patrol Branch
+        Leaf runToLastSeenPosition = new Leaf("Run To Last Seen Position (Action Leaf)", RunToLastSeenPosition); // Hunt Branch
+        BehaviourTree huntConditionTree = new BehaviourTree(); // Hunt Branch
         DependencySequence stalkBehaviour = new DependencySequence("Stalk Behaviour (Dependancy Sequence)", huntConditionTree, agent); // Hunt Branch
-        Leaf moveToHotspotPoint = new Leaf("Move to Hotspot Point (Action Leaf)", MoveToHotspotPoint); // Hunt Branch
-        Leaf generateSearchPoints = new Leaf("Generate Search Points (Action Leaf)", GenerateSearchPoints);
+        Sequence stalkConditions = new Sequence("Hunt Conditions (Sequence)"); // Hunt Branch
+        Inverter playerNotVisible = new Inverter("Player Not Visible? (Inverter)"); // Hunt Branch, Patrol Branch
+        Leaf runToHotspotPoint = new Leaf("Run to Hotspot Point (Action Leaf)", RunToHotspotPoint); // Hunt Branch
+        Leaf generateSearchPoints = new Leaf("Generate Search Points (Action Leaf)", GenerateSearchPoints); // Hunt Branch
         BehaviourTree searchLoopConditionTree = new BehaviourTree(); // Hunt Branch
+        Loop searchArea = new Loop("Search Area (Loop)", searchLoopConditionTree); // Hunt Branch
         Sequence searchLoopConditions = new Sequence("Search Loop Conditions (Sequence)"); // Hunt Branch
         Leaf searchPointsLeft = new Leaf("Search Points Left (Condition Leaf)", SearchPointsLeft); // Hunt Branch
-        Loop searchArea = new Loop("Search Area (Loop)", searchLoopConditionTree); // Hunt Branch
-        Leaf lookAround = new Leaf("Look Around! (Action Leaf)", LookAround); // Hunt Branch
+        Inverter noNewHotspot = new Inverter("No new Hotspot (Inverter)"); // Hunt Branch
+        Leaf newHotspot = new Leaf("New Hotspot?", IsNewHotspot); // Hunt Branch
         Leaf goToPoint = new Leaf("Go To Point (Action Leaf)", GoToPoint); // Hunt Branch
-        Leaf newHotspot = new Leaf("New Hotspot?", IsNewHotspot);
-        Inverter noNewHotspot = new Inverter("No new Hotspot (Inverter)");
+        Leaf lookAround = new Leaf("Look Around! (Action Leaf)", LookAround); // Hunt Branch
+        Sequence investigate = new Sequence("Investigate (Sequence)"); // Hunt Branch
+        Sequence soundCheck = new Sequence("Sound Check (Sequence)"); // Hunt Branch
+        Leaf isSuspicious = new Leaf("Entity is Suspicious? (Condition Leaf)", IsSuspicious); // Hunt Branch, Patrol Branch
+        Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething); // Hunt Branch
+        Sequence investigateSequence = new Sequence("Investigate Sequence (Sequence)"); // Hunt Branch
+        Leaf goToInterestPoint = new Leaf("Go To Interest Point (Action Leaf)", GoToInterestPoint); // Hunt Branch
+
+
+        // ----------- ( NOT IN NEW TREE ) -----------
+        Leaf goToPlayerPosition = new Leaf("Go To Player Position (Action Leaf)", GoToPlayerPosition);
+        Sequence stalkPursuit = new Sequence("Stalk Pursuit (Sequence)");
+        Inverter haventHeardAnything = new Inverter("Haven't heard Anything (Inverter)");
+        Leaf moveToHotspotPoint = new Leaf("Move to Hotspot Point (Action Leaf)", MoveToHotspotPoint);
+        
 
         // Patrol Conditions Tree
         playerNotVisible.AddChild(isPlayerVisible);
@@ -151,6 +169,16 @@ public class EntityBehaviour : BTAgent
         return Node.Status.FAILURE;
     }
 
+    public Node.Status SawSomething() // ?
+    {
+        // Needs implementation!!!
+        if (Blackboard.Instance.isPlayerVisible)
+        {
+            return Node.Status.SUCCESS;
+        }
+        return Node.Status.FAILURE;
+    }
+
     public Node.Status IsNewHotspot() // ?
     {
         if (Blackboard.Instance.CheckIfNewHotspot())
@@ -191,6 +219,17 @@ public class EntityBehaviour : BTAgent
         return Node.Status.FAILURE;
     }
 
+    public Node.Status HeardLoudNoise() // ?
+    {
+        // Needs implementation!!!
+        if (Blackboard.Instance.heardNoise)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
+    }
+
     public Node.Status SearchPointsLeft() // ?
     {
         if(Blackboard.Instance.searchPoints.Count > 0)
@@ -204,8 +243,23 @@ public class EntityBehaviour : BTAgent
     }
 
     // Action nodes
-
     public Node.Status GoToPoint() // !
+    {
+        rend.material.color = Color.gray;
+
+        Blackboard.Instance.UpdateMovementSpeed(3.5f); // OK
+
+        Node.Status s = GoToLocation(Blackboard.Instance.searchPoints[0]);
+
+        if (s == Node.Status.SUCCESS)
+        {
+            Blackboard.Instance.searchPoints.RemoveAt(0);
+        }
+
+        return s;
+    }
+
+    public Node.Status RunToLastSeenPosition() // !
     {
         rend.material.color = Color.gray;
 
@@ -242,6 +296,17 @@ public class EntityBehaviour : BTAgent
         return s;
     }
 
+    public Node.Status AnnouncePursuit() // !
+    {
+        // Needs Implementation !!!
+        rend.material.color = Color.yellow;
+
+        // This look around function does not work like it should!
+        Node.Status s = turningModule.LookAround();
+
+        return s;
+    }
+
     public Node.Status GenerateSearchPoints() // !
     {
         rend.material.color = Color.white;
@@ -259,6 +324,35 @@ public class EntityBehaviour : BTAgent
     public Node.Status MoveToHotspotPoint() // !
     {
         rend.material.color = Color.black;
+
+        Blackboard.Instance.UpdateMovementSpeed(3.5f);
+
+        Blackboard.Instance.SetCurrentHotspot();
+
+        Node.Status s = GoToLocation(Blackboard.Instance.hotspotOrigin);
+
+        return s;
+    }
+
+    public Node.Status GoToInterestPoint() // !
+    {
+        // Needs implementation !!!
+        rend.material.color = Color.black;
+
+        Blackboard.Instance.UpdateMovementSpeed(3.5f);
+
+        Blackboard.Instance.SetCurrentHotspot();
+
+        Node.Status s = GoToLocation(Blackboard.Instance.hotspotOrigin);
+
+        return s;
+    }
+
+    public Node.Status RunToHotspotPoint() // !
+    {
+        rend.material.color = Color.black;
+
+        // Need implementation !!!
 
         Blackboard.Instance.UpdateMovementSpeed(3.5f);
 
