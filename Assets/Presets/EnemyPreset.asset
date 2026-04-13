@@ -13,16 +13,23 @@ MonoBehaviour:
   m_Name: EnemyPreset
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPreset
   delay: 0.1
-  fovRadius: 10
-  angle: 100
   targetMask:
     serializedVersion: 2
     m_Bits: 64
   obstructionMask:
     serializedVersion: 2
     m_Bits: 512
+  mainConeFovRadius: 15
+  mainConeAngle: 100
+  forgetClimpseTime: 3
+  focuseConeFovRadius: 10
+  focuseConeAngle: 50
   attackRange: 2.5
   entryExpirationTime: 3
+  forgetLoudNoiseTime: 5
+  suspicionGainOnLoudNoise: 100
+  suspicionGainOnMediumNoise: 50
+  suspicionGainOnSilentNoise: 10
   suspicionDecayRate: 10
   suspicionThreshold: 100
   maxSuspicionLevel: 200

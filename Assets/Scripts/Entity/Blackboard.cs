@@ -11,6 +11,10 @@ public class Blackboard : MonoBehaviour
     public bool canReachLocation = false;
     public bool heardNoise = false;
     public bool isSuspicious = false;
+    public bool heardLoudNoise = false;
+
+    // WIP
+    public bool sawSomething = false;
 
     [Header("Position info")]
     public Vector3 interestPoint;

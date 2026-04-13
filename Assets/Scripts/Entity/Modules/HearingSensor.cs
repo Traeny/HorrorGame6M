@@ -5,19 +5,14 @@ public class HearingSensor : MonoBehaviour
 {
     public EnemyPreset preset;
 
-    [Header("Debug")]
-    public GameObject ears;
-    public float entryExpirationTime = 3f;
-
     [Header("Components")]
     public SuspicionManager suspicionManager;
     public NoiseType noiseType { get; private set; } = NoiseType.Medium;
     public float noiseTime { get; private set; } = 0f;
-
+    public float loudNoiseTime { get; private set; } = 0f;
     [SerializeField] string hearingDebug = "";
-
     public float timeSinceHeardNoise => Time.time - noiseTime;
-
+    private float timeSinceHeardLoudNoise => Time.time - loudNoiseTime;
     private float timer = 0f;
 
     private void Start()
@@ -45,27 +40,34 @@ public class HearingSensor : MonoBehaviour
 
     public void OnNoiseHeard(NoiseInfo noise)
     {
-        Blackboard.Instance.heardNoise = true;
-        ears.SetActive(true);
-
-        noiseTime = Time.time;
         noiseType = noise.type;
 
+        // LOUD
         if (noise.type == NoiseType.Loud)
         {
+            Blackboard.Instance.heardLoudNoise = true;
+            loudNoiseTime = Time.time;
+
             Blackboard.Instance.UpdateHotspotOrigin(noise.position);
-            suspicionManager.AddSuspicion(100f);
+            suspicionManager.AddSuspicion(preset.suspicionGainOnLoudNoise);
         }
+        // MEDIUM
         else if(noise.type == NoiseType.Medium)
         {
+            Blackboard.Instance.heardNoise = true;
+            noiseTime = Time.time;
+
             Blackboard.Instance.UpdateHotspotOrigin(noise.position);
-            suspicionManager.AddSuspicion(50f);
+            suspicionManager.AddSuspicion(preset.suspicionGainOnMediumNoise);
         }
+        // SILENT
         else if(noise.type == NoiseType.Silent)
         {
-            suspicionManager.AddSuspicion(10f);
-        }
+            Blackboard.Instance.heardNoise = true;
+            noiseTime = Time.time;
 
+            suspicionManager.AddSuspicion(preset.suspicionGainOnSilentNoise);
+        }
 
         if(NavMesh.SamplePosition(noise.position, out NavMeshHit hit, 4f, NavMesh.AllAreas))
         {
@@ -93,11 +95,20 @@ public class HearingSensor : MonoBehaviour
         {
             ForgetNoise();
         }
+
+        if(timeSinceHeardLoudNoise >= preset.forgetLoudNoiseTime)
+        {
+            ForgetLoudNoise();
+        }
     }
 
     public void ForgetNoise()
     {
         Blackboard.Instance.heardNoise = false;
-        ears.SetActive(false);
+    }
+
+    public void ForgetLoudNoise()
+    {
+        Blackboard.Instance.heardLoudNoise = false;
     }
 }

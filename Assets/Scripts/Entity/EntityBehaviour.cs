@@ -176,22 +176,13 @@ public class EntityBehaviour : BTAgent
 
         tree.AddChild(entityRoot);
         tree.PrintTree();
-
-        //stalkPursuit.AddChild(isSuspicious);
-        //stalkPursuit.AddChild(stalkBehaviour);
-        //huntBehaviour.AddChild(directPursuit);
-        //huntBehaviour.AddChild(stalkPursuit);
-
-        // ----------- ( NOT IN NEW TREE ) -----------
-        //Leaf goToPlayerPosition = new Leaf("Go To Player Position (Action Leaf)", GoToPlayerPosition);
-        //Sequence stalkPursuit = new Sequence("Stalk Pursuit (Sequence)");
-        //Inverter haventHeardAnything = new Inverter("Haven't heard Anything (Inverter)");
-        //Leaf moveToHotspotPoint = new Leaf("Move to Hotspot Point (Action Leaf)", MoveToHotspotPoint);
-
     }
 
-    // Condition nodes
-    public Node.Status IsPlayerVisible() // ?
+    // ----------- ( Condition nodes ) -----------
+    /*
+     *  Checks if the player is visile via the balckboard 
+     */
+    public Node.Status IsPlayerVisible()
     {
         if(Blackboard.Instance.isPlayerVisible)
         {
@@ -199,18 +190,11 @@ public class EntityBehaviour : BTAgent
         }
         return Node.Status.FAILURE;
     }
-
-    public Node.Status SawSomething() // ?
-    {
-        // Needs implementation!!!
-        if (Blackboard.Instance.isPlayerVisible)
-        {
-            return Node.Status.SUCCESS;
-        }
-        return Node.Status.FAILURE;
-    }
-
-    public Node.Status IsNewHotspot() // ?
+    
+    /*
+     *  Checks if there is a new hotspot point via the blacboard
+     */
+    public Node.Status IsNewHotspot()
     {
         if (Blackboard.Instance.CheckIfNewHotspot())
         {
@@ -220,7 +204,10 @@ public class EntityBehaviour : BTAgent
         return Node.Status.FAILURE;
     }
 
-    public Node.Status IsSuspicious() // ?
+    /*
+     *  Checks if the enemy is suspicious via the blacboard
+     */
+    public Node.Status IsSuspicious()
     {
         if (Blackboard.Instance.isSuspicious)
         {
@@ -230,7 +217,10 @@ public class EntityBehaviour : BTAgent
         return Node.Status.FAILURE;
     }
 
-    public Node.Status IsPlayerInAttackRange() // ?
+    /*
+     *  Checks if the player is in attack range via the blackboard
+     */
+    public Node.Status IsPlayerInAttackRange()
     {
         if (Blackboard.Instance.playerInAttackRange)
         {
@@ -240,7 +230,10 @@ public class EntityBehaviour : BTAgent
         return Node.Status.FAILURE;
     }
 
-    public Node.Status HeardSomething() // ?
+    /*
+     *  Checks if the enemy recently heard something via the blackboard
+     */
+    public Node.Status HeardSomething()
     {
         if (Blackboard.Instance.heardNoise)
         {
@@ -250,18 +243,10 @@ public class EntityBehaviour : BTAgent
         return Node.Status.FAILURE;
     }
 
-    public Node.Status HeardLoudNoise() // ?
-    {
-        // Needs implementation!!!
-        if (Blackboard.Instance.heardNoise)
-        {
-            return Node.Status.SUCCESS;
-        }
-
-        return Node.Status.FAILURE;
-    }
-
-    public Node.Status SearchPointsLeft() // ?
+    /*
+     *  Checks if there's any search points left via the blacboard
+     */
+    public Node.Status SearchPointsLeft()
     {
         if(Blackboard.Instance.searchPoints.Count > 0)
         {
@@ -271,6 +256,31 @@ public class EntityBehaviour : BTAgent
         {
             return Node.Status.FAILURE;
         }   
+    }
+
+    /*
+     *  Checks if the enemy has heard a loud noice recently via the blackboard
+     */
+    public Node.Status HeardLoudNoise()
+    {
+        if (Blackboard.Instance.heardLoudNoise)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
+    }
+
+    /*
+     *  Chacks if the enemy has seen the player recently via the blacboard
+     */
+    public Node.Status SawSomething()
+    {
+        if (Blackboard.Instance.isPlayerVisible)
+        {
+            return Node.Status.SUCCESS;
+        }
+        return Node.Status.FAILURE;
     }
 
     // Action nodes
