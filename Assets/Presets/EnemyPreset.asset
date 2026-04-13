@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ff4b734888a894ab20a74ec28adfc3, type: 3}
   m_Name: EnemyPreset
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPreset
-  delay: 0.1
+  delay: 0.01
   targetMask:
     serializedVersion: 2
     m_Bits: 64
   obstructionMask:
     serializedVersion: 2
     m_Bits: 512
+  walkSpeed: 3.5
+  runSpeed: 5
   mainConeFovRadius: 15
   mainConeAngle: 100
   forgetClimpseTime: 3
@@ -34,3 +36,4 @@ MonoBehaviour:
   suspicionThreshold: 100
   maxSuspicionLevel: 200
   hotspotRadius: 7
+  searchPointAmount: 3

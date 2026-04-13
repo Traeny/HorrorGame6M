@@ -3,16 +3,19 @@ using UnityEngine;
 
 public class EntityBehaviour : BTAgent
 {
+    [Header("Preset")]
+    public EnemyPreset preset;
+
     [Header("Modules")]
     public KillPlayer killPlayerModule;
     public CanGetToLocation canGetToLocationModule;
     public Turn turningModule;
     public HotspotArea hotspotModule;
+    public AnnouncePursuit pursuit;
 
     [Header("Debug")]
     public Renderer rend;
 
-    // Testing
     private Vector3 currentTarget;
     private bool hasTarget = false;
 
@@ -47,6 +50,13 @@ public class EntityBehaviour : BTAgent
         if (hotspotModule == null)
         {
             Debug.LogError($"Hotspot module Missing from Entity Behaviour Script");
+        }
+
+        pursuit = GetComponentInChildren<AnnouncePursuit>();
+
+        if (pursuit == null)
+        {
+            Debug.LogError($"Pursuit module Missing from Entity Behaviour Script");
         }
 
         // ----------- ( ROOT ) -----------
@@ -283,12 +293,19 @@ public class EntityBehaviour : BTAgent
         return Node.Status.FAILURE;
     }
 
-    // Action nodes
-    public Node.Status GoToPoint() // !
+    // ----------- ( Action nodes ) -----------
+    /*
+     * Moving to the current first searchpoint found in the blackboard. 
+     * When the current index 0 point is reached it gets removed.
+     * 
+     * Agents color changes to ORANGE for debugging
+     */
+    public Node.Status GoToPoint() 
     {
-        rend.material.color = Color.gray;
+        rend.material.color = Color.orange;
 
-        Blackboard.Instance.UpdateMovementSpeed(3.5f); // OK
+        // Walking
+        Blackboard.Instance.UpdateMovementSpeed(preset.walkSpeed);
 
         Node.Status s = GoToLocation(Blackboard.Instance.searchPoints[0]);
 
@@ -300,59 +317,49 @@ public class EntityBehaviour : BTAgent
         return s;
     }
 
-    public Node.Status RunToLastSeenPosition() // !
+    /*
+     *  Running to the players last seen position found in the blackboard.
+     *  
+     *  Agents color changes to MAGENTA for debugging
+     */
+    public Node.Status RunToLastSeenPosition()
+    {
+        rend.material.color = Color.magenta;
+
+        // Running
+        Blackboard.Instance.UpdateMovementSpeed(preset.runSpeed);
+
+        Node.Status s = GoToLocation(Blackboard.Instance.lastSeenPosition);
+
+        return s;
+    }
+
+    /*
+     * This runs when the enemy has reached it's desired location and wants to search the are
+     * NOTE: This function does not work for some reason and needs to be fixed!
+     * 
+     * When looing around the agenst color is YELLOW
+     */
+    public Node.Status LookAround() 
+    {
+        rend.material.color = Color.yellow;
+
+        Node.Status s = turningModule.LookAround();
+
+        return s;
+    }
+
+    /*
+     * This node prompts the generation of search points inside the hotsopt area.
+     * if the points don't get created or are null the node fails
+     * 
+     * During this time the enemy will be GRAY, but it won't really be visible
+     */
+    public Node.Status GenerateSearchPoints() 
     {
         rend.material.color = Color.gray;
 
-        Blackboard.Instance.UpdateMovementSpeed(3.5f); // OK
-
-        Node.Status s = GoToLocation(Blackboard.Instance.searchPoints[0]);
-
-        if (s == Node.Status.SUCCESS)
-        {
-            Blackboard.Instance.searchPoints.RemoveAt(0);
-        }
-
-        return s;
-    }
-
-    public Node.Status KillPlayer() // !
-    {
-        // This function could trigger the different kill animations
-
-        rend.material.color = Color.red;
-
-        killPlayerModule.KillPlayerAction();
-
-        return Node.Status.SUCCESS;
-    }
-
-    public Node.Status LookAround() // !
-    {
-        rend.material.color = Color.yellow;
-
-        // This look around function does not work like it should!
-        Node.Status s = turningModule.LookAround();
-
-        return s;
-    }
-
-    public Node.Status AnnouncePursuit() // !
-    {
-        // Needs Implementation !!!
-        rend.material.color = Color.yellow;
-
-        // This look around function does not work like it should!
-        Node.Status s = turningModule.LookAround();
-
-        return s;
-    }
-
-    public Node.Status GenerateSearchPoints() // !
-    {
-        rend.material.color = Color.white;
-
-        List<Vector3> points = hotspotModule.GetRandomPoints(3, Blackboard.Instance.hotspotOrigin);
+        List<Vector3> points = hotspotModule.GetRandomPoints(preset.searchPointAmount, Blackboard.Instance.hotspotOrigin);
 
         if (points.Count <= 0 || points == null)
         {
@@ -362,11 +369,19 @@ public class EntityBehaviour : BTAgent
         return Node.Status.SUCCESS;
     }
 
-    public Node.Status MoveToHotspotPoint() // !
+    /*
+     * This node is for the agent to run to the hotspot point that is registered in the blackboard
+     * NOTE: i dont know why there's logic to set the new hotspot point? 
+     * Maybe to make sure it's updated
+     * 
+     * While moving to the hotspot point the agent is PURPLE
+     */
+    public Node.Status RunToHotspotPoint()
     {
-        rend.material.color = Color.black;
+        rend.material.color = Color.purple;
 
-        Blackboard.Instance.UpdateMovementSpeed(3.5f);
+        // Running
+        Blackboard.Instance.UpdateMovementSpeed(preset.runSpeed);
 
         Blackboard.Instance.SetCurrentHotspot();
 
@@ -375,51 +390,35 @@ public class EntityBehaviour : BTAgent
         return s;
     }
 
-    public Node.Status GoToInterestPoint() // !
+    /*
+     *  This node makes the entity wal to it's current interest point
+     *  
+     *  While doing so the agents color is BLUE
+     */
+    public Node.Status GoToInterestPoint()
     {
-        // Needs implementation !!!
-        rend.material.color = Color.black;
+        rend.material.color = Color.blue;
 
-        Blackboard.Instance.UpdateMovementSpeed(3.5f);
+        // Waliking
+        Blackboard.Instance.UpdateMovementSpeed(preset.walkSpeed);
 
-        Blackboard.Instance.SetCurrentHotspot();
-
-        Node.Status s = GoToLocation(Blackboard.Instance.hotspotOrigin);
+        Node.Status s = GoToLocation(Blackboard.Instance.interestPoint);
 
         return s;
     }
 
-    public Node.Status RunToHotspotPoint() // !
-    {
-        rend.material.color = Color.black;
-
-        // Need implementation !!!
-
-        Blackboard.Instance.UpdateMovementSpeed(3.5f);
-
-        Blackboard.Instance.SetCurrentHotspot();
-
-        Node.Status s = GoToLocation(Blackboard.Instance.hotspotOrigin);
-
-        return s;
-    }
-
-    public Node.Status GoToPlayerPosition() // !
-    {
-        rend.material.color = Color.cyan;
-
-        Blackboard.Instance.UpdateMovementSpeed(5f); // OK
-
-        Node.Status s = GoToLocation(Blackboard.Instance.lastSeenPosition);
-
-        return s;
-    }
-
-    public Node.Status WanderRandomly() // !
+    /*
+     * Generating random patrol point inside the partol area.
+     * This goes on infinitely till the enemy detects someting
+     * 
+     * While patroling the agent it green
+     */
+    public Node.Status WanderRandomly()
     {
         rend.material.color = Color.green;
 
-        Blackboard.Instance.UpdateMovementSpeed(3.5f); // OK
+        // Walikng
+        Blackboard.Instance.UpdateMovementSpeed(preset.walkSpeed);
 
         if (!hasTarget)
         {
@@ -435,5 +434,35 @@ public class EntityBehaviour : BTAgent
         }
 
         return GoToLocation(currentTarget);
+    }
+
+    /*
+     * This is a placeholder function
+     * Needs implementation!
+     * 
+     * During announcement the agent will be AZURE color
+     */
+    public Node.Status AnnouncePursuit()
+    {
+        rend.material.color = Color.azure;
+
+        Node.Status s = pursuit.AnnouncePlayerPursuit();
+
+        return s;
+    }
+
+   /*
+    * This runs when the player gets too close to the enemy.
+    * NOTE: In the future this will be updated to have some actual logic
+    * 
+    * Agents color changes to RED for debugging 
+    */
+    public Node.Status KillPlayer()
+    {
+        rend.material.color = Color.red;
+
+        killPlayerModule.KillPlayerAction();
+
+        return Node.Status.SUCCESS;
     }
 }

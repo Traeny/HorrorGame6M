@@ -12,8 +12,6 @@ public class Blackboard : MonoBehaviour
     public bool heardNoise = false;
     public bool isSuspicious = false;
     public bool heardLoudNoise = false;
-
-    // WIP
     public bool sawSomething = false;
 
     [Header("Position info")]
@@ -24,7 +22,7 @@ public class Blackboard : MonoBehaviour
     public Vector3 lastSeenPosition;
     private Vector3 currentHotspot;
 
-    //[Header("Movement Speed")]
+    [Header("Movement Speed")]
     public float moveSpeed;
 
     public static Blackboard Instance

@@ -8,6 +8,10 @@ public class EnemyPreset : ScriptableObject
     public LayerMask targetMask; // Player
     public LayerMask obstructionMask; // FOV block 
 
+    [Header("Movement")]
+    public float walkSpeed = 3.5f;
+    public float runSpeed = 5f;
+
     [Header("Vision")]
     [Header("Main Cone")]
     public float mainConeFovRadius = 10f;
@@ -36,5 +40,6 @@ public class EnemyPreset : ScriptableObject
 
     [Header("Hotspot Module")]
     public float hotspotRadius = 5f;
+    public int searchPointAmount = 3;
 
 }

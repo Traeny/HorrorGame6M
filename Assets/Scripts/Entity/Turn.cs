@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,7 +7,6 @@ public class Turn : MonoBehaviour
 
     private float lookElapsed = 0f;
     private float lookDuration = 3f;
-    //private float rotationSpeed = 90f;
     private bool isLooking = false;
 
     private void Start()
@@ -27,24 +25,17 @@ public class Turn : MonoBehaviour
         {
             isLooking = true;
             lookElapsed = 0f;
-            //agent.updateRotation = false; // stop auto rotation
         }
 
-        // Rotate while duration not finished
         if (lookElapsed < lookDuration)
         {
-            //transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
             lookElapsed += Time.deltaTime;
             return Node.Status.RUNNING;
         }
         else
         {
-            // Done looking
-            //agent.updateRotation = true;
             isLooking = false;
             return Node.Status.SUCCESS;
         }
     }
-
-
 }
