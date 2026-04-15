@@ -49,7 +49,7 @@ public class Leaf : Node
             s = Status.FAILURE;
         }
 
-        //Debug.Log(name + " " + s);
+        Debug.Log(name + " " + s);
 
         return s;
     }

@@ -6,24 +6,33 @@ public class Blackboard : MonoBehaviour
     static Blackboard instance;
 
     [Header("Conditions")]
+    [Header("Vision")]
     public bool isPlayerVisible = false;
-    public bool playerInAttackRange = false;
-    public bool canReachLocation = false;
+    public bool sawSomething = false;
+
+    [Header("Hearing")]
     public bool heardNoise = false;
     public bool isSuspicious = false;
     public bool heardLoudNoise = false;
-    public bool sawSomething = false;
+
+    [Header("Attack")]
+    public bool playerInAttackRange = false;
+
+    [Header("Location")]
+    public bool canReachLocation = false;
 
     [Header("Position info")]
     public Vector3 interestPoint;
     public Vector3 hotspotOrigin;
-    public List<Vector3> searchPoints;
     public Vector3 lastHeardPosition;
     public Vector3 lastSeenPosition;
     private Vector3 currentHotspot;
 
     [Header("Movement Speed")]
     public float moveSpeed;
+
+    [Header("Search point list")]
+    public List<Vector3> searchPoints;
 
     public static Blackboard Instance
     {

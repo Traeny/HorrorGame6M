@@ -6,6 +6,8 @@ public class EntityBehaviour : BTAgent
     [Header("Preset")]
     public EnemyPreset preset;
 
+
+
     [Header("Modules")]
     public KillPlayer killPlayerModule;
     public CanGetToLocation canGetToLocationModule;
@@ -15,6 +17,8 @@ public class EntityBehaviour : BTAgent
 
     [Header("Debug")]
     public Renderer rend;
+
+
 
     private Vector3 currentTarget;
     private bool hasTarget = false;
@@ -81,33 +85,34 @@ public class EntityBehaviour : BTAgent
 
         // ----------- ( HUNT BRANCH ) -----------
         Selector huntBehaviour = new Selector("Hunt Behaviour (Selector)"); // Hunt Branch
-        Sequence pursueSequence = new Sequence("Pursue Sequence (Sequence)"); // Hunt Branch
         Selector pursuitConditions = new Selector("Pursuit Conditions (Selector)"); // Hunt Branch
+        Selector pursuitStyleSelector = new Selector("Pursuit Style Selector (Selector)"); // Hunt Branch
+        Selector senseCheck = new Selector("Sense Chec (Selector)"); // Hunt Branch
+        Sequence pursueSequence = new Sequence("Pursue Sequence (Sequence)"); // Hunt Branch
+        Sequence directPursuit = new Sequence("Direct Pursuit (Sequence)"); // Hunt Branch
+        Sequence stalkConditions = new Sequence("Hunt Conditions (Sequence)"); // Hunt Branch
+        Sequence investigateSequence = new Sequence("Investigate Sequence (Sequence)"); // Hunt Branch
+        Sequence investigate = new Sequence("Investigate (Sequence)"); // Hunt Branch
+        Sequence triggerInvetigation = new Sequence("Trigger Investigation (Sequence)"); // Hunt Branch
+        Sequence searchLoopConditions = new Sequence("Search Loop Conditions (Sequence)"); // Hunt Branch
         Leaf sawSomething = new Leaf("Saw Something (Conditions Leaf)", SawSomething); // Hunt Branch
         Leaf heardLoudNoise = new Leaf("Heard Loud Noise (Condition Leaf)", HeardLoudNoise); // Hunt Branch
+        Leaf searchPointsLeft = new Leaf("Search Points Left (Condition Leaf)", SearchPointsLeft); // Hunt Branch
+        Leaf newHotspot = new Leaf("New Hotspot? (Condition Leaf)", IsNewHotspot); // Hunt Branch
+        Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething); // Hunt Branch
         Leaf announcePursuit = new Leaf("Announce Pursuit (Action Leaf)", AnnouncePursuit); // Hunt Branch
-        Selector pursuitStyleSelector = new Selector("Pursuit Style Selector (Selector)"); // Hunt Branch
-        Sequence directPursuit = new Sequence("Direct Pursuit (Sequence)"); // Hunt Branch
         Leaf runToLastSeenPosition = new Leaf("Run To Last Seen Position (Action Leaf)", RunToLastSeenPosition); // Hunt Branch
-        BehaviourTree huntConditionTree = new BehaviourTree(); // Hunt Branch
-        DependencySequence stalkBehaviour = new DependencySequence("Stalk Behaviour (Dependancy Sequence)", huntConditionTree, agent); // Hunt Branch
-        Sequence stalkConditions = new Sequence("Hunt Conditions (Sequence)"); // Hunt Branch
+        Leaf goToInterestPoint = new Leaf("Go To Interest Point (Action Leaf)", GoToInterestPoint); // Hunt Branch
+        Leaf lookAround = new Leaf("Look Around! (Action Leaf)", LookAround); // Hunt Branch
+        Leaf goToPoint = new Leaf("Go To Point (Action Leaf)", GoToPoint); // Hunt Branch
         Leaf runToHotspotPoint = new Leaf("Run to Hotspot Point (Action Leaf)", RunToHotspotPoint); // Hunt Branch
         Leaf generateSearchPoints = new Leaf("Generate Search Points (Action Leaf)", GenerateSearchPoints); // Hunt Branch
+        BehaviourTree huntConditionTree = new BehaviourTree(); // Hunt Branch
         BehaviourTree searchLoopConditionTree = new BehaviourTree(); // Hunt Branch
+        DependencySequence stalkBehaviour = new DependencySequence("Stalk Behaviour (Dependancy Sequence)", huntConditionTree, agent); // Hunt Branch
         Loop searchArea = new Loop("Search Area (Loop)", searchLoopConditionTree); // Hunt Branch
-        Sequence searchLoopConditions = new Sequence("Search Loop Conditions (Sequence)"); // Hunt Branch
-        Leaf searchPointsLeft = new Leaf("Search Points Left (Condition Leaf)", SearchPointsLeft); // Hunt Branch
         Inverter noNewHotspot = new Inverter("No new Hotspot (Inverter)"); // Hunt Branch
-        Leaf newHotspot = new Leaf("New Hotspot?", IsNewHotspot); // Hunt Branch
-        Leaf goToPoint = new Leaf("Go To Point (Action Leaf)", GoToPoint); // Hunt Branch
-        Leaf lookAround = new Leaf("Look Around! (Action Leaf)", LookAround); // Hunt Branch
-        Sequence investigate = new Sequence("Investigate (Sequence)"); // Hunt Branch
-        Sequence soundCheck = new Sequence("Sound Check (Sequence)"); // Hunt Branch
-        Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething); // Hunt Branch
-        Sequence investigateSequence = new Sequence("Investigate Sequence (Sequence)"); // Hunt Branch
-        Leaf goToInterestPoint = new Leaf("Go To Interest Point (Action Leaf)", GoToInterestPoint); // Hunt Branch
-
+        
         // ----------- ( Patrol Branch build ) -----------
         // Patrol condition Tree (BT)
         playerNotVisible.AddChild(isPlayerVisible);
@@ -131,6 +136,10 @@ public class EntityBehaviour : BTAgent
         searchLoopConditions.AddChild(noNewHotspot);
         searchLoopConditionTree.AddChild(searchLoopConditions);
 
+        // Sense Check (Selector)
+        senseCheck.AddChild(sawSomething);
+        senseCheck.AddChild(heardSomething);
+
         // Search area (loop)
         searchArea.AddChild(goToPoint);
         searchArea.AddChild(lookAround);
@@ -148,8 +157,8 @@ public class EntityBehaviour : BTAgent
         pursuitStyleSelector.AddChild(directPursuit);
         pursuitStyleSelector.AddChild(stalkBehaviour);
 
-        // Pursuit Condiditons (Selector)
-        pursuitConditions.AddChild(sawSomething);
+        // Pursuit Condiditons (Selector) DONE
+        pursuitConditions.AddChild(isPlayerVisible);
         pursuitConditions.AddChild(heardLoudNoise);
 
         // Pursue Sequence (Sequence)
@@ -162,11 +171,11 @@ public class EntityBehaviour : BTAgent
         investigateSequence.AddChild(lookAround);
 
         // Sound Check (Sequence)
-        soundCheck.AddChild(isSuspicious);
-        soundCheck.AddChild(heardSomething);
+        triggerInvetigation.AddChild(isSuspicious);
+        triggerInvetigation.AddChild(senseCheck);
 
         // Investigate (Sequence)
-        investigate.AddChild(soundCheck);
+        investigate.AddChild(triggerInvetigation);
         investigate.AddChild(investigateSequence);
 
         // Hunt Behavior (Selector)
@@ -324,7 +333,7 @@ public class EntityBehaviour : BTAgent
      */
     public Node.Status RunToLastSeenPosition()
     {
-        rend.material.color = Color.magenta;
+        rend.material.color = Color.lightBlue;
 
         // Running
         Blackboard.Instance.UpdateMovementSpeed(preset.runSpeed);
@@ -444,7 +453,7 @@ public class EntityBehaviour : BTAgent
      */
     public Node.Status AnnouncePursuit()
     {
-        rend.material.color = Color.azure;
+        rend.material.color = Color.black;
 
         Node.Status s = pursuit.AnnouncePlayerPursuit();
 

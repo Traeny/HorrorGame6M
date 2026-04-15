@@ -15,10 +15,8 @@ namespace Entity_Script
         public GameObject player;
         public Transform eyeOrigin;
 
-        // Testing
         public float visionTime { get; private set; } = 0f;
         public float timeSinceSawSomething => Time.time - visionTime;
-
 
         private float timer = 0;
 
@@ -71,7 +69,6 @@ namespace Entity_Script
                         sawSomethignEyes.SetActive(true);
                         cantSeePlayer.SetActive(false);
 
-                        // WIP
                         Blackboard.Instance.sawSomething = true;
                         visionTime = Time.time;
                     }
@@ -79,20 +76,15 @@ namespace Entity_Script
             }
         }
 
-        // In this i could add logic that draws a cirsle around the seen target and randomly choosing a point on the navmesh on it
         private void UpdateInterestPoint()
         {
             if (NavMesh.SamplePosition(player.transform.position, out NavMeshHit hit, 4f, NavMesh.AllAreas))
             {
                 Blackboard.Instance.UpdateInterestPoint(hit.position);
-                //Blackboard.Instance.lastSeenPosition = hit.position;
-                //Blackboard.Instance.UpdateHotspotOrigin(hit.position);
             }
             else
             {
                 Blackboard.Instance.UpdateInterestPoint(player.transform.position);
-                //Blackboard.Instance.lastHeardPosition = player.transform.position;
-                //Blackboard.Instance.UpdateHotspotOrigin(player.transform.position);
             }
         }
 

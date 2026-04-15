@@ -28,7 +28,7 @@ MonoBehaviour:
   focuseConeAngle: 50
   attackRange: 2.5
   entryExpirationTime: 3
-  forgetLoudNoiseTime: 5
+  forgetLoudNoiseTime: 0.5
   suspicionGainOnLoudNoise: 100
   suspicionGainOnMediumNoise: 50
   suspicionGainOnSilentNoise: 10
