@@ -16,6 +16,7 @@ public class SuspicionManager : MonoBehaviour
         suspicionLevel = Mathf.Clamp(suspicionLevel, 0, preset.maxSuspicionLevel);
 
         Blackboard.Instance.isSuspicious = suspicionLevel >= preset.suspicionThreshold;
+        Blackboard.Instance.isHighlySuspicious = suspicionLevel >= preset.highlySuspiciousTreshold;
 
         if(suspicionLevel >= preset.suspicionThreshold)
         {

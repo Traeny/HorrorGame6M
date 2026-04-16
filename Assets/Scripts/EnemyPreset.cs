@@ -36,6 +36,7 @@ public class EnemyPreset : ScriptableObject
     [Header("Suspicion Manager Module")]
     public float suspicionDecayRate = 10f;
     public float suspicionThreshold = 100f;
+    public float highlySuspiciousTreshold = 150f;
     public float maxSuspicionLevel = 200f;
 
     [Header("Hotspot Module")]

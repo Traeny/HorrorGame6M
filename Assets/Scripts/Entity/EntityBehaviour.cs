@@ -6,8 +6,6 @@ public class EntityBehaviour : BTAgent
     [Header("Preset")]
     public EnemyPreset preset;
 
-
-
     [Header("Modules")]
     public KillPlayer killPlayerModule;
     public CanGetToLocation canGetToLocationModule;
@@ -17,8 +15,6 @@ public class EntityBehaviour : BTAgent
 
     [Header("Debug")]
     public Renderer rend;
-
-
 
     private Vector3 currentTarget;
     private bool hasTarget = false;
@@ -66,132 +62,112 @@ public class EntityBehaviour : BTAgent
         // ----------- ( ROOT ) -----------
         Selector entityRoot = new Selector("Entity Root (Selector)");
 
-        // ----------- ( PATROL BRANCH ) -----------
-        BehaviourTree patrolConditionTree = new BehaviourTree(); // Patrol
-        Sequence patrolConditions = new Sequence("Patrol Conditions (Sequence)"); // Patrol
-        Inverter notSuspicious = new Inverter("Entity Not Suspicious? (Inverter)"); // Patrol
-        DependencySequence patrolBehaviour = new DependencySequence("Patrol Behaviour (Dependancy Sequence)", patrolConditionTree, agent); // Patrol
-        Leaf wanderRandomly = new Leaf("Wander Randomly! (Action Leaf)", WanderRandomly); // Patrol
-
         // ----------- ( KILL BRANCH ) -----------
-        Sequence killBehaviour = new Sequence("Kill Behaviour (Sequence)"); // Kill Branch
-        Leaf playerInAttackRange = new Leaf("Is Player In Attack Range? (Condition Leaf)", IsPlayerInAttackRange); // Kill Branch
-        Leaf killPlayer = new Leaf("Kill Player! (Action Leaf)", KillPlayer); // Kill Branch
+        Sequence killBranch = new Sequence("Kill Branch (Sequence)");
+        Leaf playerInAttackRange = new Leaf("Is Player In Attack Range? (Condition Leaf)", IsPlayerInAttackRange);
+        Leaf killPlayer = new Leaf("Kill Player! (Action Leaf)", KillPlayer);
 
-        // ----------- ( HUNT BRANCH, PATROL BRANCH ) -----------
-        Leaf isSuspicious = new Leaf("Entity is Suspicious? (Condition Leaf)", IsSuspicious); // Hunt Branch, Patrol Branch
-        Leaf isPlayerVisible = new Leaf("Is Player Visible? (Condition Leaf)", IsPlayerVisible); // Hunt Branch, Patrol Branch
-        Inverter playerNotVisible = new Inverter("Player Not Visible? (Inverter)"); // Hunt Branch, Patrol Branch
+        // ----------- ( CHASE BRANCH ) -----------
+        Sequence chaseBranch = new Sequence("Chase Branch (Sequence)");
+        Leaf isPlayerVisible = new Leaf("Is Player Visible? (Condition Leaf)", IsPlayerVisible);
+        Leaf setChaseBoolActive = new Leaf("Set Chase Bool Active (Action Leaf)", SetChaseBoolActive);
+        Leaf runToLastSeenPosition = new Leaf("Run To Last Seen Position (Action Leaf)", RunToLastSeenPosition);
 
-        // ----------- ( HUNT BRANCH ) -----------
-        Selector huntBehaviour = new Selector("Hunt Behaviour (Selector)"); // Hunt Branch
-        Selector pursuitConditions = new Selector("Pursuit Conditions (Selector)"); // Hunt Branch
-        Selector pursuitStyleSelector = new Selector("Pursuit Style Selector (Selector)"); // Hunt Branch
-        Selector senseCheck = new Selector("Sense Chec (Selector)"); // Hunt Branch
-        Sequence pursueSequence = new Sequence("Pursue Sequence (Sequence)"); // Hunt Branch
-        Sequence directPursuit = new Sequence("Direct Pursuit (Sequence)"); // Hunt Branch
-        Sequence stalkConditions = new Sequence("Hunt Conditions (Sequence)"); // Hunt Branch
-        Sequence investigateSequence = new Sequence("Investigate Sequence (Sequence)"); // Hunt Branch
-        Sequence investigate = new Sequence("Investigate (Sequence)"); // Hunt Branch
-        Sequence triggerInvetigation = new Sequence("Trigger Investigation (Sequence)"); // Hunt Branch
-        Sequence searchLoopConditions = new Sequence("Search Loop Conditions (Sequence)"); // Hunt Branch
-        Leaf sawSomething = new Leaf("Saw Something (Conditions Leaf)", SawSomething); // Hunt Branch
-        Leaf heardLoudNoise = new Leaf("Heard Loud Noise (Condition Leaf)", HeardLoudNoise); // Hunt Branch
-        Leaf searchPointsLeft = new Leaf("Search Points Left (Condition Leaf)", SearchPointsLeft); // Hunt Branch
-        Leaf newHotspot = new Leaf("New Hotspot? (Condition Leaf)", IsNewHotspot); // Hunt Branch
-        Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething); // Hunt Branch
-        Leaf announcePursuit = new Leaf("Announce Pursuit (Action Leaf)", AnnouncePursuit); // Hunt Branch
-        Leaf runToLastSeenPosition = new Leaf("Run To Last Seen Position (Action Leaf)", RunToLastSeenPosition); // Hunt Branch
-        Leaf goToInterestPoint = new Leaf("Go To Interest Point (Action Leaf)", GoToInterestPoint); // Hunt Branch
-        Leaf lookAround = new Leaf("Look Around! (Action Leaf)", LookAround); // Hunt Branch
-        Leaf goToPoint = new Leaf("Go To Point (Action Leaf)", GoToPoint); // Hunt Branch
-        Leaf runToHotspotPoint = new Leaf("Run to Hotspot Point (Action Leaf)", RunToHotspotPoint); // Hunt Branch
-        Leaf generateSearchPoints = new Leaf("Generate Search Points (Action Leaf)", GenerateSearchPoints); // Hunt Branch
-        BehaviourTree huntConditionTree = new BehaviourTree(); // Hunt Branch
-        BehaviourTree searchLoopConditionTree = new BehaviourTree(); // Hunt Branch
-        DependencySequence stalkBehaviour = new DependencySequence("Stalk Behaviour (Dependancy Sequence)", huntConditionTree, agent); // Hunt Branch
-        Loop searchArea = new Loop("Search Area (Loop)", searchLoopConditionTree); // Hunt Branch
-        Inverter noNewHotspot = new Inverter("No new Hotspot (Inverter)"); // Hunt Branch
+        // ----------- ( ANNOUNCE PURSUIT BRANCH ) -----------
+        Sequence announcePursuitBranch = new Sequence("Announce Pursuit Branch (Sequence");
+        Sequence prePursuitCondition = new Sequence("Per Pursuit Conditions (Sequence)");
+        Leaf isHighlySuspicious = new Leaf("Is Highly Suspicious? (Condidion Leaf)", IsHighlySuspicious);
+        Inverter playerNotVisible = new Inverter("Player Not Visible? (Inverter)");
+        Leaf chaseNotActive = new Leaf("Chase Not Active (Condition Leaf)", ChaseNotActive);
+        Leaf hasNotAnnouncedPursuit = new Leaf("Has Not Announced Pursuit (Condition Leaf)", HasNotAnnouncedPursuit);
+        Leaf playAnnouncement = new Leaf("Announce Pursuit (Action Leaf)", AnnouncePursuit);
+        Leaf setHasAnnounced = new Leaf("Set Has Announed (Action Leaf)", SetHasAnnounced);
+
+        // ----------- ( STALK BRANCH ) -----------
+        Sequence stalkBranch = new Sequence("Stalk Branch (Sequence");
+        Leaf isSuspicious = new Leaf("Entity is Suspicious? (Condition Leaf)", IsSuspicious);
+        Leaf runToHotspotPoint = new Leaf("Run to Hotspot Point (Action Leaf)", RunToHotspotPoint);
+        Leaf generateSearchPoints = new Leaf("Generate Search Points (Action Leaf)", GenerateSearchPoints);
+        BehaviourTree searchLoopConditionTree = new BehaviourTree();
+        Loop searchArea = new Loop("Search Area (Loop)", searchLoopConditionTree);
+        Leaf goToPoint = new Leaf("Go To Point (Action Leaf)", GoToPoint);
+        Leaf lookAround = new Leaf("Look Around! (Action Leaf)", LookAround);
+        Sequence searchLoopConditions = new Sequence("Search Loop Conditions (Sequence)");
+        Leaf searchPointsLeft = new Leaf("Search Points Left (Condition Leaf)", SearchPointsLeft);
+
+        // ----------- ( INVESTIGATE BRANCH ) -----------
+        Sequence investigateBranch = new Sequence("Investigate Branch (Sequence)");
+        Selector senseCheck = new Selector("Sense Chec (Selector)");
+        Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething);
+        Leaf sawSomething = new Leaf("Saw Something (Conditions Leaf)", SawSomething);
+        Sequence investigateSequence = new Sequence("Investigate Sequence (Sequence)");
+        Leaf goToInterestPoint = new Leaf("Go To Interest Point (Action Leaf)", GoToInterestPoint);
+
+        // ----------- ( PATROL BRANCH ) -----------
+        BehaviourTree patrolConditionTree = new BehaviourTree();
+        Sequence patrolConditions = new Sequence("Patrol Conditions (Sequence)");
+        Inverter notSuspicious = new Inverter("Entity Not Suspicious? (Inverter)");
+        DependencySequence patrolBranch = new DependencySequence("Patrol Behaviour (Dependancy Sequence)", patrolConditionTree, agent);
+        Leaf wanderRandomly = new Leaf("Wander Randomly! (Action Leaf)", WanderRandomly);
         
         // ----------- ( Patrol Branch build ) -----------
-        // Patrol condition Tree (BT)
         playerNotVisible.AddChild(isPlayerVisible);
         notSuspicious.AddChild(isSuspicious);
         patrolConditions.AddChild(playerNotVisible);
         patrolConditions.AddChild(notSuspicious);
         patrolConditionTree.AddChild(patrolConditions);
 
-        // Patrol behaviour Branch
-        patrolBehaviour.AddChild(wanderRandomly);
+        patrolBranch.AddChild(wanderRandomly);
 
-        // ---------- ( Hunt Branch ) ------------------
-
-        // Hunt Conditions Tree (BT)
-        stalkConditions.AddChild(playerNotVisible);
-        huntConditionTree.AddChild(stalkConditions);
-
-        // Search Loop Condition Tree (BT)
-        noNewHotspot.AddChild(newHotspot);
-        searchLoopConditions.AddChild(searchPointsLeft);
-        searchLoopConditions.AddChild(noNewHotspot);
-        searchLoopConditionTree.AddChild(searchLoopConditions);
-
-        // Sense Check (Selector)
-        senseCheck.AddChild(sawSomething);
-        senseCheck.AddChild(heardSomething);
-
-        // Search area (loop)
-        searchArea.AddChild(goToPoint);
-        searchArea.AddChild(lookAround);
-
-        // Stalk behaviour (Sequence)
-        stalkBehaviour.AddChild(runToHotspotPoint);
-        stalkBehaviour.AddChild(generateSearchPoints);
-        stalkBehaviour.AddChild(searchArea);
-
-        // Direct Pursuit (Sequence)
-        directPursuit.AddChild(isPlayerVisible);
-        directPursuit.AddChild(runToLastSeenPosition);
-
-        // Pursuit Style Selector (Selector)
-        pursuitStyleSelector.AddChild(directPursuit);
-        pursuitStyleSelector.AddChild(stalkBehaviour);
-
-        // Pursuit Condiditons (Selector) DONE
-        pursuitConditions.AddChild(isPlayerVisible);
-        pursuitConditions.AddChild(heardLoudNoise);
-
-        // Pursue Sequence (Sequence)
-        pursueSequence.AddChild(pursuitConditions);
-        pursueSequence.AddChild(announcePursuit);
-        pursueSequence.AddChild(pursuitStyleSelector);
-
-        // Investigate Sequence (Sequence)
+        // ----------- ( Investigate Branch build ) -----------
         investigateSequence.AddChild(goToInterestPoint);
         investigateSequence.AddChild(lookAround);
 
-        // Sound Check (Sequence)
-        triggerInvetigation.AddChild(isSuspicious);
-        triggerInvetigation.AddChild(senseCheck);
+        senseCheck.AddChild(heardSomething);
+        senseCheck.AddChild(sawSomething);
 
-        // Investigate (Sequence)
-        investigate.AddChild(triggerInvetigation);
-        investigate.AddChild(investigateSequence);
+        investigateBranch.AddChild(senseCheck);
+        investigateBranch.AddChild(investigateSequence);
 
-        // Hunt Behavior (Selector)
-        huntBehaviour.AddChild(pursueSequence);
-        huntBehaviour.AddChild(investigate);
+        // ----------- ( Stalk Branch build ) -----------
+        searchLoopConditions.AddChild(searchPointsLeft);
+        searchLoopConditions.AddChild(playerNotVisible);
+        searchLoopConditionTree.AddChild(searchLoopConditions);
+
+        searchArea.AddChild(goToPoint);
+        searchArea.AddChild(lookAround);
+
+        stalkBranch.AddChild(isSuspicious);
+        stalkBranch.AddChild(runToHotspotPoint);
+        stalkBranch.AddChild(generateSearchPoints);
+        stalkBranch.AddChild(searchArea);
+
+        // ----------- ( Announce Pursuit Branch build ) -----------
+        prePursuitCondition.AddChild(isHighlySuspicious);
+        prePursuitCondition.AddChild(playerNotVisible);
+        prePursuitCondition.AddChild(chaseNotActive);
+        prePursuitCondition.AddChild(hasNotAnnouncedPursuit);
+
+        announcePursuitBranch.AddChild(prePursuitCondition);
+        announcePursuitBranch.AddChild(playAnnouncement);
+        announcePursuitBranch.AddChild(setHasAnnounced);
+
+        // ----------- ( Chase Branch build ) -----------
+        chaseBranch.AddChild(isPlayerVisible);
+        chaseBranch.AddChild(setChaseBoolActive);
+        chaseBranch.AddChild(runToLastSeenPosition);
 
         // ----------- ( Kill Branch build ) -----------
-
-        // Kill Behaviour (Sequence)
-        killBehaviour.AddChild(playerInAttackRange);
-        killBehaviour.AddChild(killPlayer);
+        killBranch.AddChild(playerInAttackRange);
+        killBranch.AddChild(killPlayer);
 
         // ----------- ( Final Tree build ) -----------
-        entityRoot.AddChild(killBehaviour);
-        entityRoot.AddChild(huntBehaviour);
-        entityRoot.AddChild(patrolBehaviour);
+        entityRoot.AddChild(killBranch);
+        entityRoot.AddChild(chaseBranch);
+        entityRoot.AddChild(announcePursuitBranch);
+        entityRoot.AddChild(stalkBranch);
+        entityRoot.AddChild(investigateBranch);
+        entityRoot.AddChild(patrolBranch);
 
         tree.AddChild(entityRoot);
         tree.PrintTree();
@@ -209,13 +185,19 @@ public class EntityBehaviour : BTAgent
         }
         return Node.Status.FAILURE;
     }
-    
-    /*
-     *  Checks if there is a new hotspot point via the blacboard
-     */
-    public Node.Status IsNewHotspot()
+
+    public Node.Status ChaseNotActive()
     {
-        if (Blackboard.Instance.CheckIfNewHotspot())
+        if (!Blackboard.Instance.chaseStateActive)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
+    }
+    public Node.Status HasNotAnnouncedPursuit()
+    {
+        if (!Blackboard.Instance.hasAnnouncedPursuit)
         {
             return Node.Status.SUCCESS;
         }
@@ -229,6 +211,16 @@ public class EntityBehaviour : BTAgent
     public Node.Status IsSuspicious()
     {
         if (Blackboard.Instance.isSuspicious)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
+    }
+
+    public Node.Status IsHighlySuspicious()
+    {
+        if (Blackboard.Instance.isHighlySuspicious)
         {
             return Node.Status.SUCCESS;
         }
@@ -324,6 +316,38 @@ public class EntityBehaviour : BTAgent
         }
 
         return s;
+    }
+
+    /*
+     * Setting the chase state active bool to true and then making sure the change was successful
+     * before returning success. If the change failed the node returns failure.
+     */
+    public Node.Status SetChaseBoolActive()
+    {
+        Blackboard.Instance.chaseStateActive = true;
+
+        if (Blackboard.Instance.chaseStateActive)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
+    }
+
+   /*
+    * Setting the has announced pirsuit bool to true and then making sure the change was successful
+    * before returning success. If the change failed the node returns failure.
+    */
+    public Node.Status SetHasAnnounced()
+    {
+        Blackboard.Instance.hasAnnouncedPursuit = true;
+
+        if (Blackboard.Instance.hasAnnouncedPursuit)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
     }
 
     /*
@@ -475,3 +499,98 @@ public class EntityBehaviour : BTAgent
         return Node.Status.SUCCESS;
     }
 }
+
+// Achives 
+/*
+Selector huntBehaviour = new Selector("Hunt Behaviour (Selector)"); // Hunt Branch
+Selector pursuitConditions = new Selector("Pursuit Conditions (Selector)"); // Hunt Branch
+Selector pursuitStyleSelector = new Selector("Pursuit Style Selector (Selector)"); // Hunt Branch
+Sequence pursueSequence = new Sequence("Pursue Sequence (Sequence)"); // Hunt Branch
+Sequence directPursuit = new Sequence("Direct Pursuit (Sequence)"); // Hunt Branch
+Sequence stalkConditions = new Sequence("Hunt Conditions (Sequence)"); // Hunt Branch
+Sequence investigate = new Sequence("Investigate (Sequence)"); // Hunt Branch
+Sequence triggerInvetigation = new Sequence("Trigger Investigation (Sequence)"); // Hunt Branch
+Leaf heardLoudNoise = new Leaf("Heard Loud Noise (Condition Leaf)", HeardLoudNoise); // Hunt Branch
+Leaf newHotspot = new Leaf("New Hotspot? (Condition Leaf)", IsNewHotspot); // Hunt Branch
+BehaviourTree huntConditionTree = new BehaviourTree(); // Hunt Branch
+DependencySequence stalkBehaviour = new DependencySequence("Stalk Behaviour (Dependancy Sequence)", huntConditionTree, agent); // Hunt Branch
+Inverter noNewHotspot = new Inverter("No new Hotspot (Inverter)"); // Hunt Branch
+*/
+
+/*
+// ---------- ( Hunt Branch ) ------------------
+
+// Hunt Conditions Tree (BT)
+stalkConditions.AddChild(playerNotVisible);
+huntConditionTree.AddChild(stalkConditions);
+
+// Search Loop Condition Tree (BT)
+noNewHotspot.AddChild(newHotspot);
+searchLoopConditions.AddChild(searchPointsLeft);
+searchLoopConditions.AddChild(noNewHotspot);
+searchLoopConditionTree.AddChild(searchLoopConditions);
+
+// Sense Check (Selector)
+senseCheck.AddChild(sawSomething);
+senseCheck.AddChild(heardSomething);
+
+// Search area (loop)
+searchArea.AddChild(goToPoint);
+searchArea.AddChild(lookAround);
+
+// Stalk behaviour (Sequence)
+stalkBehaviour.AddChild(runToHotspotPoint);
+stalkBehaviour.AddChild(generateSearchPoints);
+stalkBehaviour.AddChild(searchArea);
+
+// Direct Pursuit (Sequence)
+directPursuit.AddChild(isPlayerVisible);
+directPursuit.AddChild(runToLastSeenPosition);
+
+// Pursuit Style Selector (Selector)
+pursuitStyleSelector.AddChild(directPursuit);
+pursuitStyleSelector.AddChild(stalkBehaviour);
+
+// Pursuit Condiditons (Selector) DONE
+pursuitConditions.AddChild(isPlayerVisible);
+pursuitConditions.AddChild(heardLoudNoise);
+
+// Pursue Sequence (Sequence)
+pursueSequence.AddChild(pursuitConditions);
+pursueSequence.AddChild(playAnnouncement);
+pursueSequence.AddChild(pursuitStyleSelector);
+
+// Investigate Sequence (Sequence)
+investigateSequence.AddChild(goToInterestPoint);
+investigateSequence.AddChild(lookAround);
+
+// Sound Check (Sequence)
+triggerInvetigation.AddChild(isSuspicious);
+triggerInvetigation.AddChild(senseCheck);
+
+// Investigate (Sequence)
+investigate.AddChild(triggerInvetigation);
+investigate.AddChild(investigateSequence);
+
+// Hunt Behavior (Selector)
+huntBehaviour.AddChild(pursueSequence);
+huntBehaviour.AddChild(investigate);
+
+entityRoot.AddChild(killBranch);
+entityRoot.AddChild(huntBehaviour);
+entityRoot.AddChild(patrolBehaviour);
+
+^*/
+/*
+ *  Checks if there is a new hotspot point via the blacboard
+
+public Node.Status IsNewHotspot()
+{
+    if (Blackboard.Instance.CheckIfNewHotspot())
+    {
+        return Node.Status.SUCCESS;
+    }
+
+    return Node.Status.FAILURE;
+}
+*/

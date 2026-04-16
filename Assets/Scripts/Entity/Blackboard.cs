@@ -12,14 +12,21 @@ public class Blackboard : MonoBehaviour
 
     [Header("Hearing")]
     public bool heardNoise = false;
-    public bool isSuspicious = false;
     public bool heardLoudNoise = false;
+
+    [Header("Suspicion")]
+    public bool isSuspicious = false;
+    public bool isHighlySuspicious = false;
 
     [Header("Attack")]
     public bool playerInAttackRange = false;
 
     [Header("Location")]
     public bool canReachLocation = false;
+
+    [Header("State info")]
+    public bool chaseStateActive = false;
+    public bool hasAnnouncedPursuit = false;
 
     [Header("Position info")]
     public Vector3 interestPoint;
@@ -100,5 +107,15 @@ public class Blackboard : MonoBehaviour
     public void UpdateMovementSpeed(float newSpeed)
     {
         moveSpeed = newSpeed;
+    }
+
+    public void UpdateChaseState(bool newState)
+    {
+        chaseStateActive = newState;
+    }
+
+    public void UpdateHasAnnouncedPursuit(bool newState)
+    {
+        hasAnnouncedPursuit = newState;
     }
 }
