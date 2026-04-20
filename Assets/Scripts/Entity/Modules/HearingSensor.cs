@@ -57,7 +57,7 @@ public class HearingSensor : MonoBehaviour
             Blackboard.Instance.heardNoise = true;
             noiseTime = Time.time;
 
-            //Blackboard.Instance.UpdateHotspotOrigin(noise.position);
+            Blackboard.Instance.UpdateHotspotOrigin(noise.position);
             suspicionManager.AddSuspicion(preset.suspicionGainOnMediumNoise);
         }
         // SILENT

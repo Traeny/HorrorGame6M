@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ff4b734888a894ab20a74ec28adfc3, type: 3}
   m_Name: EnemyPreset
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPreset
-  delay: 0.01
+  delay: 0.1
   targetMask:
     serializedVersion: 2
     m_Bits: 64
@@ -34,6 +34,7 @@ MonoBehaviour:
   suspicionGainOnSilentNoise: 10
   suspicionDecayRate: 10
   suspicionThreshold: 100
+  highlySuspiciousTreshold: 150
   maxSuspicionLevel: 200
   hotspotRadius: 7
   searchPointAmount: 3

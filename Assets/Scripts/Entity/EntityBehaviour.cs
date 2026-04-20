@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 
 public class EntityBehaviour : BTAgent
@@ -84,18 +85,23 @@ public class EntityBehaviour : BTAgent
         Leaf setHasAnnounced = new Leaf("Set Has Announed (Action Leaf)", SetHasAnnounced);
 
         // ----------- ( STALK BRANCH ) -----------
-        Sequence stalkBranch = new Sequence("Stalk Branch (Sequence");
-        Leaf isSuspicious = new Leaf("Entity is Suspicious? (Condition Leaf)", IsSuspicious);
+        BehaviourTree stalkConditionTree = new BehaviourTree();
+        DependencySequence stalkBranch = new DependencySequence("Stalk Branch (Dependancy Sequence)", stalkConditionTree, agent);
+        Sequence stalkConditions = new Sequence("Stalk conditions (Sequence)");
         Leaf runToHotspotPoint = new Leaf("Run to Hotspot Point (Action Leaf)", RunToHotspotPoint);
         Leaf generateSearchPoints = new Leaf("Generate Search Points (Action Leaf)", GenerateSearchPoints);
+        Leaf hasAnnounced = new Leaf("Has announced pursuit (condition leaf)", HasAnnouncedPursuit);
         BehaviourTree searchLoopConditionTree = new BehaviourTree();
         Loop searchArea = new Loop("Search Area (Loop)", searchLoopConditionTree);
         Leaf goToPoint = new Leaf("Go To Point (Action Leaf)", GoToPoint);
         Leaf lookAround = new Leaf("Look Around! (Action Leaf)", LookAround);
         Sequence searchLoopConditions = new Sequence("Search Loop Conditions (Sequence)");
         Leaf searchPointsLeft = new Leaf("Search Points Left (Condition Leaf)", SearchPointsLeft);
+        Inverter noNewHotspotPoint = new Inverter("No New Hotspot Point (Inverter");
+        Leaf newHotspotPoint = new Leaf("New Hotspot Point (Condition Leaf)", IsNewHotspot);
 
         // ----------- ( INVESTIGATE BRANCH ) -----------
+        Leaf isSuspicious = new Leaf("Entity is Suspicious? (Condition Leaf)", IsSuspicious);
         Sequence investigateBranch = new Sequence("Investigate Branch (Sequence)");
         Selector senseCheck = new Selector("Sense Chec (Selector)");
         Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething);
@@ -120,24 +126,32 @@ public class EntityBehaviour : BTAgent
         patrolBranch.AddChild(wanderRandomly);
 
         // ----------- ( Investigate Branch build ) -----------
+        investigateSequence.AddChild(playerNotVisible);
         investigateSequence.AddChild(goToInterestPoint);
         investigateSequence.AddChild(lookAround);
 
         senseCheck.AddChild(heardSomething);
         senseCheck.AddChild(sawSomething);
 
+        investigateBranch.AddChild(isSuspicious);
         investigateBranch.AddChild(senseCheck);
         investigateBranch.AddChild(investigateSequence);
 
         // ----------- ( Stalk Branch build ) -----------
+        noNewHotspotPoint.AddChild(newHotspotPoint);
+
         searchLoopConditions.AddChild(searchPointsLeft);
+        searchLoopConditions.AddChild(noNewHotspotPoint);
         searchLoopConditions.AddChild(playerNotVisible);
         searchLoopConditionTree.AddChild(searchLoopConditions);
+
+        stalkConditions.AddChild(playerNotVisible);
+        stalkConditionTree.AddChild(stalkConditions);
 
         searchArea.AddChild(goToPoint);
         searchArea.AddChild(lookAround);
 
-        stalkBranch.AddChild(isSuspicious);
+        stalkBranch.AddChild(hasAnnounced);
         stalkBranch.AddChild(runToHotspotPoint);
         stalkBranch.AddChild(generateSearchPoints);
         stalkBranch.AddChild(searchArea);
@@ -166,7 +180,7 @@ public class EntityBehaviour : BTAgent
         entityRoot.AddChild(chaseBranch);
         entityRoot.AddChild(announcePursuitBranch);
         entityRoot.AddChild(stalkBranch);
-        entityRoot.AddChild(investigateBranch);
+        //entityRoot.AddChild(investigateBranch);
         entityRoot.AddChild(patrolBranch);
 
         tree.AddChild(entityRoot);
@@ -198,6 +212,16 @@ public class EntityBehaviour : BTAgent
     public Node.Status HasNotAnnouncedPursuit()
     {
         if (!Blackboard.Instance.hasAnnouncedPursuit)
+        {
+            return Node.Status.SUCCESS;
+        }
+
+        return Node.Status.FAILURE;
+    }
+
+    public Node.Status HasAnnouncedPursuit()
+    {
+        if (Blackboard.Instance.hasAnnouncedPursuit)
         {
             return Node.Status.SUCCESS;
         }
@@ -265,6 +289,7 @@ public class EntityBehaviour : BTAgent
         }
         else
         {
+            Blackboard.Instance.hasAnnouncedPursuit = false;
             return Node.Status.FAILURE;
         }   
     }
@@ -291,6 +316,16 @@ public class EntityBehaviour : BTAgent
         {
             return Node.Status.SUCCESS;
         }
+        return Node.Status.FAILURE;
+    }
+
+    public Node.Status IsNewHotspot()
+    {
+        if (Blackboard.Instance.CheckIfNewHotspot())
+        {
+            return Node.Status.SUCCESS;
+        }
+
         return Node.Status.FAILURE;
     }
 
@@ -357,7 +392,7 @@ public class EntityBehaviour : BTAgent
      */
     public Node.Status RunToLastSeenPosition()
     {
-        rend.material.color = Color.lightBlue;
+        rend.material.color = Color.brown;
 
         // Running
         Blackboard.Instance.UpdateMovementSpeed(preset.runSpeed);
@@ -385,13 +420,9 @@ public class EntityBehaviour : BTAgent
     /*
      * This node prompts the generation of search points inside the hotsopt area.
      * if the points don't get created or are null the node fails
-     * 
-     * During this time the enemy will be GRAY, but it won't really be visible
      */
     public Node.Status GenerateSearchPoints() 
     {
-        rend.material.color = Color.gray;
-
         List<Vector3> points = hotspotModule.GetRandomPoints(preset.searchPointAmount, Blackboard.Instance.hotspotOrigin);
 
         if (points.Count <= 0 || points == null)
@@ -499,98 +530,3 @@ public class EntityBehaviour : BTAgent
         return Node.Status.SUCCESS;
     }
 }
-
-// Achives 
-/*
-Selector huntBehaviour = new Selector("Hunt Behaviour (Selector)"); // Hunt Branch
-Selector pursuitConditions = new Selector("Pursuit Conditions (Selector)"); // Hunt Branch
-Selector pursuitStyleSelector = new Selector("Pursuit Style Selector (Selector)"); // Hunt Branch
-Sequence pursueSequence = new Sequence("Pursue Sequence (Sequence)"); // Hunt Branch
-Sequence directPursuit = new Sequence("Direct Pursuit (Sequence)"); // Hunt Branch
-Sequence stalkConditions = new Sequence("Hunt Conditions (Sequence)"); // Hunt Branch
-Sequence investigate = new Sequence("Investigate (Sequence)"); // Hunt Branch
-Sequence triggerInvetigation = new Sequence("Trigger Investigation (Sequence)"); // Hunt Branch
-Leaf heardLoudNoise = new Leaf("Heard Loud Noise (Condition Leaf)", HeardLoudNoise); // Hunt Branch
-Leaf newHotspot = new Leaf("New Hotspot? (Condition Leaf)", IsNewHotspot); // Hunt Branch
-BehaviourTree huntConditionTree = new BehaviourTree(); // Hunt Branch
-DependencySequence stalkBehaviour = new DependencySequence("Stalk Behaviour (Dependancy Sequence)", huntConditionTree, agent); // Hunt Branch
-Inverter noNewHotspot = new Inverter("No new Hotspot (Inverter)"); // Hunt Branch
-*/
-
-/*
-// ---------- ( Hunt Branch ) ------------------
-
-// Hunt Conditions Tree (BT)
-stalkConditions.AddChild(playerNotVisible);
-huntConditionTree.AddChild(stalkConditions);
-
-// Search Loop Condition Tree (BT)
-noNewHotspot.AddChild(newHotspot);
-searchLoopConditions.AddChild(searchPointsLeft);
-searchLoopConditions.AddChild(noNewHotspot);
-searchLoopConditionTree.AddChild(searchLoopConditions);
-
-// Sense Check (Selector)
-senseCheck.AddChild(sawSomething);
-senseCheck.AddChild(heardSomething);
-
-// Search area (loop)
-searchArea.AddChild(goToPoint);
-searchArea.AddChild(lookAround);
-
-// Stalk behaviour (Sequence)
-stalkBehaviour.AddChild(runToHotspotPoint);
-stalkBehaviour.AddChild(generateSearchPoints);
-stalkBehaviour.AddChild(searchArea);
-
-// Direct Pursuit (Sequence)
-directPursuit.AddChild(isPlayerVisible);
-directPursuit.AddChild(runToLastSeenPosition);
-
-// Pursuit Style Selector (Selector)
-pursuitStyleSelector.AddChild(directPursuit);
-pursuitStyleSelector.AddChild(stalkBehaviour);
-
-// Pursuit Condiditons (Selector) DONE
-pursuitConditions.AddChild(isPlayerVisible);
-pursuitConditions.AddChild(heardLoudNoise);
-
-// Pursue Sequence (Sequence)
-pursueSequence.AddChild(pursuitConditions);
-pursueSequence.AddChild(playAnnouncement);
-pursueSequence.AddChild(pursuitStyleSelector);
-
-// Investigate Sequence (Sequence)
-investigateSequence.AddChild(goToInterestPoint);
-investigateSequence.AddChild(lookAround);
-
-// Sound Check (Sequence)
-triggerInvetigation.AddChild(isSuspicious);
-triggerInvetigation.AddChild(senseCheck);
-
-// Investigate (Sequence)
-investigate.AddChild(triggerInvetigation);
-investigate.AddChild(investigateSequence);
-
-// Hunt Behavior (Selector)
-huntBehaviour.AddChild(pursueSequence);
-huntBehaviour.AddChild(investigate);
-
-entityRoot.AddChild(killBranch);
-entityRoot.AddChild(huntBehaviour);
-entityRoot.AddChild(patrolBehaviour);
-
-^*/
-/*
- *  Checks if there is a new hotspot point via the blacboard
-
-public Node.Status IsNewHotspot()
-{
-    if (Blackboard.Instance.CheckIfNewHotspot())
-    {
-        return Node.Status.SUCCESS;
-    }
-
-    return Node.Status.FAILURE;
-}
-*/
