@@ -195,8 +195,10 @@ public class EntityBehaviour : BTAgent
     {
         if(Blackboard.Instance.isPlayerVisible)
         {
+            
             return Node.Status.SUCCESS;
         }
+        Blackboard.Instance.chaseStateActive = false;
         return Node.Status.FAILURE;
     }
 
