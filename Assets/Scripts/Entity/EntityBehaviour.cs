@@ -101,12 +101,15 @@ public class EntityBehaviour : BTAgent
         Leaf newHotspotPoint = new Leaf("New Hotspot Point (Condition Leaf)", IsNewHotspot);
 
         // ----------- ( INVESTIGATE BRANCH ) -----------
-        Leaf isSuspicious = new Leaf("Entity is Suspicious? (Condition Leaf)", IsSuspicious);
         Sequence investigateBranch = new Sequence("Investigate Branch (Sequence)");
+        Sequence allowInvestigate = new Sequence("Allow investigation (Sequence)");
+        Leaf isSuspicious = new Leaf("Entity is Suspicious? (Condition Leaf)", IsSuspicious);
         Selector senseCheck = new Selector("Sense Chec (Selector)");
         Leaf heardSomething = new Leaf("Heard Something? (Condition Leaf)", HeardSomething);
         Leaf sawSomething = new Leaf("Saw Something (Conditions Leaf)", SawSomething);
-        Sequence investigateSequence = new Sequence("Investigate Sequence (Sequence)");
+        BehaviourTree investigateConditionTree = new BehaviourTree();
+        DependencySequence investigate = new DependencySequence("Investigate (DepSeq)", investigateConditionTree, agent);
+        Sequence investigateConditions = new Sequence("Investigate Conditions (Sequence)");
         Leaf goToInterestPoint = new Leaf("Go To Interest Point (Action Leaf)", GoToInterestPoint);
 
         // ----------- ( PATROL BRANCH ) -----------
@@ -126,16 +129,20 @@ public class EntityBehaviour : BTAgent
         patrolBranch.AddChild(wanderRandomly);
 
         // ----------- ( Investigate Branch build ) -----------
-        investigateSequence.AddChild(playerNotVisible);
-        investigateSequence.AddChild(goToInterestPoint);
-        investigateSequence.AddChild(lookAround);
+        investigateConditions.AddChild(playerNotVisible);
+        investigateConditionTree.AddChild(investigateConditions);
+
+        investigate.AddChild(goToInterestPoint);
+        investigate.AddChild(lookAround);
 
         senseCheck.AddChild(heardSomething);
         senseCheck.AddChild(sawSomething);
 
-        investigateBranch.AddChild(isSuspicious);
-        investigateBranch.AddChild(senseCheck);
-        investigateBranch.AddChild(investigateSequence);
+        allowInvestigate.AddChild(isSuspicious);
+        allowInvestigate.AddChild(senseCheck);
+
+        investigateBranch.AddChild(allowInvestigate);
+        investigateBranch.AddChild(investigate);
 
         // ----------- ( Stalk Branch build ) -----------
         noNewHotspotPoint.AddChild(newHotspotPoint);
@@ -180,7 +187,7 @@ public class EntityBehaviour : BTAgent
         entityRoot.AddChild(chaseBranch);
         entityRoot.AddChild(announcePursuitBranch);
         entityRoot.AddChild(stalkBranch);
-        //entityRoot.AddChild(investigateBranch);
+        entityRoot.AddChild(investigateBranch);
         entityRoot.AddChild(patrolBranch);
 
         tree.AddChild(entityRoot);

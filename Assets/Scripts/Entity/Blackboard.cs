@@ -86,7 +86,6 @@ public class Blackboard : MonoBehaviour
 
     public void SetSearchPointList(List<Vector3> newpoints)
     {
-        Debug.Log(newpoints.Count);
         searchPoints = newpoints;
     }
 

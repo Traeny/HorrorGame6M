@@ -19,7 +19,7 @@ public class KillPlayer : MonoBehaviour
 
     public void KillPlayerAction()
     {
-        //Debug.Log("Killed the player!");
+        Debug.Log("Killed the player!");
     }
 
 }
