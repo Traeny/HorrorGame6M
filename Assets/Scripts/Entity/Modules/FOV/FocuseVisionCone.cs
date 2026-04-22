@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +16,10 @@ namespace Entity_Script
         public GameObject player;
         public Transform eyeOrigin;
 
-        private float timer = 0;
+        private float delayTimer = 0;
+        public float sightTimer = 0;
+
+        
 
         private void Start()
         {
@@ -27,17 +31,18 @@ namespace Entity_Script
                 return;
             }
 
-            timer = preset.delay;
+            delayTimer = preset.delay;
+            sightTimer = preset.focuseConeGraceDelay;
         }
 
         private void Update()
         {
-            timer -= Time.deltaTime;
+            delayTimer -= Time.deltaTime;
 
-            if (timer < 0)
+            if (delayTimer < 0)
             {
                 FOVCheck();
-                timer = preset.delay;
+                delayTimer = preset.delay;
             }
         }
 
@@ -57,10 +62,15 @@ namespace Entity_Script
 
                     if(!Physics.Raycast(eyeOrigin.position, directionToTarget, distanceToTarget, preset.obstructionMask))
                     {
-                        UpdateInterestPoint();
-                        canSeePlayer.SetActive(true);
-                        cantSeePlayer.SetActive(false);
-                        Blackboard.Instance.isPlayerVisible = true;
+                        sightTimer -= Time.deltaTime;
+
+                        if(sightTimer <= 0)
+                        {
+                            UpdateInterestPoint();
+                            canSeePlayer.SetActive(true);
+                            cantSeePlayer.SetActive(false);
+                            Blackboard.Instance.isPlayerVisible = true;
+                        }
                     }
                     else
                     {
@@ -71,6 +81,8 @@ namespace Entity_Script
                 }
                 else
                 {
+                    sightTimer = preset.focuseConeGraceDelay;
+
                     canSeePlayer.SetActive(false);
                     cantSeePlayer.SetActive(true);
                     Blackboard.Instance.isPlayerVisible = false;

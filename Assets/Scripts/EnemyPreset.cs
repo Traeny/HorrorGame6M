@@ -17,10 +17,12 @@ public class EnemyPreset : ScriptableObject
     public float mainConeFovRadius = 10f;
     public float mainConeAngle = 90f;
     public float forgetClimpseTime = 3f;
+    public float mainConeGraceDelay = 0f;
 
     [Header("Focus Cone")]
     public float focuseConeFovRadius = 15f;
     public float focuseConeAngle = 150f;
+    public float focuseConeGraceDelay = 0f;
 
     [Header("Kill player module")]
     public float attackRange = 2.5f;

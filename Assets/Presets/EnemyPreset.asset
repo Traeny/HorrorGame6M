@@ -24,8 +24,10 @@ MonoBehaviour:
   mainConeFovRadius: 15
   mainConeAngle: 100
   forgetClimpseTime: 3
+  mainConeGraceDelay: 0
   focuseConeFovRadius: 10
   focuseConeAngle: 50
+  focuseConeGraceDelay: 0
   attackRange: 2.5
   entryExpirationTime: 3
   forgetLoudNoiseTime: 0.5

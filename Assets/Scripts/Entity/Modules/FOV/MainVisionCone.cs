@@ -18,7 +18,8 @@ namespace Entity_Script
         public float visionTime { get; private set; } = 0f;
         public float timeSinceSawSomething => Time.time - visionTime;
 
-        private float timer = 0;
+        private float delayTimer = 0;
+        public float sightTimer = 0;
 
         private void Start()
         {
@@ -30,17 +31,19 @@ namespace Entity_Script
                 return;
             }
 
-            timer = preset.delay;
+            sightTimer = preset.mainConeGraceDelay;
+            delayTimer = preset.delay;
         }
 
         private void Update()
         {
-            timer -= Time.deltaTime;
+            delayTimer -= Time.deltaTime;
+            
 
-            if (timer < 0)
+            if (delayTimer < 0)
             {
                 FOVCheck();
-                timer = preset.delay;
+                delayTimer = preset.delay;
             }
 
             if (timeSinceSawSomething >= preset.forgetClimpseTime)
@@ -65,13 +68,23 @@ namespace Entity_Script
 
                     if (!Physics.Raycast(eyeOrigin.position, directionToTarget, distanceToTarget, preset.obstructionMask))
                     {
-                        UpdateInterestPoint();
-                        sawSomethignEyes.SetActive(true);
-                        cantSeePlayer.SetActive(false);
+                        sightTimer -= Time.deltaTime;
 
-                        Blackboard.Instance.sawSomething = true;
-                        visionTime = Time.time;
+                        if(sightTimer <= 0)
+                        {
+                            UpdateInterestPoint();
+                            sawSomethignEyes.SetActive(true);
+                            cantSeePlayer.SetActive(false);
+
+                            Blackboard.Instance.sawSomething = true;
+                            visionTime = Time.time;
+                        }
                     }
+
+                }
+                else
+                {
+                    sightTimer = preset.mainConeGraceDelay;
                 }
             }
         }

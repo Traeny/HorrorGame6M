@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Data.Common;
 using UnityEngine;
 
 public class EntityBehaviour : BTAgent
@@ -131,33 +130,25 @@ public class EntityBehaviour : BTAgent
         // ----------- ( Investigate Branch build ) -----------
         investigateConditions.AddChild(playerNotVisible);
         investigateConditionTree.AddChild(investigateConditions);
-
         investigate.AddChild(goToInterestPoint);
         investigate.AddChild(lookAround);
-
         senseCheck.AddChild(heardSomething);
         senseCheck.AddChild(sawSomething);
-
         allowInvestigate.AddChild(isSuspicious);
         allowInvestigate.AddChild(senseCheck);
-
         investigateBranch.AddChild(allowInvestigate);
         investigateBranch.AddChild(investigate);
 
         // ----------- ( Stalk Branch build ) -----------
         noNewHotspotPoint.AddChild(newHotspotPoint);
-
         searchLoopConditions.AddChild(searchPointsLeft);
         searchLoopConditions.AddChild(noNewHotspotPoint);
         searchLoopConditions.AddChild(playerNotVisible);
         searchLoopConditionTree.AddChild(searchLoopConditions);
-
         stalkConditions.AddChild(playerNotVisible);
         stalkConditionTree.AddChild(stalkConditions);
-
         searchArea.AddChild(goToPoint);
         searchArea.AddChild(lookAround);
-
         stalkBranch.AddChild(hasAnnounced);
         stalkBranch.AddChild(runToHotspotPoint);
         stalkBranch.AddChild(generateSearchPoints);
@@ -168,7 +159,6 @@ public class EntityBehaviour : BTAgent
         prePursuitCondition.AddChild(playerNotVisible);
         prePursuitCondition.AddChild(chaseNotActive);
         prePursuitCondition.AddChild(hasNotAnnouncedPursuit);
-
         announcePursuitBranch.AddChild(prePursuitCondition);
         announcePursuitBranch.AddChild(playAnnouncement);
         announcePursuitBranch.AddChild(setHasAnnounced);
@@ -184,11 +174,11 @@ public class EntityBehaviour : BTAgent
 
         // ----------- ( Final Tree build ) -----------
         entityRoot.AddChild(killBranch);
-        entityRoot.AddChild(chaseBranch);
-        entityRoot.AddChild(announcePursuitBranch);
-        entityRoot.AddChild(stalkBranch);
-        entityRoot.AddChild(investigateBranch);
-        entityRoot.AddChild(patrolBranch);
+        //entityRoot.AddChild(chaseBranch);
+        //entityRoot.AddChild(announcePursuitBranch);
+        //entityRoot.AddChild(stalkBranch);
+        //entityRoot.AddChild(investigateBranch);
+        //entityRoot.AddChild(patrolBranch);
 
         tree.AddChild(entityRoot);
         tree.PrintTree();
@@ -196,19 +186,22 @@ public class EntityBehaviour : BTAgent
 
     // ----------- ( Condition nodes ) -----------
     /*
-     *  Checks if the player is visile via the balckboard 
+     *  Checks if the player is visile via the balckboard.
+     *  If the player is not visible the chase state bool gets set to false.
      */
     public Node.Status IsPlayerVisible()
     {
         if(Blackboard.Instance.isPlayerVisible)
         {
-            
             return Node.Status.SUCCESS;
         }
         Blackboard.Instance.chaseStateActive = false;
         return Node.Status.FAILURE;
     }
 
+    /*
+     * Check if the chase state is bool is not active via the blacboard.
+     */
     public Node.Status ChaseNotActive()
     {
         if (!Blackboard.Instance.chaseStateActive)
@@ -218,13 +211,16 @@ public class EntityBehaviour : BTAgent
 
         return Node.Status.FAILURE;
     }
+
+    /*
+     * Checks if the enemy has announced it's bursuit 
+     */
     public Node.Status HasNotAnnouncedPursuit()
     {
         if (!Blackboard.Instance.hasAnnouncedPursuit)
         {
             return Node.Status.SUCCESS;
         }
-
         return Node.Status.FAILURE;
     }
 
