@@ -2272,6 +2272,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1379273584}
+    - target: {fileID: 4518506670172279198, guid: cc7a899bef7f9e2428e30af36a4414e8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148938034978511366, guid: cc7a899bef7f9e2428e30af36a4414e8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7233207203821332044, guid: cc7a899bef7f9e2428e30af36a4414e8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 262.6
@@ -5182,6 +5190,7 @@ MonoBehaviour:
   player: {fileID: 1379273584}
   entity: {fileID: 1576193774}
   targetTime: 0
+  preset: {fileID: 11400000, guid: 6201ea66b7fea8642af974f147764f71, type: 2}
 --- !u!43 &583875413
 Mesh:
   m_ObjectHideFlags: 0
@@ -7320,6 +7329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea174d47c44dc144eb350e12dcec4abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  preset: {fileID: 11400000, guid: 6201ea66b7fea8642af974f147764f71, type: 2}
 --- !u!4 &783420075
 Transform:
   m_ObjectHideFlags: 0
@@ -8194,8 +8204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c95bf16cf576f4c49aa82c533c1bb4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outerRadius: 50
-  innerRadius: 3
+  preset: {fileID: 11400000, guid: 6201ea66b7fea8642af974f147764f71, type: 2}
   player: {fileID: 0}
 --- !u!4 &881227380
 Transform:

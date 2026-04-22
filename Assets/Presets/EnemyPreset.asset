@@ -21,12 +21,12 @@ MonoBehaviour:
     m_Bits: 512
   walkSpeed: 3.5
   runSpeed: 5
-  mainConeFovRadius: 15
-  mainConeAngle: 100
+  mainConeFovRadius: 20
+  mainConeAngle: 110
   forgetClimpseTime: 3
   mainConeGraceDelay: 0
   focuseConeFovRadius: 10
-  focuseConeAngle: 50
+  focuseConeAngle: 70
   focuseConeGraceDelay: 0
   attackRange: 2.5
   entryExpirationTime: 3
@@ -40,3 +40,9 @@ MonoBehaviour:
   maxSuspicionLevel: 200
   hotspotRadius: 7
   searchPointAmount: 3
+  decreasePatrolAreaAmount: 10
+  increasePatrolAreaAmount: 10
+  proxDetectionRange: 20
+  updatePatrolAreaTreshold: 20
+  patrolArea: 60
+  innerRadius: 5

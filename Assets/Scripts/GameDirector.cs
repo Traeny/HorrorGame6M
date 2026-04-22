@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameDirector : MonoBehaviour
 {
     private ProxyimityDetector proximityDetector;
+    public EnemyPreset preset;
 
     private void Start()
     {
@@ -16,19 +17,19 @@ public class GameDirector : MonoBehaviour
     {
         while (true)
         {
-            if(proximityDetector.targetTime >= 20f)
+            if(proximityDetector.targetTime >= preset.updatePatrolAreaTreshold)
             {
                 proximityDetector.targetTime = 0;
-                Area.Instance.outerRadius += 10f;
+                Area.Instance.preset.patrolArea += preset.increasePatrolAreaAmount;
             }
 
-            if (proximityDetector.targetTime <= -20f)
+            if (proximityDetector.targetTime <= -preset.updatePatrolAreaTreshold)
             {
                 proximityDetector.targetTime = 0;
-                Area.Instance.outerRadius -= 10f;
+                Area.Instance.preset.patrolArea -= preset.decreasePatrolAreaAmount;
             }
 
-            yield return 0.1f;
+            yield return preset.delay;
         }
     }
 }

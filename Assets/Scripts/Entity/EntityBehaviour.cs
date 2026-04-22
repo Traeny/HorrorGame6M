@@ -174,11 +174,11 @@ public class EntityBehaviour : BTAgent
 
         // ----------- ( Final Tree build ) -----------
         entityRoot.AddChild(killBranch);
-        //entityRoot.AddChild(chaseBranch);
-        //entityRoot.AddChild(announcePursuitBranch);
-        //entityRoot.AddChild(stalkBranch);
-        //entityRoot.AddChild(investigateBranch);
-        //entityRoot.AddChild(patrolBranch);
+        entityRoot.AddChild(chaseBranch);
+        entityRoot.AddChild(announcePursuitBranch);
+        entityRoot.AddChild(stalkBranch);
+        entityRoot.AddChild(investigateBranch);
+        entityRoot.AddChild(patrolBranch);
 
         tree.AddChild(entityRoot);
         tree.PrintTree();

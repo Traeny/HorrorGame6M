@@ -45,4 +45,12 @@ public class EnemyPreset : ScriptableObject
     public float hotspotRadius = 5f;
     public int searchPointAmount = 3;
 
+    [Header("Patrol")]
+    public float decreasePatrolAreaAmount = 10f;
+    public float increasePatrolAreaAmount = 10f;
+    public float proxDetectionRange = 20f;
+    public float updatePatrolAreaTreshold = 20f;
+    public float patrolArea = 30f;
+    public float innerRadius = 5f;
+
 }

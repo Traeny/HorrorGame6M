@@ -1,4 +1,3 @@
-using Player_Script;
 using UnityEngine;
 
 public class ProxyimityDetector : MonoBehaviour
@@ -7,11 +6,11 @@ public class ProxyimityDetector : MonoBehaviour
     public GameObject entity;
     public float targetTime = 0;
 
+    public EnemyPreset preset;
+
     private void Update()
     {
-        float maxRange = 20;
-
-        if (Vector3.Distance(entity.transform.position, player.transform.position) < maxRange)
+        if (Vector3.Distance(entity.transform.position, player.transform.position) < preset.proxDetectionRange)
         {
             targetTime += Time.deltaTime;
         }

@@ -50,16 +50,19 @@ namespace Entity_Script
         {
             Collider[] rangeChecks = Physics.OverlapSphere(eyeOrigin.position, preset.focuseConeFovRadius, preset.targetMask);
 
+            // Checks is the player is inside a sphere where the center is the enemys center
             if(rangeChecks.Length != 0)
             {
                 Transform target = rangeChecks[0].transform;
 
                 Vector3 directionToTarget = (target.position - eyeOrigin.position).normalized;
 
+                // Checks if the player is inside the FOV angle
                 if(Vector3.Angle(eyeOrigin.forward, directionToTarget) < preset.focuseConeAngle / 2)
                 {
                     float distanceToTarget = Vector3.Distance(eyeOrigin.position, target.position);
 
+                    // Checks theres nothing blocking the ray from the enemy to the player
                     if(!Physics.Raycast(eyeOrigin.position, directionToTarget, distanceToTarget, preset.obstructionMask))
                     {
                         sightTimer -= Time.deltaTime;
@@ -72,6 +75,7 @@ namespace Entity_Script
                             Blackboard.Instance.isPlayerVisible = true;
                         }
                     }
+                    // If something is blocking the ray (we do not see)
                     else
                     {
                         canSeePlayer.SetActive(false);
@@ -79,6 +83,7 @@ namespace Entity_Script
                         Blackboard.Instance.isPlayerVisible = false;
                     }
                 }
+                // If the player is not in the FOV cone (We cennot see)
                 else
                 {
                     sightTimer = preset.focuseConeGraceDelay;
@@ -88,12 +93,12 @@ namespace Entity_Script
                     Blackboard.Instance.isPlayerVisible = false;
                 }
             }
-            else if (Blackboard.Instance.isPlayerVisible)
-            {
-                canSeePlayer.SetActive(false);
-                cantSeePlayer.SetActive(true);
-                Blackboard.Instance.isPlayerVisible = false;
-            }
+            //else if (Blackboard.Instance.isPlayerVisible)
+            //{
+            //    canSeePlayer.SetActive(false);
+            //    cantSeePlayer.SetActive(true);
+            //    Blackboard.Instance.isPlayerVisible = false;
+            //}
         }
 
         private void UpdateInterestPoint()

@@ -5,9 +5,10 @@ public class Area : MonoBehaviour
 {
     public static Area Instance { get; private set; }
 
+    public EnemyPreset preset;
 
-    public float outerRadius = 20f;
-    public float innerRadius = 5f;
+    //public float outerRadius = 20f;
+    //public float innerRadius = 5f;
 
     public GameObject player;
 
@@ -29,14 +30,14 @@ public class Area : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, outerRadius);
+        Gizmos.DrawWireSphere(transform.position, preset.patrolArea);
         Gizmos.color = Color.orange;
-        Gizmos.DrawWireSphere(transform.position, innerRadius);
+        Gizmos.DrawWireSphere(transform.position, preset.innerRadius);
     }
     
     public void UpdatePatrolRadius(float r)
     {
-        outerRadius = r;
+        preset.patrolArea = r;
     }
 
     public Vector3 GetRandomPoint()
@@ -44,7 +45,7 @@ public class Area : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             float r = Mathf.Sqrt(
-                Random.Range(innerRadius * innerRadius, outerRadius * outerRadius)
+                Random.Range(preset.innerRadius * preset.innerRadius, preset.patrolArea * preset.patrolArea)
             );
 
             float angle = Random.Range(0f, Mathf.PI * 2f);
