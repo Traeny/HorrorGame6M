@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7241269229244706007}
   - component: {fileID: 3614989203526474187}
   - component: {fileID: 1893136961837264834}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,6 +112,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7241269229244706007
 MonoBehaviour:
@@ -563,7 +564,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 329
+  m_VersionIndex: 335
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -612,7 +613,7 @@ GameObject:
   - component: {fileID: 824241159028584602}
   - component: {fileID: 3374110388955631741}
   - component: {fileID: 1659882868857558967}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hallway1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -722,6 +723,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &824241159028584602
 MonoBehaviour:
@@ -1385,7 +1387,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2680
+  m_VersionIndex: 2686
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1509,6 +1511,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &7463006220752290305
 MeshCollider:
@@ -1546,7 +1549,7 @@ GameObject:
   - component: {fileID: 2488636039012996396}
   - component: {fileID: 4111394799398838926}
   - component: {fileID: 2063939784594228033}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room27
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1640,6 +1643,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &2488636039012996396
 MonoBehaviour:
@@ -1943,7 +1947,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 617
+  m_VersionIndex: 623
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1992,7 +1996,7 @@ GameObject:
   - component: {fileID: 4271465107228713599}
   - component: {fileID: 6820452012663847647}
   - component: {fileID: 2304844284945612336}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hallway3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2132,6 +2136,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &4271465107228713599
 MonoBehaviour:
@@ -3586,7 +3591,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 14715
+  m_VersionIndex: 14721
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3635,7 +3640,7 @@ GameObject:
   - component: {fileID: 3224492035124382381}
   - component: {fileID: 4189076087347487815}
   - component: {fileID: 7643723108544689510}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3727,6 +3732,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3224492035124382381
 MonoBehaviour:
@@ -4039,7 +4045,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 172
+  m_VersionIndex: 178
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -4088,7 +4094,7 @@ GameObject:
   - component: {fileID: 3829012842664353180}
   - component: {fileID: 6781450676022495013}
   - component: {fileID: 6970772085825773553}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4184,6 +4190,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3829012842664353180
 MonoBehaviour:
@@ -4943,7 +4950,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 747
+  m_VersionIndex: 753
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -4992,7 +4999,7 @@ GameObject:
   - component: {fileID: 8305059079393205665}
   - component: {fileID: 2834937662843540396}
   - component: {fileID: 4209269666871850700}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5084,6 +5091,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8305059079393205665
 MonoBehaviour:
@@ -5396,7 +5404,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 562
+  m_VersionIndex: 568
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5445,7 +5453,7 @@ GameObject:
   - component: {fileID: 8600920284358399692}
   - component: {fileID: 6950107474709683770}
   - component: {fileID: 6904004208360151612}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5537,6 +5545,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8600920284358399692
 MonoBehaviour:
@@ -5795,7 +5804,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2026
+  m_VersionIndex: 2032
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5844,7 +5853,7 @@ GameObject:
   - component: {fileID: 4840050230336935618}
   - component: {fileID: 6470354049733081969}
   - component: {fileID: 606598712920519769}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5936,6 +5945,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &4840050230336935618
 MonoBehaviour:
@@ -6248,7 +6258,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 289
+  m_VersionIndex: 295
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -6297,7 +6307,7 @@ GameObject:
   - component: {fileID: 1279436550154733870}
   - component: {fileID: 5293948075712969015}
   - component: {fileID: 7648942387736277568}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6391,6 +6401,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1279436550154733870
 MonoBehaviour:
@@ -6694,7 +6705,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 702
+  m_VersionIndex: 708
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -6743,7 +6754,7 @@ GameObject:
   - component: {fileID: 1550223128474698935}
   - component: {fileID: 725525861903956934}
   - component: {fileID: 7229464346362426948}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hallway2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6858,6 +6869,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1550223128474698935
 MonoBehaviour:
@@ -7822,7 +7834,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 5220
+  m_VersionIndex: 5226
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -7871,7 +7883,7 @@ GameObject:
   - component: {fileID: 5445984781463201127}
   - component: {fileID: 5527368992562187003}
   - component: {fileID: 3125580455342581195}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7967,6 +7979,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5445984781463201127
 MonoBehaviour:
@@ -8344,7 +8357,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 280
+  m_VersionIndex: 286
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -8393,7 +8406,7 @@ GameObject:
   - component: {fileID: 6834096257054318826}
   - component: {fileID: 4147665836109808135}
   - component: {fileID: 3088915725732177469}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8487,6 +8500,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6834096257054318826
 MonoBehaviour:
@@ -8790,7 +8804,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 578
+  m_VersionIndex: 584
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -8839,7 +8853,7 @@ GameObject:
   - component: {fileID: 1073471806349967013}
   - component: {fileID: 832732242257444840}
   - component: {fileID: 6333476694576913648}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8935,6 +8949,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1073471806349967013
 MonoBehaviour:
@@ -9283,7 +9298,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 691
+  m_VersionIndex: 697
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -9332,7 +9347,7 @@ GameObject:
   - component: {fileID: 530552247653828386}
   - component: {fileID: 1518911018991273493}
   - component: {fileID: 6082640860002513946}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9426,6 +9441,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &530552247653828386
 MonoBehaviour:
@@ -9729,7 +9745,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 320
+  m_VersionIndex: 326
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -9778,7 +9794,7 @@ GameObject:
   - component: {fileID: 5996228932252695942}
   - component: {fileID: 4219086539342484653}
   - component: {fileID: 8243075449147564533}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9874,6 +9890,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5996228932252695942
 MonoBehaviour:
@@ -10222,7 +10239,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 466
+  m_VersionIndex: 472
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -10271,7 +10288,7 @@ GameObject:
   - component: {fileID: 7387215397659147396}
   - component: {fileID: 5411010976751774768}
   - component: {fileID: 5335079881310337019}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10365,6 +10382,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7387215397659147396
 MonoBehaviour:
@@ -10668,7 +10686,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 627
+  m_VersionIndex: 633
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -10717,7 +10735,7 @@ GameObject:
   - component: {fileID: 1947690790249581978}
   - component: {fileID: 6692891306383494398}
   - component: {fileID: 7087071612708686681}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10811,6 +10829,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1947690790249581978
 MonoBehaviour:
@@ -11114,7 +11133,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 481
+  m_VersionIndex: 487
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -11163,7 +11182,7 @@ GameObject:
   - component: {fileID: 3350395516655948635}
   - component: {fileID: 8345755707249952823}
   - component: {fileID: 4720402343015474059}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room28
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11255,6 +11274,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3350395516655948635
 MonoBehaviour:
@@ -11567,7 +11587,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 189
+  m_VersionIndex: 195
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -11616,7 +11636,7 @@ GameObject:
   - component: {fileID: 6701437645640543321}
   - component: {fileID: 5001525109534975406}
   - component: {fileID: 6811746716952491872}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11708,6 +11728,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6701437645640543321
 MonoBehaviour:
@@ -12020,7 +12041,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 161
+  m_VersionIndex: 167
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -12069,7 +12090,7 @@ GameObject:
   - component: {fileID: 1448599425004868599}
   - component: {fileID: 6632818461385862806}
   - component: {fileID: 6773271121436672465}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12161,6 +12182,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1448599425004868599
 MonoBehaviour:
@@ -12473,7 +12495,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 173
+  m_VersionIndex: 179
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -12522,7 +12544,7 @@ GameObject:
   - component: {fileID: 5055601728086477047}
   - component: {fileID: 3763544583079668011}
   - component: {fileID: 4377282735525509540}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room19
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12616,6 +12638,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5055601728086477047
 MonoBehaviour:
@@ -12919,7 +12942,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 369
+  m_VersionIndex: 375
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -12968,7 +12991,7 @@ GameObject:
   - component: {fileID: 5131668746597118357}
   - component: {fileID: 6730824999860038162}
   - component: {fileID: 8394430107685945142}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room26
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13062,6 +13085,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5131668746597118357
 MonoBehaviour:
@@ -13425,7 +13449,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 399
+  m_VersionIndex: 405
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -13474,7 +13498,7 @@ GameObject:
   - component: {fileID: 267399052175741482}
   - component: {fileID: 8092995696086245183}
   - component: {fileID: 3248727914764319769}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13566,6 +13590,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &267399052175741482
 MonoBehaviour:
@@ -13878,7 +13903,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 192
+  m_VersionIndex: 198
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -13990,7 +14015,7 @@ GameObject:
   - component: {fileID: 7346879671138257698}
   - component: {fileID: 685803474621181816}
   - component: {fileID: 2692442597212131540}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14084,6 +14109,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7346879671138257698
 MonoBehaviour:
@@ -14387,7 +14413,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 814
+  m_VersionIndex: 820
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -14436,7 +14462,7 @@ GameObject:
   - component: {fileID: 256089619755482139}
   - component: {fileID: 7689477738390795920}
   - component: {fileID: 6660635277691382668}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14528,6 +14554,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &256089619755482139
 MonoBehaviour:
@@ -14840,7 +14867,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 462
+  m_VersionIndex: 468
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -14889,7 +14916,7 @@ GameObject:
   - component: {fileID: 5092912251699598918}
   - component: {fileID: 3803092070667005295}
   - component: {fileID: 1978720557071306450}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14981,6 +15008,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5092912251699598918
 MonoBehaviour:
@@ -15293,7 +15321,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 476
+  m_VersionIndex: 482
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -15342,7 +15370,7 @@ GameObject:
   - component: {fileID: 6563361962033220915}
   - component: {fileID: 6524138597841946727}
   - component: {fileID: 8348799591977012003}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15434,6 +15462,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6563361962033220915
 MonoBehaviour:
@@ -15692,7 +15721,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 945
+  m_VersionIndex: 951
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -15741,7 +15770,7 @@ GameObject:
   - component: {fileID: 4534876936530935323}
   - component: {fileID: 5459497566859316019}
   - component: {fileID: 4764595482916661607}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15833,6 +15862,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &4534876936530935323
 MonoBehaviour:
@@ -16145,7 +16175,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 231
+  m_VersionIndex: 237
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -16194,7 +16224,7 @@ GameObject:
   - component: {fileID: 5188372217617521244}
   - component: {fileID: 2414695142254685032}
   - component: {fileID: 8995193280424044189}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16286,6 +16316,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5188372217617521244
 MonoBehaviour:
@@ -16598,7 +16629,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 259
+  m_VersionIndex: 265
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -16647,7 +16678,7 @@ GameObject:
   - component: {fileID: 4475435471922900299}
   - component: {fileID: 643176033995367966}
   - component: {fileID: 1993437349740524926}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16739,6 +16770,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &4475435471922900299
 MonoBehaviour:
@@ -17051,7 +17083,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 204
+  m_VersionIndex: 210
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

@@ -78,7 +78,7 @@ MonoBehaviour:
   IKTarget: {fileID: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 520
   rayLength: 5
   stepHeight: 0.3
   stepSpeed: 3
@@ -382,7 +382,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1414358328915537807
 Transform:
   m_ObjectHideFlags: 0
@@ -801,7 +801,7 @@ MonoBehaviour:
   IKTarget: {fileID: 0}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 520
   rayLength: 5
   stepHeight: 0.3
   stepSpeed: 3
@@ -935,7 +935,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7689703259993059839
 Transform:
   m_ObjectHideFlags: 0
@@ -1306,11 +1306,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.RigBuilder
   m_RigLayers:
   - m_Rig: {fileID: 4352717730363514825}
-    m_Active: 1
+    m_Active: 0
   - m_Rig: {fileID: 3977740897437333965}
-    m_Active: 1
+    m_Active: 0
   - m_Rig: {fileID: 4968444293916677366}
-    m_Active: 1
+    m_Active: 0
   m_Effectors: []
 --- !u!114 &6082022525443607871
 MonoBehaviour:
@@ -1340,9 +1340,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player_Script.FPFullBodyAnimator
   controller: {fileID: 8529966716106129182}
   animator: {fileID: 7048303706005972779}
-  leftLegRig: {fileID: 3977740897437333965}
-  rightLegRig: {fileID: 4352717730363514825}
-  rightArmRig: {fileID: 0}
   enteringloker: 0
 --- !u!114 &1193144474699227145
 MonoBehaviour:
@@ -1351,7 +1348,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4358189869953165291}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87562baa58cbca945be722d6b9cebcea, type: 3}
   m_Name: 

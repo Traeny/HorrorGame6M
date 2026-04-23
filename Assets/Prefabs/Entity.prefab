@@ -2173,6 +2173,7 @@ MonoBehaviour:
   cantSeePlayer: {fileID: 4376310080681012006}
   player: {fileID: 0}
   eyeOrigin: {fileID: 1720589878389970611}
+  sightTimer: 0
 --- !u!114 &3178418046687566364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2234,6 +2235,7 @@ MonoBehaviour:
   cantSeePlayer: {fileID: 4376310080681012006}
   player: {fileID: 0}
   eyeOrigin: {fileID: 1720589878389970611}
+  sightTimer: 0
 --- !u!1 &8024839215334333247
 GameObject:
   m_ObjectHideFlags: 0

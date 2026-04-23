@@ -8,9 +8,9 @@ namespace Player_Script
     {
         [SerializeField] FPController controller;
         [SerializeField] Animator animator;
-        [SerializeField] Rig leftLegRig;
-        [SerializeField] Rig rightLegRig;
-        [SerializeField] Rig rightArmRig;
+        //[SerializeField] Rig leftLegRig;
+        //[SerializeField] Rig rightLegRig;
+        //[SerializeField] Rig rightArmRig;
 
         public bool enteringloker = false;
 
@@ -54,22 +54,22 @@ namespace Player_Script
 
             animator.SetBool("Fall", controller.verticalVelocity <= -0.1f && !controller.Grounded);
 
-            IdleLegRigHandler();
+            //IdleLegRigHandler();
         }
 
-        private void IdleLegRigHandler()
-        {
-            if (!Activity.IsActive(controller.Crouch) && controller.currentVelocity.sqrMagnitude > 0.01f)
-            {
-                leftLegRig.weight = 0f;
-                rightLegRig.weight = 0f;
-            }
-            else
-            {
-                leftLegRig.weight = 1f;
-                rightLegRig.weight = 1f;
-            }
-        }
+        //private void IdleLegRigHandler()
+        //{
+        //    if (!Activity.IsActive(controller.Crouch) && controller.currentVelocity.sqrMagnitude > 0.01f)
+        //    {
+        //        leftLegRig.weight = 0f;
+        //        rightLegRig.weight = 0f;
+        //    }
+        //    else
+        //    {
+        //        leftLegRig.weight = 1f;
+        //        rightLegRig.weight = 1f;
+        //    }
+        //}
 
         /*
         public IEnumerator EnterLockerAnimation(Transform outsidePos, Transform outsideHandPos, Transform insidePos, Transform insideHandPos)
