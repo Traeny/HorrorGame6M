@@ -28,7 +28,14 @@ public class BTAgent : MonoBehaviour
     }
 
     public Node.Status GoToLocation(Vector3 destination)
-    { 
+    {
+        // Checking if agent is on navmesh
+        if (!agent.isOnNavMesh)
+        {
+            Debug.Log("Agent is not on navmesh");
+            return Node.Status.FAILURE;
+        }
+
         float distanceToTarget = Vector3.Distance(destination, this.transform.position);
         agent.speed = Blackboard.Instance.moveSpeed;
         
@@ -55,6 +62,10 @@ public class BTAgent : MonoBehaviour
     {
         Vector3 lookPos = destination - transform.position;
         lookPos.y = 0;
+
+        if (lookPos.sqrMagnitude < 0.0001f)
+            return;
+
         Quaternion rotation = Quaternion.LookRotation(lookPos);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.2f);
     }

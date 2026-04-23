@@ -93,12 +93,12 @@ namespace Entity_Script
                     Blackboard.Instance.isPlayerVisible = false;
                 }
             }
-            //else if (Blackboard.Instance.isPlayerVisible)
-            //{
-            //    canSeePlayer.SetActive(false);
-            //    cantSeePlayer.SetActive(true);
-            //    Blackboard.Instance.isPlayerVisible = false;
-            //}
+            else if (Blackboard.Instance.isPlayerVisible)
+            {
+                canSeePlayer.SetActive(false);
+                cantSeePlayer.SetActive(true);
+                Blackboard.Instance.isPlayerVisible = false;
+            }
         }
 
         private void UpdateInterestPoint()
