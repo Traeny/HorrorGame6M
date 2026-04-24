@@ -14,7 +14,7 @@ public class AutomaticDoor : MonoBehaviour
     public Transform door2ClosePos;
 
     [Header("Others for now")]
-    public GameObject sensorCenter;
+    public Transform sensorCenter;
     public float doorAnimSpeed = 1f;
     public float closeDoorTime = 1f;
 
@@ -22,6 +22,8 @@ public class AutomaticDoor : MonoBehaviour
     public float sensorRadius = 5f;
 
     private float timer = 0f;
+
+    public bool isOpen = false;
 
 
     private void Start()
@@ -36,22 +38,23 @@ public class AutomaticDoor : MonoBehaviour
         if (timer <= 0)
         {
             CloseDoors();
+            isOpen = false;
         }
     }
 
     private void CheckForEnities()
     {
-        Collider[] sensorCheck =
-            Physics.OverlapSphere(
-                transform.position,
-                sensorRadius,
-                entitieLayers
-            );
+        Collider[] sensorCheck = Physics.OverlapSphere(
+            sensorCenter.position,
+            sensorRadius,
+            entitieLayers
+        );
 
-        if(sensorCheck.Length != 0)
+        if (sensorCheck.Length != 0)
         {
             timer = closeDoorTime;
             OpenDoors();
+            isOpen = true;
         }
         else
         {
@@ -74,6 +77,8 @@ public class AutomaticDoor : MonoBehaviour
                 door2OpenPos.position,
                 doorAnimSpeed * Time.deltaTime
             );
+
+        isOpen = true;
     }
 
     private void CloseDoors()
@@ -91,6 +96,21 @@ public class AutomaticDoor : MonoBehaviour
                 door2ClosePos.position,
                 doorAnimSpeed * Time.deltaTime
             );
+        
+        isOpen = false;
     }
 
+    private void OnDrawGizmos()
+    {
+        Vector3 center = sensorCenter != null
+            ? sensorCenter.transform.position
+            : transform.position;
+
+        Collider[] hits = Physics.OverlapSphere(center, sensorRadius, entitieLayers);
+
+        // Red if detecting something, green if not
+        Gizmos.color = hits.Length > 0 ? Color.red : Color.green;
+
+        Gizmos.DrawWireSphere(center, sensorRadius);
+    }
 }
