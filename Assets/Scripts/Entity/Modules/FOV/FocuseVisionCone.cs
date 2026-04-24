@@ -48,7 +48,12 @@ namespace Entity_Script
 
         private void FOVCheck()
         {
-            Collider[] rangeChecks = Physics.OverlapSphere(eyeOrigin.position, preset.focuseConeFovRadius, preset.targetMask);
+            Collider[] rangeChecks = 
+                Physics.OverlapSphere(
+                    eyeOrigin.position, 
+                    preset.focuseConeFovRadius, 
+                    preset.targetMask
+                );
 
             // Checks is the player is inside a sphere where the center is the enemys center
             if(rangeChecks.Length != 0)
