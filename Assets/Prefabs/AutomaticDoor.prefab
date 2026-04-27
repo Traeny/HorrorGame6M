@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8921200939712252503}
   - component: {fileID: 3294638839351426158}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AutomaticDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 1776395916252401755}
   - component: {fileID: 6135805880751958939}
   - component: {fileID: 3227900945624656900}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door_Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -970,7 +970,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 8593
+  m_VersionIndex: 8605
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1087,7 +1087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6716194676820765647}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door_2_Close_Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1123,7 +1123,7 @@ GameObject:
   - component: {fileID: 2271198309248974192}
   - component: {fileID: 5523317323901149120}
   - component: {fileID: 1767965503580702238}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1405,7 +1405,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 8061
+  m_VersionIndex: 8067
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1522,7 +1522,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7963662240666690041}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door_2_Open_Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1553,7 +1553,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1931698177383098538}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door_1_Close_Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1584,7 +1584,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4481861432130700948}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door_1_Open_Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1615,7 +1615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5563007053393413130}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sensor_Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1651,7 +1651,7 @@ GameObject:
   - component: {fileID: 8204657388604259456}
   - component: {fileID: 4786640203078952656}
   - component: {fileID: 8878838501025903881}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Door_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1933,7 +1933,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 8061
+  m_VersionIndex: 8067
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
