@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class AutomaticDoor : MonoBehaviour
 {
+    [Header("Door Animation")]
+    public float doorAnimSpeed = 1f;
+    public float closeDoorTime = 1f;
+    private float timer = 0f;
+    public bool isOpen = false;
+
     [Header("Door 1")]
     public GameObject door1;
     public Transform door1OpenPos;
@@ -13,18 +19,13 @@ public class AutomaticDoor : MonoBehaviour
     public Transform door2OpenPos;
     public Transform door2ClosePos;
 
-    [Header("Others for now")]
+    [Header("Sensor")]
     public Transform sensorCenter;
-    public float doorAnimSpeed = 1f;
-    public float closeDoorTime = 1f;
-
     public LayerMask entitieLayers;
     public float sensorRadius = 5f;
 
-    private float timer = 0f;
-
-    public bool isOpen = false;
-
+    [Header("Locked")]
+    public bool doorLocked = true;
 
     private void Start()
     {
@@ -33,7 +34,10 @@ public class AutomaticDoor : MonoBehaviour
 
     private void Update()
     {
-        CheckForEnities();
+        if (!doorLocked)
+        {
+            CheckForEnities();
+        }
 
         if (timer <= 0)
         {
