@@ -64,8 +64,10 @@ public class BTAgent : MonoBehaviour
         lookPos.y = 0;
 
         if (lookPos.sqrMagnitude < 0.0001f)
+        {
             return;
-
+        }
+            
         Quaternion rotation = Quaternion.LookRotation(lookPos);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.2f);
     }

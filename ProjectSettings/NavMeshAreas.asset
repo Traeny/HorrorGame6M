@@ -11,9 +11,9 @@ NavMeshProjectSettings:
     cost: 1
   - name: Jump
     cost: 2
-  - name: 
+  - name: Middle_Area
     cost: 1
-  - name: 
+  - name: B_Wing
     cost: 1
   - name: 
     cost: 1

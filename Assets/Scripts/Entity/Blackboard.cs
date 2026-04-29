@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Blackboard : MonoBehaviour
 {
@@ -40,6 +42,10 @@ public class Blackboard : MonoBehaviour
 
     [Header("Search point list")]
     public List<Vector3> searchPoints;
+
+    
+
+    
 
     public static Blackboard Instance
     {

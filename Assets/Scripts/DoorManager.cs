@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class DoorManager : MonoBehaviour
 {
+    [Header("Door lists")]
     public List<GameObject> BwingDoors;
     public List<GameObject> MiddleLabDoors;
     public List<GameObject> ExitDoor;
@@ -12,9 +13,11 @@ public class DoorManager : MonoBehaviour
         if (button == 1)
         {
             UnlockDoors(BwingDoors);
+            Area.Instance.bWingUnlocked = true;
         }
         else if (button == 2) {
             UnlockDoors(MiddleLabDoors);
+            Area.Instance.middleAreaUnlocked = true;
         }
         else if (button == 3)
         {

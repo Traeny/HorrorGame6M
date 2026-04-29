@@ -44,5 +44,5 @@ MonoBehaviour:
   increasePatrolAreaAmount: 10
   proxDetectionRange: 20
   updatePatrolAreaTreshold: 20
-  patrolArea: 60
+  patrolArea: 70
   innerRadius: 5
