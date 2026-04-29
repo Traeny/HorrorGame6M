@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class AutomaticDoor : MonoBehaviour
@@ -24,6 +23,10 @@ public class AutomaticDoor : MonoBehaviour
     public LayerMask entitieLayers;
     public float sensorRadius = 5f;
 
+    [Header("Door Indicator")]
+    public Renderer openIndicatorRendered;
+    public Renderer locedIndicatorRenderer;
+
     [Header("Locked")]
     public bool doorLocked = true;
 
@@ -43,6 +46,18 @@ public class AutomaticDoor : MonoBehaviour
         {
             CloseDoors();
             isOpen = false;
+        }
+
+        // maybe add a time check for this so not every frame
+        if (doorLocked)
+        {
+            openIndicatorRendered.material.color = Color.gray;
+            locedIndicatorRenderer.material.color = Color.red;
+        }
+        else if (!doorLocked)
+        {
+            openIndicatorRendered.material.color = Color.lightGreen;
+            locedIndicatorRenderer.material.color = Color.gray;
         }
     }
 
