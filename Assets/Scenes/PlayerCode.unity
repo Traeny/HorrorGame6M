@@ -10917,6 +10917,10 @@ PrefabInstance:
       propertyPath: doorManager
       value: 
       objectReference: {fileID: 2099033908}
+    - target: {fileID: 7065963916048023988, guid: 52869ab62b32400459328bc98fa4f94c, type: 3}
+      propertyPath: buttonNotPressed
+      value: Unlock B wing doors
+      objectReference: {fileID: 0}
     - target: {fileID: 7074098093137439691, guid: 52869ab62b32400459328bc98fa4f94c, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -21411,7 +21415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &2070470629
 MeshCollider:
   m_ObjectHideFlags: 0
